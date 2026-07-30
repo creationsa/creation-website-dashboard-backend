@@ -1,0 +1,58 @@
+{
+  "header_title": "Solutions",
+  "header_description": "Defining Ambition",
+  "header_sub_description": "with Unrivaled Execution",
+
+  "view_all_solutions": "View All Solutions",
+
+  "explore_now": "Explore our solution",
+  "view_service_details": "View {{title}} details",
+  "explore_now_about_service": "Explore Now about {{title}}",
+
+  "branding": "Branding + Advertising",
+  "branding_desc": "We create identities, platforms, and activations that differentiate brands and position them to matter in culture.",
+  "digital_marketing": "Digital Marketing + Services",
+  "digital_marketing_desc": "We build digital ecosystems and revenue channels that synchronize data-driven precision with the speed of culture.",
+  "web_design": "Websites + Platforms",
+  "web_design_desc": "We conceive and create experiences that immerse consumers in the brand through a combination of utility and creativity.",
+  "production": "Production + Services",
+  "production_desc": "We provide end-to-end strategic production that transforms creative vision into high-fidelity reality across every stage of the project lifecycle.",
+
+  "integrated_solutions": "Integrated solutions",
+  "core_services": "Integrated solutions",
+  "core_services_description": "discover our",
+  "core_services_sub_description": "capabilities",
+
+  "best_services_des": "Providing best services and results since 2009",
+
+  "what_we_offer": "What We offer",
+  "what_we_offer_description": "Accelerating Your Business Growth",
+  "what_we_offer_sub_description": "with Confidence",
+
+  "why_choose_us": "Our DNA",
+  "why_choose_us_description": "Where Vision",
+  "why_choose_us_sub_description": "Meets Execution",
+  "capabilities": [
+    {
+      "title": "Strategic precision",
+      "description": "We never rely on guesswork; we plan intelligently. Every move is backed by data to ensure your brand hits its target and achieves sustainable, calculated growth."
+    },
+    {
+      "title": "Creative Excellence",
+      "description": "Where art meets functional utility. We design visual experiences that are not only attractive but deliver tangible results, enhancing your digital presence and engaging your customers."
+    },
+    {
+      "title": "People First",
+      "description": "Our digital solutions focus on human needs, creating smart, interactive experiences that mirror your audience's aspirations, ensuring a strong, lasting relationship between your brand and clients."
+    },
+    {
+      "title": "Business innovation",
+      "description": "Always stay ahead and never falter. We implement advanced, future-ready solutions that maintain your competitiveness in changing markets, ensuring leadership by anticipating technical challenges and opportunities."
+    }
+  ],
+
+  "all_services_description": "End-to-end digital solutions designed to build presence, connection,",
+  "all_services_sub_description": "and long-term growth.",
+
+  "seo_description": "End-to-end digital solutions crafted to connect strategy, audience, and growth into one continuous impact loop."
+}

@@ -1,0 +1,209 @@
+{
+  "header_title": "Project Details",
+  "year": "Year",
+  "role": "PROJECT FOCUS",
+  "clients": "Clients",
+  "about_project": "About the project",
+  "overview": "Overview",
+  "results": "Results",
+
+  "items": [
+    "We Collaborate with Ambitious Brands and People. Let's build. hello@creation.sa"
+  ],
+
+  "mouj": {
+    "title": "MOUJ AL HILAL Saudi Football Club",
+
+    "about_project_description": "Design With Purpose, Result By Design.",
+    "about_project_sub_description": "Legendary Identity.. Redefined.",
+    "about_project_paragraph": "The legendary \"Blue Wave\" of Al-Hilal fans served as the core inspiration for the MOUJ brand. This project was built to bridge the gap between stadium passion and commercial excellence. From the initial concept to the final brand guidelines, we developed a visual language that speaks to millions, transforming the fans' energy into a professional lifestyle identity that leads the sports market.",
+    "about_project_paragraph_summary": "Transforming the passion of Al-Hilal fans into a professional lifestyle brand leading the sports market.",
+
+    "first_title_statistics": "Commercial Expansion Rate",
+    "first_statistics": "150%",
+    "second_title_statistics": "Fan Brand Recognition",
+    "second_statistics": "65%",
+    "third_title_statistics": "Initial Brand Reach",
+    "third_statistics": "500K+"
+  },
+
+  "boulevard_world": {
+    "title": "BLVD WORLD SAUDI ARABIA ZONE",
+
+    "about_project_description": "Rooted in Research, Built for Identity.",
+    "about_project_sub_description": "Cultural Essence.. Unveiled.",
+    "about_project_paragraph": "To bring the Saudi Zone at Boulevard World to life, we conducted extensive marketing research covering every region of the Kingdom. Our study delved deep into traditional cuisines, authentic accessories, and local customs to ensure a truly immersive experience. This data-driven approach was presented to Sela, forming the foundation for a zone that celebrates the rich diversity and authentic soul of Saudi Arabia.",
+    "about_project_paragraph_summary": "A data-driven cultural experience celebrating the authentic soul and rich diversity of the Saudi Kingdom.",
+
+    "first_title_statistics": "Regions Deeply Researched",
+    "first_statistics": "13",
+    "second_title_statistics": "Cultural Authenticity Score",
+    "second_statistics": "95%",
+    "third_title_statistics": "Zone Visitors Experience",
+    "third_statistics": "2M+"
+  },
+
+  "maybach_boutique": {
+    "title": "MAYBACH Boutique SAUDI ARABIA",
+
+    "about_project_description": "Design With Purpose, Result Driven Experiences.",
+    "about_project_sub_description": "Luxury Reimagined.",
+    "about_project_paragraph": "The Maybach Boutique project was inspired by the elegance of Maybach, aiming to create a refined retail experience that reflects luxury and exclusivity. A key focus was localizing the global brand identity to align with the Saudi market while preserving its premium positioning.",
+    "about_project_paragraph_summary": "A refined retail experience blending global luxury with the unique elegance of the Saudi market.",
+
+    "first_title_statistics": "Brand Perception Growth",
+    "first_statistics": "120%",
+    "second_title_statistics": "Customer Engagement Increase",
+    "second_statistics": "45%",
+    "third_title_statistics": "Digital Experience Enhancement",
+    "third_statistics": "300%"
+  },
+
+  "errva": {
+    "title": "ERRVA Sparkling Water Maker",
+
+    "about_project_description": "From Concept To Launch.",
+    "about_project_sub_description": "Creative Works.. Redefined",
+    "about_project_paragraph": "At ERRVA, the essence of sparkling water meets the art of modern living. Every bubble represents a moment of purity, inspiring us to create a brand that flows with elegance and health. This vision drove us to develop the full identity and packaging, crafting a refreshing experience that resonates with those who seek a sophisticated lifestyle.",
+    "about_project_paragraph_summary": "A sophisticated brand and packaging identity reflecting the purity of modern living and healthy elegance.",
+
+    "first_title_statistics": "Market Presence Growth",
+    "first_statistics": "85%",
+    "second_title_statistics": "Packaging Efficiency",
+    "second_statistics": "40%",
+    "third_title_statistics": "Monthly Active Users",
+    "third_statistics": "250K+"
+  },
+
+  "tasier": {
+    "title": "TASIER Digital Financial Broker",
+
+    "about_project_description": "Where Logic Meets Vision.",
+    "about_project_sub_description": "Digital Finance.. Redefined.",
+    "about_project_paragraph": "Tasier is a digital financial broker built on the principles of transparency and efficiency. We developed a comprehensive brand identity and strategic guidelines that reflect its core mission in the FinTech world. Our goal was to create a visual system that inspires trust and simplifies the digital brokerage experience, positioning Tasaer as a modern leader in the financial landscape.",
+    "about_project_paragraph_summary": "A comprehensive FinTech identity built on transparency to simplify and lead the digital brokerage experience.",
+
+    "first_title_statistics": "Brand Trust Alignment",
+    "first_statistics": "100%",
+    "second_title_statistics": "Interface Clarity Score",
+    "second_statistics": "55%",
+    "third_title_statistics": "Seamless Digital Presence",
+    "third_statistics": "24/7"
+  },
+
+  "nozomi": {
+    "title": "NOZOMI",
+
+    "about_project_description": "Where Heritage Meets Modernity.",
+    "about_project_sub_description": "Japanese Luxury.. Redefined.",
+    "about_project_paragraph": "For Nozomi, we didn’t just capture images; we documented a sensory journey. Through high-end commercial production and immersive dining experience videography, we highlighted the sophisticated artistry of Japanese cuisine. Our lens focused on the vibrant atmosphere and the seamless flow of luxury service, creating compelling advertisements that invite diners to step into the world of Nozomi and experience excellence.",
+    "about_project_paragraph_summary": "High-end commercial production documenting the sensory journey and sophisticated artistry of fine Japanese dining.",
+
+    "first_title_statistics": "Atmosphere Engagement Rate",
+    "first_statistics": "92%",
+    "second_title_statistics": "Customer Conversion Growth",
+    "second_statistics": "85%",
+    "third_title_statistics": "Campaign Visual Impressions",
+    "third_statistics": "1M+"
+  },
+
+  "cupic": {
+    "title": "CUPIC ITALIAN CLOSETS",
+
+    "about_project_description": "Sculpting Space, Defining Luxury.",
+    "about_project_sub_description": "Bespoke Living.. Redefined.",
+    "about_project_paragraph": "For Cupic, we didn't just build an identity; we crafted a premium visual language for bespoke Italian closets. Our goal was to reflect the high-end craftsmanship of their products through a sophisticated brand system and comprehensive guidelines. We successfully positioned Cupic as a luxury furniture destination, ensuring every visual touchpoint radiates elegance, quality, and the timeless essence of Italian design.",
+    "about_project_paragraph_summary": "A premium visual language reflecting Italian craftsmanship and timeless elegance for bespoke luxury closets.",
+
+    "first_title_statistics": "Visual Brand Prestige Growth",
+    "first_statistics": "120%",
+    "second_title_statistics": "Brand Guidelines Compliance",
+    "second_statistics": "95%",
+    "third_title_statistics": "Premium Market Positioning",
+    "third_statistics": "100%"
+  },
+
+  "phase": {
+    "title": "PHASE Real Estate",
+
+    "about_project_description": "Building the Future, Step by Step.",
+    "about_project_sub_description": "Modern Living.. Redefined.",
+    "about_project_paragraph": "Phase represents the evolution of modern real estate. We developed a comprehensive brand identity and strategic guidelines that reflect stability and forward-thinking design. Our goal was to create a visual language that resonates with homeowners and investors alike, establishing Phase as a trusted name that guides clients through every stage of their property journey with clarity and confidence.",
+    "about_project_paragraph_summary": "A forward-thinking real estate identity establishing a trusted name for modern living and property investment.",
+
+    "first_title_statistics": "Brand Identity Cohesion",
+    "first_statistics": "100%",
+    "second_title_statistics": "Market Trust Growth",
+    "second_statistics": "60%",
+    "third_title_statistics": "Investor Engagement Increase",
+    "third_statistics": "75%"
+  },
+
+  "darf": {
+    "title": "DARF Digital Invitation",
+
+    "about_project_description": "Beyond Invitations, Crafting Connections.",
+    "about_project_sub_description": "Digital Hospitality.. Redefined.",
+    "about_project_paragraph": "For Darf, we didn't just design a brand; we engineered a complete digital ecosystem. From the initial identity to the full technical solution, operation, and continuous support, we built a platform that transforms traditional invitations into a seamless digital experience. Our mission was to blend elegance with advanced functionality, positioning Darf as the ultimate destination for smart, sophisticated, and efficient digital hospitality.",
+    "about_project_paragraph_summary": "A complete digital ecosystem blending elegant hospitality with advanced technical solutions for smart invitations.",
+
+    "first_title_statistics": "Operational Excellence",
+    "first_statistics": "100%",
+    "second_title_statistics": "User Experience (UX) Efficiency",
+    "second_statistics": "75%",
+    "third_title_statistics": "Brand Market Penetration",
+    "third_statistics": "150%"
+  },
+
+  "btic_group": {
+    "title": "BTIC GROUP",
+
+    "about_project_description": "Beyond Boundaries, Above Expectations.",
+    "about_project_sub_description": "Creative Logic.. Redefined.",
+    "about_project_paragraph": "We believe that great brands are built on bold ideas. For this project, we pushed the limits of conventional design to create a disruptive visual identity that commands attention. By merging strategic thinking with artistic rebellion, we delivered a brand experience that doesn’t just compete in the market—it leads it. This is where imagination meets execution to set a new standard for excellence.",
+    "about_project_paragraph_summary": "A disruptive visual identity merging strategic thinking with artistic rebellion to set new market standards.",
+
+    "first_title_statistics": "Brand Differentiation Impact",
+    "first_statistics": "150%",
+    "second_title_statistics": "Creative Market Resonance",
+    "second_statistics": "90%",
+    "third_title_statistics": "Vision-to-Reality Execution",
+    "third_statistics": "100%"
+  },
+
+  "damons": {
+    "title": "Damons Office Furniture",
+
+    "about_project_description": "Engineering Comfort, Designing Productivity.",
+    "about_project_sub_description": "Workspace Evolution.. Redefined.",
+    "about_project_paragraph": "Damons is where ergonomics meets executive style. We took charge of the brand’s complete transformation, from evolving its visual identity to managing its social media presence and strategic marketing. Our goal was to position Damons as more than just an office furniture provider, but as a strategic partner in building inspiring work environments. Through targeted content and a cohesive brand voice, we successfully amplified their market reach and professional authority.",
+    "about_project_paragraph_summary": "Transforming Damons into a strategic authority in premium and inspiring workspace solutions.",
+
+    "first_title_statistics": "Social Media Engagement Growth",
+    "first_statistics": "130%",
+    "second_title_statistics": "Brand Professional Credibility",
+    "second_statistics": "85%",
+    "third_title_statistics": "Market Outreach Expansion",
+    "third_statistics": "200%"
+  },
+
+  "shovel": {
+    "title": "SHOVEL Roastery",
+
+    "about_project_description": "Digging for Perfection, Crafting Flavor.",
+    "about_project_sub_description": "Roasting Artistry.. Redefined.",
+    "about_project_paragraph": "SHOVEL is far more than a roastery; it is a curated odyssey of rare harvests and exceptional profiles. We evolved its brand identity to mirror the innate luxury and artisanal craft found within every cup. By engineering a visual system that honors the alchemy of roasting and the heritage of global origins, we cemented SHOVEL as a premier authority in the specialty coffee landscape, ensuring the brand resonates deeply with the sophisticated palates of true connoisseurs.",
+    "about_project_paragraph_summary": "Positioning SHOVEL as a luxury specialty coffee brand crafted for true connoisseurs.",
+
+    "first_title_statistics": "Brand Recognition in Specialty Market",
+    "first_statistics": "115%",
+    "second_title_statistics": "Visual Consistency Across Packaging",
+    "second_statistics": "95%",
+    "third_title_statistics": "Artisanal Identity Alignment",
+    "third_statistics": "100%"
+  },
+
+  "project_image": "{{title}} project image-0{{index}}",
+  "project_not_found_title": "Project Not Found",
+  "project_not_found_desc": "We couldn't find the specific project you're looking for."
+}

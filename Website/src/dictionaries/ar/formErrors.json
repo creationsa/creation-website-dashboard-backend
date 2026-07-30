@@ -1,0 +1,16 @@
+{
+  "name_required": "الاسم مطلوب",
+  "name_short": "يجب ألا يقل الاسم عن حرفين",
+  "email_required": "البريد الإلكتروني مطلوب",
+  "email_invalid": "البريد الإلكتروني غير صالح",
+  "phone_invalid": "رقم الهاتف غير صالح",
+  "company_required": "اسم الشركة مطلوب",
+  "country_required": "البلد مطلوب",
+  "message_required": "الرسالة مطلوبة",
+  "message_short": "يجب ألا تقل الرسالة عن 10 أحرف",
+  "success_message": "تم إرسال البيانات بنجاح!",
+  "error_message": "عذراً، تعذر إرسال النموذج!",
+
+  "send_message": "إرسال الرسالة",
+  "sending": "يتم الإرسال..."
+}

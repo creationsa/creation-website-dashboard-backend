@@ -1,0 +1,48 @@
+{
+  "header_description": "Your partner in",
+  "header_sub_description": "Digital Growth",
+
+  "informations": [
+    {
+      "title": "Location + NO",
+      "details": "Riyadh, Saudi Arabia"
+    },
+    {
+      "title": "Contact / Email",
+      "details": "hello@creation.sa , +966 50 896 8157"
+    },
+    {
+      "title": "Follow / social",
+      "details": "Instagram.. Behance..Dribbble.. Facebook..Twitter.."
+    }
+  ],
+
+  "form_title": "Get in touch",
+  "form_description": "We Collaborate with Ambitious Brands and People. Let's build.",
+  "form_sub_description": "hello@creation.sa",
+  "form_paragraph": "We are always glad to have new meetings and friends. If you have a project or want to discuss collaboration, please contact us.",
+
+  "full_name": "Full Name",
+  "full_name_placeholder": "Your Name",
+  "email": "Email",
+  "email_placeholder": "yourname@yourcompany.com",
+  "company": "Company Name",
+  "company_placeholder": "Your Company",
+  "phone": "Phone Number",
+  "phone_placeholder": "+966 123456789",
+  "country": "Country",
+  "country_placeholder": "Select a Country...",
+  "message": "Give us a brief about your project",
+  "message_placeholder": "Write here...",
+
+  "riyadh_title": "RIYADH • SAUDI ARABIA",
+  "riyadh_description": "Roshn Business Front, Riyadh, Saudi Arabia.",
+  "riyadh_phone": "+966 50 896 8157",
+  "riyadh_email": "hello@creation.sa",
+  "cairo_title": "CAIRO • EGYPT",
+  "cairo_description": "3 Waheeb Doos, Maadi, Cairo, Egypt.",
+  "cairo_phone": "+20 101 010 6440",
+  "cairo_email": "hello@creation.sa",
+
+  "seo_description": "Find answers about crēation®’s end-to-end digital solutions, branding frameworks, and how we engineer enduring symbols of authority and market influence."
+}

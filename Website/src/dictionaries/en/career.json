@@ -1,0 +1,40 @@
+{
+  "header_description": "CAREERS &",
+  "header_sub_description": "VACANCIES",
+  "header_brief": "current openings",
+  "the_role": "The Role",
+  "focus": "Focus",
+
+  "current_jobs": [
+    {
+      "title": "Senior Performance Data Analyst",
+      "role_description": "You provide the 'measurable' in 'measurable results.' You will translate complex data sets into actionable business intelligence, ensuring every decision is backed by precision.",
+      "focus_description": "Predictive modeling, attribution tracking, and performance reporting."
+    },
+    {
+      "title": "Associate Art Director",
+      "role_description": "The creative force that gives 'Creative Vision' a tangible form. You will lead the visual direction of projects, ensuring that artistic aesthetics are integrated with strategic goals to transform brand identity into an impactful and organized visual experience.",
+      "focus_description": "Visual storytelling, creative systems design, and cross-platform brand consistency."
+    },
+    {
+      "title": "Senior Full-Stack Systems Architect",
+      "role_description": "The master planner of your 'Technical Reality.' This lead role designs the overarching structure of complex web applications, ensuring that the frontend beauty is supported by a robust, scalable backend.",
+      "focus_description": "System architecture, database optimization, and high-level technical logic."
+    },
+    {
+      "title": "Senior DevOps & Automation Engineer",
+      "role_description": "The specialist who builds the 'Engine' itself. You will automate deployment pipelines and manage cloud infrastructure to ensure that every brand touchpoint is fast, secure, and always online.",
+      "focus_description": "Cloud infrastructure (AWS/Azure), CI/CD pipelines, and technical security."
+    },
+    {
+      "title": "QA & Performance Specialist",
+      "role_description": "The guardian of 'Precision.' You are responsible for rigorous testing and performance auditing to ensure that every release is bug-free and optimized for high-performance output.",
+      "focus_description": "Automated testing, load testing, and cross-platform quality assurance."
+    }
+  ],
+
+  "next_job_title": "Find Your Next Job!",
+  "next_job_description": "We’re always looking to connect with individuals who want to make the best work of their lives with the world’s greatest brands. If you’re interested in working with us or learning more, drop us a note, portfolio link, or résumé. We’ll take anything you’ve got.",
+  "apply_now": "Apply Now",
+  "seo_description": "Join Creation and build the most meaningful work of your career alongside globally recognized brands and ambitious creative minds."
+}

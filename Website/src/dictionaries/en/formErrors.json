@@ -1,0 +1,16 @@
+{
+  "name_required": "Name is required",
+  "name_short": "Name must be at least 2 characters",
+  "email_required": "Email is required",
+  "email_invalid": "Invalid email address",
+  "phone_invalid": "Invalid phone number",
+  "company_required": "Company is required",
+  "country_required": "Country is required",
+  "message_required": "Message is required",
+  "message_short": "Message must be at least 10 characters",
+  "success_message": "Form Submitted Successfully!",
+  "error_message": "Oops! Something went wrong.",
+
+  "send_message": "Send Message",
+  "sending": "sending..."
+}

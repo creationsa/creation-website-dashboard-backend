@@ -1,0 +1,48 @@
+{
+  "header_description": "شريكك في النمو",
+  "header_sub_description": "الرقمي",
+
+  "informations": [
+    {
+      "title": "الموقع",
+      "details": "الرياض، المملكة العربية السعودية"
+    },
+    {
+      "title": "البريد الالكتروني/ هاتف محمول",
+      "details": "hello@creation.sa , 8157 896 50 966+"
+    },
+    {
+      "title": "التواصل الاجتماعي",
+      "details": "Instagram.. Behance..Dribbble.. Facebook..Twitter.."
+    }
+  ],
+
+  "form_title": "تواصل معنا",
+  "form_description": "نصنع قصصًا من التميّز من الاستراتيجية إلى التواصل، نصمم علامات تجارية تترك أثر.",
+  "form_sub_description": "hello@creation.sa",
+  "form_paragraph": "نرحّب دائماً بلقاءات جديدة وبناء علاقات مهنية جديدة. إذا كان لديك مشروع أو ترغب في مناقشة سُبل التعاون، فلا تتردد في التواصل معنا.",
+
+  "full_name": "الاسم الكامل",
+  "full_name_placeholder": "اسمك",
+  "email": "البريد الإلكتروني",
+  "email_placeholder": "yourname@yourcompany.com",
+  "company": "اسم الشركة",
+  "company_placeholder": "شركتك",
+  "phone": "رقم الهاتف",
+  "phone_placeholder": "+966 123456789",
+  "country": "الدولة",
+  "country_placeholder": "اختر الدولة...",
+  "message": "أخبرنا نبذة عن مشروعك",
+  "message_placeholder": "اكتب هنا...",
+
+  "riyadh_title": "المملكة السعودية . الرياض",
+  "riyadh_description": "واجهة روشن للأعمال . الرياض . السعودية",
+  "riyadh_phone": "+966 50 896 8157",
+  "riyadh_email": "hello@creation.sa",
+  "cairo_title": "جمهورية مصر . القاهرة",
+  "cairo_description": "3 وهيب دوس .المعادى . القاهرة . مصر",
+  "cairo_phone": "+20 101 010 6440",
+  "cairo_email": "hello@creation.sa",
+
+  "seo_description": "تواصل مع كريشن® لتطوير أعمالك، شاركنا اليوم لبناء المنظومة الرقمية لعلامتك التجارية، وتجسيد الرؤى الاستراتيجية إلى واقع ملموس ومؤثر."
+}
