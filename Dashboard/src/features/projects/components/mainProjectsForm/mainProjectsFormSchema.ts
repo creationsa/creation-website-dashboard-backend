@@ -1,5 +1,5 @@
 import { createHeaderSchema } from "@/shared/components/headerFields/headerSchema";
-import { createLogosSchema } from "@/shared/components/logosFields/logosSectionSchema";
+import { createPageTitleSettingsSectionSchema } from "@/shared/components/pageTitleSettingsSection/PageTitleSettingsSectionSchema";
 import {
   MAX_DESCRIPTION_LENGTH,
   MIN_DESCRIPTION_LENGTH,
@@ -10,6 +10,7 @@ import { z } from "zod";
 
 export const createProjectsSchema = (t: TFunction) => {
   const headerSchema = createHeaderSchema(t);
+  const slugSchema = createPageTitleSettingsSectionSchema(t);
 
   const baseProjectsSchema = z.object({
     overview_description_en: englishField(
@@ -22,10 +23,9 @@ export const createProjectsSchema = (t: TFunction) => {
       MIN_DESCRIPTION_LENGTH,
       MAX_DESCRIPTION_LENGTH,
     ),
-    logos_section: createLogosSchema(t),
   });
 
-  return headerSchema.merge(baseProjectsSchema);
+  return headerSchema.merge(baseProjectsSchema).merge(slugSchema);
 };
 
 export type ProjectsFormValues = z.infer<

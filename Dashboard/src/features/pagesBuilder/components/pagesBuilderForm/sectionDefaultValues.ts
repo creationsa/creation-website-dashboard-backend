@@ -1,5 +1,4 @@
 import { HEADER_INITIAL_STATE } from "@/shared/components/headerFields/getHeaderDefaultValues";
-import { LOGOS_INITIAL_STATE } from "@/shared/components/logosFields/getLogosFieldsDefaultValues";
 import { SECTION_TYPES } from "../../constants/sectionTypes";
 import { ACHIEVEMENTS_INITIAL_STATE } from "../../sections/achievementsSection/getAchievementsDefaultValues";
 import { ADVANCED_OVERVIEW_INITIAL_STATE } from "../../sections/advancedOverviewSection/getAdvancedOverviewDefaultValues";
@@ -9,8 +8,13 @@ import { CULTURE_IDENTITY_INITIAL_STATE } from "../../sections/cultureIdentity/g
 import { CUSTOM_ACCORDION_INITIAL_STATE } from "../../sections/customAccordion/getCustomAccordionDefaultValues";
 import { DISPLAY_INFO_INITIAL_STATE } from "../../sections/displayInformationSection/getInfoDefaultValues";
 import { FEATURED_WORKS_INITIAL_STATE } from "../../sections/featuredWorksSection/getFeaturedWorksDefaultValues";
+import { LOGOS_INITIAL_STATE } from "../../sections/logos/getLogosDefaultValues";
 import { MEDIA_CONTENT_INITIAL_STATE } from "../../sections/mediaContentSection/getMediaContentDefaultValues";
+import { CONTACT_INITIAL_STATE } from "../../sections/contactSection/getContactDefaultValues";
+import { BLOGS_TEASER_INITIAL_STATE } from "../../sections/blogsTeaser/getBlogsTeaserDefaultValues";
 import { NEWS_TICKER_INITIAL_STATE } from "../../sections/newsTickerSection/getNewsTickerDefaultValues";
+import { REVIEWS_INITIAL_STATE } from "../../sections/reviewsSection/getReviewsDefaultValues";
+import { TEXT_LIST_INITIAL_STATE } from "../../sections/textListSection/getTextListDefaultValues";
 
 export const SECTION_DEFAULTS: Record<string, object> = {
   [SECTION_TYPES.BANNER]: {
@@ -60,5 +64,21 @@ export const SECTION_DEFAULTS: Record<string, object> = {
   [SECTION_TYPES.LOGOS]: {
     type: SECTION_TYPES.LOGOS,
     content: LOGOS_INITIAL_STATE,
+  },
+  [SECTION_TYPES.REVIEWS]: {
+    type: SECTION_TYPES.REVIEWS,
+    content: REVIEWS_INITIAL_STATE,
+  },
+  [SECTION_TYPES.BLOGS_TEASER]: {
+    type: SECTION_TYPES.BLOGS_TEASER,
+    content: BLOGS_TEASER_INITIAL_STATE,
+  },
+  [SECTION_TYPES.CONTACT]: {
+    type: SECTION_TYPES.CONTACT,
+    content: CONTACT_INITIAL_STATE,
+  },
+  [SECTION_TYPES.TEXT_LIST]: {
+    type: SECTION_TYPES.TEXT_LIST,
+    content: TEXT_LIST_INITIAL_STATE,
   },
 };

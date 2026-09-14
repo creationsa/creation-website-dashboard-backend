@@ -12,11 +12,11 @@ class UserObserver
 
     public function saved(User $user)
     {
-        $requestKeys = collect(array_only(request()->all(), ['image', 'personal_image']))->keys();
+        $requestKeys = collect(\Arr::only(request()->all(), ['image', 'personal_image']))->keys();
         $imgs = $requestKeys->filter(function ($key) {
             if (\Str::contains($key, 'image')) return $key;
         })->toArray();
-
+        
         if (! empty($imgs)) {
             foreach ($imgs as $img)
             {

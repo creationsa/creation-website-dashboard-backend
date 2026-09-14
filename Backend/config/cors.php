@@ -15,7 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // `storage/*` added so the website can fetch uploaded SVGs (e.g. the
+    // Settings logo) cross-origin and inline them client-side — needed to
+    // keep their fill/stroke themeable via CSS (see react-inlinesvg usage
+    // in the Website project).
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'storage/*'],
 
     'allowed_methods' => ['*'],
 

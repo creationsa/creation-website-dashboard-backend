@@ -1,20 +1,23 @@
 import { queryKeys } from "@/shared/api/queryKeys";
 import type { LanguageType } from "@/shared/hooks/useLanguage";
-import { useQuery } from "@tanstack/react-query";
+import type { ListQueryParams } from "@/shared/types/pagination";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getSolutions } from "../api/getSolutions";
 
-export function useSolutions(locale: LanguageType) {
+export function useSolutions(locale: LanguageType, params: ListQueryParams) {
   const {
-    data: solutions,
+    data,
     isPending: isSolutionsLoading,
     error,
   } = useQuery({
-    queryKey: [...queryKeys.solutions, locale],
-    queryFn: () => getSolutions(locale),
+    queryKey: [...queryKeys.solutions, locale, params],
+    queryFn: () => getSolutions(locale, params),
+    placeholderData: keepPreviousData,
   });
 
   return {
-    solutions,
+    solutions: data?.data,
+    meta: data?.meta,
     isSolutionsLoading,
     error,
   };

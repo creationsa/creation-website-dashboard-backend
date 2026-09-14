@@ -17,17 +17,17 @@ class PageDetailsResource extends JsonResource
         $locales = [];
 
         foreach (config('translatable.locales') as $locale) {
-            $locales[$locale]['title']        = $this->translate($locale)?->title;
-            $locales[$locale]['desc']        = $this->translate($locale)?->desc;
+            $locales[$locale]['title'] = $this->translate($locale)?->title;
+            $locales[$locale]['desc']  = $this->translate($locale)?->desc;
         }
 
         return [
-            'id'        => $this->id,
-            'title'            => $this->title,
-            'desc'            => $this->desc,
-            'type'         => $this->type,
-            'ordering'        => $this->ordering,
-        ]+ $locales;
-
+            'id'       => $this->id,
+            'image'    => $this->image,
+            'title'    => $this->title,
+            'desc'     => $this->desc,
+            'type'     => $this->type,
+            'ordering' => $this->ordering,
+        ] + $locales;
     }
 }

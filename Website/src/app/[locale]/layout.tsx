@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Directions, Languages } from "@/constants/enums";
 import { LanguageType } from "@/i18n.config";
 import { getSeoForPage } from "@/lib/api/getSeoForPage";
-import getTrans from "@/lib/translation";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -30,12 +29,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
-  const [common, seoData] = await Promise.all([
-    getTrans(locale, "common"),
-    getSeoForPage("home", locale),
-  ]);
+  const seoData = await getSeoForPage("home", locale);
 
-  const { title, description, image } = seoData;
+  const { title, description, image, image_alt, image_type } = seoData;
 
   const keywords = parseKeywords(seoData.keywords);
 
@@ -74,8 +70,8 @@ export async function generateMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: common.creation,
-          type: "image/jpeg",
+          alt: image_alt,
+          type: image_type || "image/jpeg",
         },
       ],
     },
@@ -112,7 +108,7 @@ export default async function RootLayout({
       className={`${myHeadingFont.variable} ${myTextFont.variable} overflow-x-hidden`}
       suppressHydrationWarning
     >
-      <body className="dark:bg-black-800 dark:text-white-100 bg-white-200 text-black-100 font-text flex min-h-screen flex-col overflow-x-hidden antialiased">
+      <body className="dark:bg-black-800 dark:text-white-100 bg-white-200 text-black-100 font-text flex min-h-screen flex-col antialiased">
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="dark"

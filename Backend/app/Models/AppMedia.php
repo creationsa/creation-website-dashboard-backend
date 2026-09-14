@@ -6,7 +6,6 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
-
 class AppMedia extends Model implements TranslatableContract
 {
     use Translatable;
@@ -50,22 +49,21 @@ class AppMedia extends Model implements TranslatableContract
     public function getFileNameAttribute()
     {
         $map = [
-            About::class                  => 'abouts',
-            Country::class                => 'countries',
-            Metadata::class               => 'metadata',
-            User::class                   => 'users',
-            Backdrop::class               => 'backdrops',
-            EnvelopeBackground::class     => 'envelope_backgrounds',
-            PaperBackground::class        => 'paper_backgrounds',
-            Subcategory::class            => 'subcategories',
-            Template::class               => 'templates',
-            UserTemplate::class           => 'user_templates',
-            Slider::class                 => 'sliders',
-            SecondSection::class          => 'second_sections',
-            ThirdSection::class           => 'third_sections',
-            Cohost::class                 => 'cohosts',
-            ChooseUs::class               => 'choose_us',
-            Logo::class                   => 'logos',
+            About::class    => 'abouts',
+            Country::class  => 'countries',
+            Metadata::class => 'metadata',
+            User::class     => 'users',
+            Page::class     => 'pages',
+            Blog::class     => 'blogs',
+            Project::class  => 'projects',
+            ProjectsMainData::class => 'projects',
+            Solution::class => 'solutions',
+            SolutionItem::class => 'solutions',
+            SolutionsMainData::class => 'solutions',
+            SolutionMainDataItem::class => 'solutions',
+            Footer::class => 'footer',
+            FooterBadge::class => 'footer',
+            Client::class => 'clients',
         ];
 
         return $map[$this->app_mediaable_type];

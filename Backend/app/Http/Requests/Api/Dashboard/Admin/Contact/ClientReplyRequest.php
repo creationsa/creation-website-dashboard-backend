@@ -24,7 +24,7 @@ class ClientReplyRequest extends ApiMasterRequest
     public function rules()
     {
         return [
-            'reply'    => 'required|string|between:2,100000',
+            'reply' => 'required|string|between:2,100000',
         ];
     }
 }

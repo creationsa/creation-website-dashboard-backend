@@ -1,52 +1,53 @@
-import BackgroundImageMainSection from "@/components/common/backgroundImageMainSection";
 import News from "@/components/common/news";
 import PageBanner from "@/components/common/pageBanner";
+import SmartMedia from "@/components/ui/SmartMedia";
 import AboutTheProject from "@/components/pages/projectDetails/aboutTheProject";
+import { getProjectBySlug } from "@/components/pages/projectDetails/getProjectBySlug";
+import { getProjectSlugs } from "@/components/pages/projectDetails/getProjectSlugs";
 import Images from "@/components/pages/projectDetails/images";
-import { PROJECT_DETAILS } from "@/components/pages/projectDetails/projectDetailsData";
 import ProjectNavigation from "@/components/pages/projectDetails/projectNavigation";
 import Results from "@/components/pages/projectDetails/results";
 import { ProjectDetailsProps } from "@/components/pages/projectDetails/types";
-import { getCurrentLocale } from "@/lib/getCurrentLocale";
+import { Languages } from "@/constants/enums";
+import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import getTrans from "@/lib/translation";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { parseKeywords } from "../../../../../utils/parseKeywords";
 
 export async function generateMetadata({
   params,
 }: ProjectDetailsProps): Promise<Metadata> {
-  const { slug } = await params;
-  const locale = await getCurrentLocale();
+  const { slug, locale } = await params;
 
-  const projectConfig = PROJECT_DETAILS.find(
-    (project) => project.slug === slug,
-  );
-
-  if (!projectConfig) {
+  let projectData;
+  try {
+    projectData = await getProjectBySlug(slug, locale);
+  } catch {
     return {};
   }
 
-  const [project_details, common] = await Promise.all([
-    getTrans(locale, "projectDetails"),
-    getTrans(locale, "common"),
-  ]);
+  const { site_name } = await getSeoForPage("home", locale);
 
-  const projectData = project_details[projectConfig.translationKey];
-
-  if (!projectData) {
-    return {};
-  }
-
-  const title = `${common.creation} | ${projectData.title}`;
-  const description = projectData.about_project_paragraph_summary;
-
+  const {
+    title: seoTitle,
+    description,
+    image,
+    image_alt,
+    image_type,
+  } = projectData.seo;
+  const title = `${site_name} | ${seoTitle}`;
   const currentUrl = `https://www.creation.sa/${locale}/projects/${slug}`;
 
-  const image = `https://www.creation.sa/images/project/${projectConfig.seoImage}/creation_SEO_Image.jpg`;
+  const keywords = projectData.seo.keywords
+    ? parseKeywords(projectData.seo.keywords)
+    : undefined;
 
   return {
     title,
     description,
+
+    ...(keywords?.length && { keywords }),
 
     alternates: {
       canonical: currentUrl,
@@ -62,87 +63,92 @@ export async function generateMetadata({
       description,
       url: currentUrl,
 
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-          alt: projectData.title,
-          type: "image/jpeg",
-        },
-      ],
+      images: image
+        ? [
+            {
+              url: image,
+              width: 1200,
+              height: 630,
+              alt: image_alt || projectData.title,
+              type: image_type || "image/png",
+            },
+          ]
+        : [],
     },
 
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [image],
+      images: image ? [image] : [],
       site: currentUrl,
     },
   };
 }
 
-export function generateStaticParams() {
-  return PROJECT_DETAILS.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const slugs = await getProjectSlugs(Languages.ENGLISH);
+
+  return slugs.flatMap((project) => [
+    { locale: Languages.ARABIC, slug: project.slug_en },
+    { locale: Languages.ENGLISH, slug: project.slug_en },
+  ]);
 }
 
 export default async function ProjectDetails({ params }: ProjectDetailsProps) {
-  const { slug } = await params;
-  const locale = await getCurrentLocale();
+  const { slug, locale } = await params;
 
-  const projectConfig = PROJECT_DETAILS.find(
-    (project) => project.slug === slug,
-  );
-
-  if (!projectConfig) {
+  let projectData;
+  try {
+    projectData = await getProjectBySlug(slug, locale);
+  } catch {
     return notFound();
   }
 
-  const [{ home, previous, next }, project_details] = await Promise.all([
-    getTrans(locale, "common"),
-    getTrans(locale, "projectDetails"),
-  ]);
+  const { home, previous, next } = await getTrans(locale, "common");
 
-  const projectData = project_details[projectConfig.translationKey];
-
-  if (!projectData) {
-    return notFound();
-  }
   return (
     <>
       <PageBanner pageTitle={projectData.title} home={home} />
 
-      <BackgroundImageMainSection
-        certainImage={projectConfig.mainImage}
-        alt={projectData.title}
-      />
+      {projectData.main_image?.file && (
+        <section className="-mt-20 space-y-20">
+          <div className="relative aspect-4001/1392 w-full">
+            <SmartMedia
+              media={projectData.main_image}
+              alt={projectData.title}
+              className="absolute inset-0 h-full w-full object-cover"
+              quality={90}
+              sizes="(min-width: 1280px) 1280px, 100vw"
+            />
+          </div>
+        </section>
+      )}
 
       <AboutTheProject
         locale={locale}
-        project={projectData}
-        title={project_details.about_project}
-        certainImage={projectConfig.aboutImage}
+        data={projectData}
+        certainImage={projectData.about_image}
       />
 
-      <Results projectData={projectData} translations={project_details} />
+      <Results data={projectData} />
 
-      <Images
-        images={projectConfig.images}
-        title={projectData.title}
-        translations={project_details}
-      />
+      <Images images={projectData.gallery} title={projectData.title} />
 
-      <News data={project_details.items} noBackground />
+      {projectData.ticker_items.length > 0 && (
+        <News data={projectData.ticker_items} />
+      )}
 
       {/* PROJECT NAVIGATION */}
-      <ProjectNavigation
-        slug={slug}
-        locale={locale}
-        project_details={project_details}
-        previousLabel={previous}
-        nextLabel={next}
-      />
+      {projectData.prev && projectData.next && (
+        <ProjectNavigation
+          locale={locale}
+          prevItem={projectData.prev}
+          nextItem={projectData.next}
+          previousLabel={previous}
+          nextLabel={next}
+        />
+      )}
     </>
   );
 }

@@ -14,6 +14,7 @@ export default function PageTabs({
       <Button
         type="button"
         variation={activeTab === "content" ? "primary" : "secondary"}
+        size="large"
         onClick={() => onChange("content")}
       >
         {t("pages.content")}
@@ -22,8 +23,10 @@ export default function PageTabs({
       <Button
         type="button"
         variation={activeTab === "seo" ? "primary" : "secondary"}
+        size="large"
         onClick={() => onChange("seo")}
         disabled={!isEditMode}
+        title={!isEditMode ? t("pages.seo_tab_disabled_hint") : undefined}
       >
         {t("pages.seo")}
       </Button>

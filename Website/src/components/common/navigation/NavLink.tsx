@@ -4,7 +4,14 @@ import { RightArrowIcon } from "@/icons";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { NavItemProps } from "./types";
+import { StaticImageData } from "next/image";
+import { NavItemMedia, NavItemProps } from "./types";
+
+function isNavItemMedia(
+  image: NavItemProps["image"],
+): image is NavItemMedia {
+  return typeof image === "object" && image !== null && "file" in image;
+}
 
 export default function NavLink({
   href,
@@ -15,6 +22,10 @@ export default function NavLink({
   type,
 }: NavItemProps) {
   const isPrev = type === "prev";
+  const media = isNavItemMedia(image) ? image : null;
+  const plainImage = media
+    ? undefined
+    : (image as string | StaticImageData | undefined);
 
   return (
     <Link
@@ -46,7 +57,7 @@ export default function NavLink({
         {title}
       </span>
 
-      {image && (
+      {(media?.file || plainImage) && (
         <motion.div
           initial={{
             opacity: 0,
@@ -57,7 +68,25 @@ export default function NavLink({
           viewport={{ once: true, amount: 0.4 }}
           className="relative mt-5 hidden aspect-square w-full sm:block"
         >
-          <Image src={image} alt={title} fill className="object-cover" />
+          {media?.type === "video" && media.file ? (
+            <video
+              src={media.file}
+              poster={media.poster || undefined}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <Image
+              src={media?.file || plainImage!}
+              alt={title}
+              fill
+              sizes="(min-width: 1280px) 576px, 45vw"
+              className="object-cover"
+            />
+          )}
         </motion.div>
       )}
     </Link>

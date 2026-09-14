@@ -18,14 +18,12 @@ class CreatePermissionsTable extends Migration
             $table->string('front_route_name')->nullable();
             $table->string('back_route_name')->nullable();
             $table->string('icon')->nullable();
-            //
             $table->boolean('is_control_permission')->default(0)->nullable();
             $table->timestamps();
         });
 
         Schema::create('permission_translations', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('permission_id');
             $table->string('title');
             $table->string('locale')->index();
             $table->foreignId('permission_id', 'permission_id')->constrained("permissions")->cascadeOnDelete();

@@ -17,21 +17,23 @@ class MetadataShowResource extends JsonResource
         $locales = [];
         foreach (config('translatable.locales') as $locale) {
             $locales[$locale]['title']           = $this->translate($locale)?->title;
-            $locales[$locale]['canonical_tags']  = $this->translate($locale)?->canonical_tags;
+            // $locales[$locale]['canonical_tags']  = $this->translate($locale)?->canonical_tags;
             $locales[$locale]['image']           = $this->translate($locale)?->image;
-            $locales[$locale]['type']            = $this->translate($locale)?->type;
+            $locales[$locale]['image_alt']       = $this->translate($locale)?->image_alt;
+            $locales[$locale]['image_type']      = $this->translate($locale)?->image_type;
+            $locales[$locale]['site_name']       = $this->translate($locale)?->site_name;
+            // $locales[$locale]['type']            = $this->translate($locale)?->type;
             $locales[$locale]['description']     = $this->translate($locale)?->description;
-            $locales[$locale]['keywords']        = $this->translate($locale)?->keywords;
         }
         return [
             'id'             => (int) $this->id,
             'title'          => (string) $this->title,
             'for'            => (string) $this->for,
-            'canonical_tags' => (string) $this->canonical_tags,
+            // 'canonical_tags' => (string) $this->canonical_tags,
             'image'          => (string) $this->image,
-            'type'           => (string) $this->type,
+            // 'type'           => (string) $this->type,
             'description'    => (string) $this->description,
-            'keywords'       => (string) $this->keywords,
+            'keywords'       => $this->keywords,
         ] + $locales;
     }
 }

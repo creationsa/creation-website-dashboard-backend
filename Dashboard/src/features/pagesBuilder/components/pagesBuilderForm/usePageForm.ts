@@ -1,31 +1,24 @@
 import { useUploadAttachment } from "@/shared/hooks/useUploadAttachment";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useCreateNewPage } from "../../hooks/useCreateNewPage";
 import { useUpdateExistingPage } from "../../hooks/useUpdateExistingPage";
-// import { resolveSectionImages } from "../../utils/resolveSectionImages";
+import { buildPageFormData } from "../../utils/buildPageFormData";
+import { resolveSectionImages } from "../../utils/resolveSectionImages";
 import { createPageSchema, type PageFormValues } from "./pageSchema";
 import { SECTION_DEFAULTS } from "./sectionDefaultValues";
 
-export function usePageForm(dataToEdit?: PageFormValues) {
+export function usePageForm(dataToEdit?: PageFormValues, id?: number) {
   const isEditingSession = Boolean(dataToEdit);
 
   const { t } = useTranslation();
 
-  const {
-    // mutateAsync: uploadAttachment,
-    isPending: isUploadPending,
-  } = useUploadAttachment();
-  const {
-    // addNewPage,
-    addNewPageLoading,
-  } = useCreateNewPage();
-  const {
-    // updatePage,
-    updatePageLoading,
-  } = useUpdateExistingPage();
+  const { mutateAsync: uploadAttachment } = useUploadAttachment();
+  const { addNewPage, addNewPageLoading } = useCreateNewPage();
+  const { updatePage, updatePageLoading } = useUpdateExistingPage();
+  const [isUploading, setIsUploading] = useState(false);
 
   const schema = useMemo(() => createPageSchema(t), [t]);
 
@@ -35,15 +28,22 @@ export function usePageForm(dataToEdit?: PageFormValues) {
       page_title_en: "",
       page_title_ar: "",
       page_slug_en: "",
+      is_home: false,
       sections: [],
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control: form.control,
     name: "sections",
   });
+
+  useEffect(() => {
+    if (isEditingSession) {
+      form.trigger();
+    }
+  }, [isEditingSession, form]);
 
   const appendSection = (type: string) => {
     const defaults = SECTION_DEFAULTS[type];
@@ -51,23 +51,32 @@ export function usePageForm(dataToEdit?: PageFormValues) {
   };
 
   const onSubmit = async (data: PageFormValues) => {
-    console.log("final data", data);
-    // const resolvedSections = await Promise.all(
-    //   data.sections.map((section) =>
-    //     resolveSectionImages(section, uploadAttachment),
-    //   ),
-    // );
+    // See useSolutionForm.ts for why this manual flag replaces the shared
+    // upload mutation's own `isPending` here — every section's images
+    // fire concurrent calls through the same mutation instance.
+    setIsUploading(true);
+    try {
+      const resolvedSections = await Promise.all(
+        data.sections.map((section) =>
+          resolveSectionImages(section, uploadAttachment),
+        ),
+      );
 
-    // const payload: PageFormValues = { ...data, sections: resolvedSections };
+      const payload: PageFormValues = { ...data, sections: resolvedSections };
 
-    // if (isEditingSession) {
-    //   updatePage({
-    //     id: dataToEdit!.id,
-    //     payload,
-    //   });
-    // } else {
-    //   addNewPage(payload);
-    // }
+      if (isEditingSession && id) {
+        const formData = buildPageFormData(payload, { isEdit: true });
+        updatePage(
+          { id, formData },
+          { onSuccess: () => form.reset(payload) },
+        );
+      } else {
+        const formData = buildPageFormData(payload);
+        addNewPage(formData);
+      }
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return {
@@ -75,10 +84,9 @@ export function usePageForm(dataToEdit?: PageFormValues) {
     fields,
     appendSection,
     remove,
+    move,
     onSubmit,
-    isLoading: Boolean(
-      addNewPageLoading || updatePageLoading || isUploadPending,
-    ),
+    isLoading: Boolean(addNewPageLoading || updatePageLoading || isUploading),
     isEditingSession,
   };
 }

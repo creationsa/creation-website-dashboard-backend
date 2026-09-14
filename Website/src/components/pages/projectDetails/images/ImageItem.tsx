@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+import SmartMedia from "@/components/ui/SmartMedia";
 import { ImageItemProps } from "../types";
 import { itemVariants } from "./animations";
 
@@ -10,12 +10,7 @@ export default function ImageItem({
   full = false,
   index = 0,
   title,
-  translations,
 }: ImageItemProps) {
-  const formattedAlt = translations?.project_image
-    ?.replace("{{title}}", title || "")
-    ?.replace("{{index}}", (index + 1).toString());
-
   return (
     <motion.div
       variants={itemVariants}
@@ -25,11 +20,16 @@ export default function ImageItem({
       viewport={{ once: true, margin: "-80px" }}
       className={`relative ${full ? "aspect-3167/1393" : "aspect-square"}`}
     >
-      <Image
-        src={src}
-        alt={formattedAlt}
-        className="object-cover"
-        quality={`${full ? 90 : 80}`}
+      <SmartMedia
+        media={src}
+        alt={src.alt || title}
+        className="absolute inset-0 h-full w-full object-cover"
+        quality={full ? 90 : 80}
+        sizes={
+          full
+            ? "(min-width: 1280px) 1280px, 100vw"
+            : "(min-width: 768px) 640px, 100vw"
+        }
       />
     </motion.div>
   );

@@ -1,12 +1,25 @@
 import type { DynamicItemsFormValues } from "@/shared/components/dynamicItemsFields/dynamicItemsFieldsSchema";
 import type { HeaderFormValues } from "@/shared/components/headerFields/headerSchema";
-import type { SeoSectionFormValues } from "@/shared/components/seoSection/SeoSectionSchema";
-import type { SlugSectionFormValues } from "@/shared/components/slugSection/SlugSectionSchema";
 import type { MediaFieldValues } from "@/shared/components/smartMediaField/smartMediaFieldSchema";
 import type { TitleSectionFormValues } from "@/shared/components/titleSection/titleSectionSchema";
 import type { UseFormReturn } from "react-hook-form";
 import type { ProjectFormValues } from "./components/projectForm/projectSchema";
-import type { LogosFormValues } from "@/shared/components/logosFields/logosSectionSchema";
+import type { ProjectsFormValues } from "./components/mainProjectsForm/mainProjectsFormSchema";
+
+export const PROJECT_MEDIA_FIELDS = [
+  "first_cover_media",
+  "second_cover_media",
+  "first_media",
+  "second_media",
+  "third_media",
+  "fourth_media",
+  "fifth_media",
+  "sixth_media",
+  "seventh_media",
+  "eighth_media",
+] as const;
+
+export type ProjectMediaField = (typeof PROJECT_MEDIA_FIELDS)[number];
 
 export interface ImageLocalization {
   alt: string;
@@ -15,6 +28,8 @@ export interface ImageLocalization {
 export interface ProjectImageObject {
   id: number;
   media: string;
+  type: "image" | "video";
+  poster: string;
   alt: string;
   en: ImageLocalization;
   ar: ImageLocalization;
@@ -40,12 +55,13 @@ export interface DeleteProjectProps {
 }
 
 export interface SingleProject
-  extends
-    TitleSectionFormValues,
-    SeoSectionFormValues,
-    SlugSectionFormValues,
-    HeaderFormValues {
+  extends TitleSectionFormValues, HeaderFormValues {
   id: number;
+  metadata_id: number | null;
+  slug_en: string;
+
+  cover_media_field: ProjectMediaField | null;
+  feature_media_field: ProjectMediaField | null;
 
   first_cover_media: MediaFieldValues;
   overview_description_en: string;
@@ -88,10 +104,22 @@ export interface SectionProps {
 export interface ProjectsMainDataProps extends HeaderFormValues {
   overview_description_en: string;
   overview_description_ar: string;
-
-  logos_section: LogosFormValues;
+  nav_title_en: string;
+  nav_title_ar: string;
+  slug_en: string;
 }
 
 export interface ProjectsFormMainDataProps {
   projectMainDataToEdit?: ProjectsMainDataProps;
+}
+
+export interface CoverToggleProps {
+  form: UseFormReturn<ProjectFormValues>;
+  fieldName: ProjectMediaField;
+  disabled?: boolean;
+}
+
+export interface ProjectsHeaderOverviewFieldsProps {
+  form: UseFormReturn<ProjectsFormValues>;
+  disabled: boolean;
 }

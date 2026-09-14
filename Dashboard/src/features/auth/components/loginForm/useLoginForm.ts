@@ -17,7 +17,7 @@ export function useLoginForm() {
       password: "",
     },
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = (data: LoginFormValues) => {

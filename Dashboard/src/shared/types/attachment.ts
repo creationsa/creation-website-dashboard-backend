@@ -1,6 +1,14 @@
 export type AttachmentType = "image" | "file" | "audio" | "video";
 
-export type AttachmentModel = "blogs" | "metadata" | "pages" | "footer" | "settings";
+export type AttachmentModel =
+  | "blogs"
+  | "metadata"
+  | "pages"
+  | "footer"
+  | "settings"
+  | "projects"
+  | "solutions"
+  | "clients";
 
 export interface UploadAttachmentPayload {
   file: File;

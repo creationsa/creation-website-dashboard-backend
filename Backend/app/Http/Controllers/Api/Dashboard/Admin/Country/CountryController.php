@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Dashboard\Admin\Country;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\Admin\Country\CountryRequest;
-use App\Http\Resources\Api\Dashboard\Admin\Country\{GetCountryCitiesResource,CountryDetailsResource,CountryItemResource,CountryResource};
-use App\Models\{Country,User};
+use App\Http\Resources\Api\Dashboard\Admin\Country\{GetCountryCitiesResource, CountryDetailsResource, CountryItemResource, CountryResource};
+use App\Models\{Country, User};
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -46,10 +46,9 @@ class CountryController extends Controller
                 ->orWhereTranslationLike('currency', '%' . $request->keyword . '%')
                 ->orWhereTranslationLike('slug', '%' . $request->keyword . '%');
         })->latest()->paginate(25);
-        return CountryResource::collection($countries)->additional(['status' => 'success', 'message' => '']);
+        return CountryDetailsResource::collection($countries)->additional(['status' => 'success', 'message' => '']);
     }
-    
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -57,8 +56,8 @@ class CountryController extends Controller
      */
     public function store(CountryRequest $request)
     {
-        $country = Country::create($request->validated());
-        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => trans('api.messages.Created_successfully')]);
+        $country = Country::create(\Arr::except($request->validated(), ['flag']));
+        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => trans('Created successfully')]);
     }
 
     /**
@@ -70,9 +69,8 @@ class CountryController extends Controller
     public function show($id)
     {
         $country = Country::findOrFail($id);
-        return CountryResource::make($country)->additional(['status' => 'success', 'message' => '']);
+        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => '']);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -90,8 +88,8 @@ class CountryController extends Controller
         }
 
         $country->update($request->validated());
-        
-        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => trans('api.messages.updated_successfully')]);
+
+        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => trans('Updated successfully')]);
     }
 
     /**
@@ -104,8 +102,15 @@ class CountryController extends Controller
     {
         $country = Country::findOrFail($id);
         if ($country->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('api.messages.deleted_successfully')]);
+            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
         }
-        return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('dashboard.api.delete_fail')], 422);
+        return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Something went wrong, please try again')], 422);
+    }
+
+    public function toggleActive($id)
+    {
+        $country = Country::findOrFail($id);
+        $country->update(['is_active' => !$country->is_active]);
+        return CountryDetailsResource::make($country)->additional(['status' => 'success', 'message' => '']);
     }
 }

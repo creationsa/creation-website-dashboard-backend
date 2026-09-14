@@ -1,5 +1,5 @@
-import AddNewBlock from "@/features/pagesBuilder/components/pagesBuilderForm/AddNewBlock";
-import BlockHeader from "@/features/pagesBuilder/components/pagesBuilderForm/BlockHeader";
+import AddNewBlock from "@/shared/components/blockControls/AddNewBlock";
+import BlockHeader from "@/shared/components/blockControls/BlockHeader";
 import Input from "@/shared/ui/textField/Input";
 import {
   get,
@@ -46,6 +46,8 @@ export default function DynamicItemsFields<T extends FieldValues>({
         onAdd={() =>
           append(DYNAMIC_ITEM_INITIAL_STATE as FieldArray<T, ArrayPath<T>>)
         }
+        managementLabel={t("blockControls.ticker_item_management")}
+        addLabel={t("blockControls.add_new_ticker_item")}
       />
 
       <div className="flex flex-col gap-4 overflow-y-auto pr-1">
@@ -55,7 +57,9 @@ export default function DynamicItemsFields<T extends FieldValues>({
             className="relative flex flex-col gap-3 rounded-xl border p-4 lg:gap-5"
           >
             <BlockHeader
-              index={itemIndex}
+              rowLabel={t("blockControls.ticker_item_row", {
+                index: itemIndex + 1,
+              })}
               onRemove={() => remove(itemIndex)}
               isDeleteDisabled={fields.length === 1}
             />

@@ -9,17 +9,12 @@ class CountryObserver
 {
     public function saved(Country $country)
     {
-        if (request()->has('flag') && isset(request()->flag['media']) && request()->flag['media'] != null) {
+        if (request()->has('flag') && isset(request()->flag) && request()->flag != null) {
             if ($country->media()->exists()) {
                 $image = AppMedia::where(['app_mediaable_type' => 'App\Models\Country','app_mediaable_id' => $country->id ,'media_type' => 'image', 'option' => 'flag'])->first();
-                if ($image) {
-                    if (file_exists(storage_path('app/public/images/countries/' . $image->media))) {
-                        \File::delete(storage_path('app/public/images/countries/' . $image->media));
-                    }
-                    $image->delete();
-                }
+                if($image) $image->delete();
             }
-            $country->media()->create(request('flag') + ['media_type' => 'image', 'option' => 'flag']);
+            $country->media()->create(['media' => request()->flag,'media_type' => 'image', 'option' => 'flag']);
         }
     }
 

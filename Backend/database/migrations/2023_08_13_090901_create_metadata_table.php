@@ -17,18 +17,18 @@ return new class extends Migration
             $table->id();
             $table->nullableMorphs('metadataable');
             $table->string('for')->nullable(); // home - blogs - blog - gallery - about - services - service - contact-us
+            $table->longText('keywords')->nullable();
             $table->timestamps();
         });
 
         Schema::create('metadata_translations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('metadata_id')->constrained('metadata')->cascadeOnDelete();
-            $table->string('image');
-            $table->string('canonical_tags');
+            $table->string('image')->nullable();
+            $table->string('canonical_tags')->nullable();
             $table->string('title');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('description');
-            $table->longText('keywords');
 
             $table->string('locale')->index();
             $table->unique(['metadata_id', 'locale']);

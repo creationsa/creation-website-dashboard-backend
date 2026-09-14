@@ -18,8 +18,8 @@ class Role extends Model implements TranslatableContract
     {
     	return $this->hasMany(User::class);
     }
-        public function permissions()
-        {
-            return $this->belongsToMany(Permission::class)->withTimestamps();
-        }
+    public function permissions()
+    {
+    	return $this->belongsToMany(Permission::class)->withTimestamps();
+    }
 }

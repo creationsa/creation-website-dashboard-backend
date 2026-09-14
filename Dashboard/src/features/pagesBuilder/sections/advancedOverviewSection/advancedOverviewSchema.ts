@@ -3,8 +3,10 @@ import { createMediaSchema } from "@/shared/components/smartMediaField/smartMedi
 import {
   MAX_DESCRIPTION_LENGTH,
   MAX_STAT_LENGTH,
+  MAX_STAT_NUMBER_LENGTH,
   MIN_DESCRIPTION_LENGTH,
   MIN_STAT_LENGTH,
+  MIN_STAT_NUMBER_LENGTH,
 } from "@/shared/constants/constants";
 import { englishField, normalField } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
@@ -36,7 +38,11 @@ export const createAdvancedOverviewSchema = (t: TFunction) => {
       MAX_DESCRIPTION_LENGTH,
     ),
 
-    overlay_label_number: englishField(t, 1, 20).optional(),
+    overlay_label_number: englishField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ).optional(),
     overlay_label_title_en: englishField(
       t,
       MIN_STAT_LENGTH,
@@ -48,19 +54,55 @@ export const createAdvancedOverviewSchema = (t: TFunction) => {
       MAX_STAT_LENGTH,
     ).optional(),
 
-    stat1_number: englishField(t, 1, 20),
+    stat1_number_en: englishField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
+    stat1_number_ar: normalField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
     stat1_label_en: englishField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
     stat1_label_ar: normalField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
 
-    stat2_number: englishField(t, 1, 20),
+    stat2_number_en: englishField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
+    stat2_number_ar: normalField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
     stat2_label_en: englishField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
     stat2_label_ar: normalField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
 
-    stat3_number: englishField(t, 1, 20),
+    stat3_number_en: englishField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
+    stat3_number_ar: normalField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
     stat3_label_en: englishField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
     stat3_label_ar: normalField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
 
-    stat4_number: englishField(t, 1, 20),
+    stat4_number_en: englishField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
+    stat4_number_ar: normalField(
+      t,
+      MIN_STAT_NUMBER_LENGTH,
+      MAX_STAT_NUMBER_LENGTH,
+    ),
     stat4_label_en: englishField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
     stat4_label_ar: normalField(t, MIN_STAT_LENGTH, MAX_STAT_LENGTH),
 

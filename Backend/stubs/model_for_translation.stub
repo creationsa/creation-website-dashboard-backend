@@ -1,0 +1,36 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Observers\{{ modelName }}Observer;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+
+
+class {{ modelName }} extends Model implements TranslatableContract
+{
+    use  Translatable, HasFactory;
+    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
+    public $translatedAttributes = ['name'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        {{ modelName }}::observe({{ modelName }}Observer::class) ;
+    }
+
+    public function media()
+    {
+    	return $this->morphOne(AppMedia::class,'app_mediaable');
+    }
+
+     public function getImageAttribute()
+    {
+        $media = $this->media()->where('option', 'image')->first();
+        $image = $media ? asset('storage/images/{{ modelSmall }}s/' . $media->media) : null;
+        return $media ?  $image : asset('assets/images/default/default.jpeg');
+    }
+
+}

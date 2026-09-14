@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import SmartMedia from "@/components/ui/SmartMedia";
 import { ProjectCardProps } from "./types";
 import { useCursorTooltip } from "./useCursorTooltip";
 
@@ -17,15 +17,11 @@ const directions = [
 
 const MotionLink = motion(Link);
 
-export default function ProjectCard({
-  item,
-  project,
-  directionIndex,
-}: ProjectCardProps) {
+export default function ProjectCard({ item, directionIndex }: ProjectCardProps) {
   const randomDirection = directions[directionIndex % directions.length];
 
   const pathname = usePathname();
-  const fullHref = `${pathname}/${item.href.replace(/^\/?/, "")}`;
+  const fullHref = `${pathname}/${item.slug.replace(/^\/?/, "")}`;
 
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -61,11 +57,11 @@ export default function ProjectCard({
       className={`group relative aspect-square w-full cursor-pointer ${showTooltip ? "z-50" : "z-0"}`}
     >
       {/* IMAGE */}
-      <Image
-        src={item.img}
-        alt={project[item.toolkit_title]}
-        className="object-cover transition-all duration-700 sm:grayscale sm:group-hover:grayscale-0"
-        fill
+      <SmartMedia
+        media={item.image}
+        alt={item.title}
+        className="absolute inset-0 h-full w-full object-cover transition-all duration-700 sm:grayscale sm:group-hover:grayscale-0"
+        sizes="(min-width: 1280px) 620px, (min-width: 768px) 50vw, 100vw"
       />
 
       {/* TOOLTIP */}
@@ -77,14 +73,8 @@ export default function ProjectCard({
           exit={{ opacity: 0 }}
           className="dark:text-black-100 text-white-100 pointer-events-none absolute top-0 left-0 z-1000 flex flex-col font-semibold uppercase"
         >
-          {/* <span className="dark:bg-white-100 bg-black-800 w-fit px-4 py-2">
-            {Array.isArray(item.toolkit_header)
-              ? item.toolkit_header.map((key) => project[key]).join(" / ")
-              : project[item.toolkit_header]}
-          </span> */}
-
           <span className="bg-tiffany-600 dark:bg-tiffany-100 px-6 py-3 text-xl">
-            {project[item.toolkit_title]}
+            {item.title}
           </span>
         </motion.div>
       )}

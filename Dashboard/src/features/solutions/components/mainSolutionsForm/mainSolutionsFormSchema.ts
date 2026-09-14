@@ -2,6 +2,7 @@ import { createAccordionSchema } from "@/shared/components/dynamicAccordionField
 import { createDynamicFeaturedItemsSchema } from "@/shared/components/dynamicFeaturedItemsFields/dynamicFeaturedItemsFieldsSchema";
 import { createDynamicItemsSchema } from "@/shared/components/dynamicItemsFields/dynamicItemsFieldsSchema";
 import { createHeaderSchema } from "@/shared/components/headerFields/headerSchema";
+import { createPageTitleSettingsSectionSchema } from "@/shared/components/pageTitleSettingsSection/PageTitleSettingsSectionSchema";
 import { createMediaSchema } from "@/shared/components/smartMediaField/smartMediaFieldSchema";
 import {
   MAX_DESCRIPTION_LENGTH,
@@ -15,6 +16,7 @@ export const createSolutionsSchema = (t: TFunction) => {
   const headerSchema = createHeaderSchema(t);
   const itemsSchema = createDynamicFeaturedItemsSchema(t);
   const accordionSchema = createAccordionSchema(t);
+  const slugSchema = createPageTitleSettingsSectionSchema(t);
 
   const baseSolutionsSchema = z.object({
     core_desc_en: englishField(
@@ -23,6 +25,16 @@ export const createSolutionsSchema = (t: TFunction) => {
       MAX_DESCRIPTION_LENGTH,
     ),
     core_desc_ar: normalField(
+      t,
+      MIN_DESCRIPTION_LENGTH,
+      MAX_DESCRIPTION_LENGTH,
+    ),
+    core_sub_desc_en: englishField(
+      t,
+      MIN_DESCRIPTION_LENGTH,
+      MAX_DESCRIPTION_LENGTH,
+    ),
+    core_sub_desc_ar: normalField(
       t,
       MIN_DESCRIPTION_LENGTH,
       MAX_DESCRIPTION_LENGTH,
@@ -37,7 +49,8 @@ export const createSolutionsSchema = (t: TFunction) => {
   return headerSchema
     .merge(baseSolutionsSchema)
     .merge(itemsSchema)
-    .merge(accordionSchema);
+    .merge(accordionSchema)
+    .merge(slugSchema);
 };
 
 export type SolutionsFormValues = z.infer<

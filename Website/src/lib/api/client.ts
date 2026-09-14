@@ -6,6 +6,7 @@ export async function apiClient<T>(
   endpoint: string,
   locale: LanguageType,
   options?: RequestInit,
+  revalidate: number = 60,
 ): Promise<T> {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
@@ -15,7 +16,7 @@ export async function apiClient<T>(
       }),
       ...options?.headers,
     },
-    next: { revalidate: 60 },
+    next: { revalidate },
   });
 
   if (!res.ok) throw new Error(`API error: ${res.status}`);

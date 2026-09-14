@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { FieldArrayWithId, UseFormReturn } from "react-hook-form";
 import type { PageFormValues } from "./components/pagesBuilderForm/pageSchema";
 
@@ -13,6 +14,7 @@ export interface SectionProps extends SubSectionProps {
 
 export interface DeleteSectionButtonProps {
   onRemove: () => void;
+  disabled?: boolean;
 }
 
 export interface PageMetaFieldsProps {
@@ -22,6 +24,7 @@ export interface PageMetaFieldsProps {
 
 export interface SectionSelectorProps {
   onSelect: (type: string) => void;
+  disabled?: boolean;
 }
 
 export interface SectionsListProps {
@@ -29,21 +32,13 @@ export interface SectionsListProps {
   form: UseFormReturn<PageFormValues>;
   disabled?: boolean;
   onRemove: (index: number) => void;
+  onMove: (from: number, to: number) => void;
 }
 
 export interface PageFormProps {
   dataToEdit?: PageFormValues;
-}
-
-export interface BlockHeaderProps {
-  index: number;
-  onRemove: () => void;
-  isDeleteDisabled: boolean;
-}
-
-export interface AddNewBlockProps {
-  count: number;
-  onAdd: () => void;
+  id?: number;
+  metadataId?: number | null;
 }
 
 export interface SubHeadTitleProps {
@@ -53,6 +48,7 @@ export interface SubHeadTitleProps {
 export interface AllPagesProps {
   id: number;
   title: string;
+  is_home: boolean;
 }
 
 export interface PagesGridProps {
@@ -65,4 +61,17 @@ export interface PagesCardProps {
 
 export interface DeletePageProps {
   page: AllPagesProps;
+}
+
+export interface SectionAccordionProps {
+  title: string;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
+  onRemove: () => void;
+  disabled?: boolean;
+  children: ReactNode;
 }

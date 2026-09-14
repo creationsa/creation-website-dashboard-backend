@@ -3,6 +3,7 @@ import {
   BlogsIcon,
   ChartIcon,
   FooterIcon,
+  GlobalIcon,
   HeaderIcon,
   PageBuilderIcon,
   ProjectIcon,
@@ -18,11 +19,20 @@ export const links: SidebarLink[] = [
     title: "statistics.statistics",
   },
   {
+    href: routes.pagesBuilder,
+    icon: PageBuilderIcon,
+    title: "pages.title",
+  },
+  {
     href: routes.blogs,
     icon: BlogsIcon,
     title: "blogs.title",
     activePrefix: routes.blogs,
     submenuItems: [
+      {
+        href: `${routes.blogs}/${routes.blogsMainPage}`,
+        title: "blogs.blogs_main_page",
+      },
       {
         href: `${routes.blogs}/${routes.manageBlogs}`,
         title: "blogs.manage_blogs",
@@ -34,21 +44,15 @@ export const links: SidebarLink[] = [
     ],
   },
   {
-    href: routes.header,
-    icon: HeaderIcon,
-    title: "header.header",
-  },
-  {
-    href: routes.footer,
-    icon: FooterIcon,
-    title: "footer.footer",
-  },
-  {
     href: routes.projects,
     icon: ProjectIcon,
     title: "projects.title",
     activePrefix: routes.projects,
     submenuItems: [
+      {
+        href: `${routes.projects}/${routes.projectsMainPage}`,
+        title: "projects.projects_main_page",
+      },
       {
         href: `${routes.projects}/${routes.manageProjects}`,
         title: "projects.manage_projects",
@@ -66,6 +70,10 @@ export const links: SidebarLink[] = [
     activePrefix: routes.solutions,
     submenuItems: [
       {
+        href: `${routes.solutions}/${routes.solutionsMainPage}`,
+        title: "solutions.solutions_main_page",
+      },
+      {
         href: `${routes.solutions}/${routes.manageSolutions}`,
         title: "solutions.manage_solutions",
       },
@@ -75,10 +83,21 @@ export const links: SidebarLink[] = [
       },
     ],
   },
+
   {
-    href: routes.pagesBuilder,
-    icon: PageBuilderIcon,
-    title: "pages.title",
+    href: routes.header,
+    icon: HeaderIcon,
+    title: "header.header",
+  },
+  {
+    href: routes.footer,
+    icon: FooterIcon,
+    title: "footer.footer",
+  },
+  {
+    href: routes.clients,
+    icon: GlobalIcon,
+    title: "clients.clients",
   },
   {
     href: routes.settings,

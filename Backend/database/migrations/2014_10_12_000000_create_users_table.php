@@ -15,7 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
+            
+            $table->string('full_name')->nullable();
 
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -32,16 +33,19 @@ class CreateUsersTable extends Migration
 
             $table->string('reset_code')->nullable();
 
-            $table->string('user_type')->nullable(); // admin - supper_admin - client
+            $table->string('user_type')->nullable(); // admin - super_admin - client
             $table->enum('gender', ['male', 'female'])->nullable();
 
             $table->string('locale')->default('en')->nullable();
 
-            $table->unsignedBigInteger('points')->default(0);
-            // $table->unsignedBigInteger('subscription_plan_id');
-            // $table->foreign('subscription_plan_id')->references('id')->on('subscription_plans');
-
             $table->boolean('allow_notification')->default(true);
+
+            $table->string('promotional_code')->nullable(); // code for the user
+            $table->string('promotional_code_used')->nullable(); // code used from another user
+
+            // $table->double('promotional_balance', 15, 2)->default(0)->nullable();
+
+            $table->boolean('is_completed_data')->default(false);
 
             $table->rememberToken();
             $table->softDeletes();

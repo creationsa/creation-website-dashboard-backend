@@ -25,7 +25,7 @@ export default function Input({
         {...(register ? register : {})}
         id={name}
         className={`input h-15 rounded-xl placeholder-gray-900 dark:placeholder-gray-100 ${disabled ? "cursor-not-allowed bg-gray-100! text-gray-900! dark:bg-gray-900! dark:text-gray-100!" : Styles}`}
-        // dir="auto"
+        dir="auto"
         placeholder={
           placeholder ||
           t("general.placeholder", {

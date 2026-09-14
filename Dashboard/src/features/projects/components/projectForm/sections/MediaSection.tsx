@@ -2,6 +2,7 @@ import type { SectionProps } from "@/features/projects/types";
 import SmartMediaField from "@/shared/components/smartMediaField";
 import Box from "@/shared/ui/Box";
 import { useTranslation } from "react-i18next";
+import CoverToggle from "../CoverToggle";
 
 const MEDIA_KEYS = [
   "first",
@@ -33,6 +34,7 @@ export default function MediaSection({ form, disabled }: SectionProps) {
               label={t(`projects.${valueName}`)}
               disabled={disabled}
             />
+            <CoverToggle form={form} fieldName={valueName} disabled={disabled} />
           </div>
         );
       })}

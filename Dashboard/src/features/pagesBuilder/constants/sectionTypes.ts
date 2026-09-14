@@ -11,4 +11,8 @@ export const SECTION_TYPES = {
   CTA_BANNER: "cta_banner",
   HEADER: "header",
   LOGOS: "logos_section",
+  REVIEWS: "reviews_section",
+  BLOGS_TEASER: "blogs_teaser_section",
+  CONTACT: "contact_section",
+  TEXT_LIST: "text_list_section",
 } as const;

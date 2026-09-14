@@ -1,8 +1,6 @@
 import DynamicItemsFields from "@/shared/components/dynamicItemsFields";
-import Box from "@/shared/ui/Box";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import type { SectionProps } from "../../types";
 import tickerWithBorder from "./assets/ticker-with-border.png";
 import tickerWithoutBorder from "./assets/ticker-without-border.png";
@@ -12,7 +10,6 @@ export default function NewsTickerSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
   const { watch } = form;
@@ -22,10 +19,7 @@ export default function NewsTickerSection({
   const activePreviewImage = hasBorder ? tickerWithBorder : tickerWithoutBorder;
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.news_ticker.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <TickerLayoutSettings form={form} index={index} disabled={disabled} />
 
       <SectionPreview
@@ -40,8 +34,6 @@ export default function NewsTickerSection({
           name={`sections.${index}.content.items`}
         />
       </div>
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

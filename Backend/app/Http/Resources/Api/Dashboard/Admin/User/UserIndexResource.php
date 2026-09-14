@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\Dashboard\Admin\User;
 
-use App\Http\Resources\Api\Dashboard\Admin\SubscriptionPlan\SubscriptionPlanResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserIndexResource extends JsonResource
@@ -15,7 +14,6 @@ class UserIndexResource extends JsonResource
      */
     public function toArray($request)
     {
-        $plan = $this->subscriptionPlanUsers()->where(['is_active' => true])->latest('id')->first();
         return [
             'id'                   => (int) $this->id,
             'full_name'            => $this->full_name,
@@ -24,12 +22,11 @@ class UserIndexResource extends JsonResource
             'phone'                => $this->phone,
             'phone_code'           => $this->phone_code,
             'phone_complete_form'  => $this->phone_code . $this->phone,
-            'is_active'            => (bool) $this->is_active,
             'is_admin_active_user' => (bool) $this->is_admin_active_user,
             'is_ban'               => (bool) $this->is_ban,
-            'points'               => $this->points,
-            'subscription_plan'    => $plan ? SubscriptionPlanResource::make($plan->subscriptionPlan) : null,
-
+            'user_type'            => (string) $this->user_type,
+            'created_at'           => $this->created_at->format('Y-m-d H:i  '),
+            'balance'              => (double) $this->wallet,
         ];
     }
 }

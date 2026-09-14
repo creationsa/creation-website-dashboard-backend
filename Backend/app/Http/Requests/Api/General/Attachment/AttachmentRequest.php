@@ -33,17 +33,11 @@ class AttachmentRequest extends ApiMasterRequest
         $res = implode(",",$res) ;
 
         if ($this->attachment_type == 'image') {
-            if($this->model == 'stickers' || $this->model == 'choose_us' || $this->model == 'logos'){
-                $file_validation = 'required|image|mimes:png,jpg,jpeg,gif,webp,svg|max:2048';
-            }else{
-                $file_validation = 'required|image|mimes:png,jpg,jpeg,gif,webp';
-            }
-        } elseif (in_array($this->attachment_type, ['file', 'audio', 'video'])) {
-            if($this->model == 'fonts' || $this->model == 'page_styles'){
-                $file_validation = 'required|file|max:20480';
-            }else{
-                $file_validation = 'required|file|mimes:docx,doc,docs,rar,zip,mp3,mp4,wma,aac,wav,flac,m4a,pdf,ttf,otf|max:20480';
-            }
+            $file_validation = 'required|image|mimes:png,jpg,jpeg,svg';
+        } elseif ($this->attachment_type == 'video') {
+            $file_validation = 'required|file|mimes:mp4,mov,webm,avi,quicktime|max:51200';
+        } elseif (in_array($this->attachment_type, ['file', 'audio'])) {
+            $file_validation = 'required|file|mimes:docx,doc,docs,rar,zip,mp3,mp4,wma,aac,wav,flac,m4a,pdf|max:20480';
         } else {
             $file_validation = 'required';
         }

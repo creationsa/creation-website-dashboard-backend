@@ -1,15 +1,14 @@
 import { TITLE_SECTION_INITIAL_STATE } from "@/shared/components/titleSection/getTitleSectionDefaultValues";
 import type { SingleBlog } from "../../types";
 import type { BlogFormValues } from "./blogSchema";
-import { SEO_SECTION_INITIAL_STATE } from "@/shared/components/seoSection/getSeoSectionDefaultValues";
-import { SLUG_SECTION_INITIAL_STATE } from "@/shared/components/slugSection/getSlugSectionDefaultValues";
 
 const BLOG_INITIAL_STATE = {
-  show_in_home: false,
+  slug_en: "",
 
   ...TITLE_SECTION_INITIAL_STATE,
-  ...SLUG_SECTION_INITIAL_STATE,
-  ...SEO_SECTION_INITIAL_STATE,
+
+  seo_desc_en: "",
+  seo_desc_ar: "",
 
   base_image: "",
   base_image_alt_en: "",
@@ -45,8 +44,6 @@ export default function getBlogDefaultValues(
 ): BlogFormValues {
   if (!blogToEdit) return BLOG_INITIAL_STATE;
   return {
-    show_in_home: blogToEdit?.show_in_home ?? false,
-
     title_en: blogToEdit?.en?.title || "",
     title_ar: blogToEdit?.ar?.title || "",
 

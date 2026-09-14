@@ -26,7 +26,7 @@ class SendCouponRequest extends ApiMasterRequest
     public function rules()
     {
         Coupon::where('code', $this->coupon_code)->available()->firstOr(function () {
-            throw new HttpResponseException(response()->json(['status' => 'fail', 'data' => null, 'message' => trans('dashboard/admin.messages.cant_send_this_coupon')], 422));
+            throw new HttpResponseException(response()->json(['status' => 'fail', 'data' => null, 'message' => trans('This coupon cannot be used')], 422));
         });
 
         return [

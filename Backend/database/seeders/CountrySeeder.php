@@ -17,19 +17,18 @@ class CountrySeeder extends Seeder
     {
         Country::create([
             'ar' => [
-                "name"        => "المملكة العربية السعودية",
+                "name"        => "السعودية",
                 "short_name"  => "السعودية",
                 "nationality" => "سعودي",
             ],
             'en' => [
-                "name"        => "Kingdom of Saudi Arabia",
+                "name"        => "Saudi Arabia",
                 "short_name"  => "Saudi Arabia",
                 "nationality" => "Saudi",
             ],
             'phone_code'         => '966',
-            'show_phone_code'    => '+966',
             'continent'          => 'asia',
-            'phone_number_limit' => 10,
+            'phone_number_limit' => 8,
         ]);
     }
 }

@@ -15,6 +15,9 @@ const Statistics = lazy(() => import("@/features/statistics"));
 
 // BLOGS
 const BlogsPage = lazy(() => import("@/features/blogs/pages/BlogsPage"));
+const BlogsMainPage = lazy(
+  () => import("@/features/blogs/pages/BlogsMainPage"),
+);
 const CreateBlogPage = lazy(
   () => import("@/features/blogs/pages/CreateBlogPage"),
 );
@@ -34,7 +37,7 @@ const UpdatePageBuilder = lazy(
   () => import("@/features/pagesBuilder/pages/UpdatePageBuilder"),
 );
 
-const Footer = lazy(() => import("@/features/footer"));
+const Footer = lazy(() => import("@/features/footer/pages/Footer"));
 
 // PROJECTS
 const ProjectsPage = lazy(
@@ -42,6 +45,9 @@ const ProjectsPage = lazy(
 );
 const ProjectsSeoPage = lazy(
   () => import("@/features/projects/pages/AllProjectsSeoPage"),
+);
+const ProjectsMainPage = lazy(
+  () => import("@/features/projects/pages/ProjectsMainPage"),
 );
 const CreateProjectPage = lazy(
   () => import("@/features/projects/pages/CreateProjectPage"),
@@ -54,6 +60,9 @@ const UpdateProjectPage = lazy(
 const SolutionsPage = lazy(
   () => import("@/features/solutions/pages/SolutionsPage"),
 );
+const SolutionsMainPage = lazy(
+  () => import("@/features/solutions/pages/SolutionsMainPage"),
+);
 const SolutionsSeoPage = lazy(
   () => import("@/features/solutions/pages/AllSolutionsSeoPage"),
 );
@@ -64,8 +73,9 @@ const UpdateSolutionPage = lazy(
   () => import("@/features/solutions/pages/UpdateSolutionPage"),
 );
 
-const Header = lazy(() => import("@/features/header"));
-const Settings = lazy(() => import("@/features/settings"));
+const Header = lazy(() => import("@/features/header/pages/Header"));
+const Clients = lazy(() => import("@/features/clients/pages/Clients"));
+const Settings = lazy(() => import("@/features/settings/pages/Settings"));
 
 function withSuspense(element: ReactNode) {
   return <Suspense fallback={<Spinner />}>{element}</Suspense>;
@@ -107,6 +117,10 @@ export default function Navigation() {
             element={withSuspense(<BlogsPage />)}
           />
           <Route
+            path={routes.blogsMainPage}
+            element={withSuspense(<BlogsMainPage />)}
+          />
+          <Route
             path={routes.blogsSeo}
             element={withSuspense(<BlogSeoPage />)}
           />
@@ -144,6 +158,10 @@ export default function Navigation() {
             element={withSuspense(<ProjectsPage />)}
           />
           <Route
+            path={routes.projectsMainPage}
+            element={withSuspense(<ProjectsMainPage />)}
+          />
+          <Route
             path={routes.projectsSeo}
             element={withSuspense(<ProjectsSeoPage />)}
           />
@@ -167,6 +185,10 @@ export default function Navigation() {
             element={withSuspense(<SolutionsPage />)}
           />
           <Route
+            path={routes.solutionsMainPage}
+            element={withSuspense(<SolutionsMainPage />)}
+          />
+          <Route
             path={routes.solutionsSeo}
             element={withSuspense(<SolutionsSeoPage />)}
           />
@@ -181,6 +203,7 @@ export default function Navigation() {
         </Route>
 
         <Route path={routes.header} element={withSuspense(<Header />)} />
+        <Route path={routes.clients} element={withSuspense(<Clients />)} />
         <Route path={routes.settings} element={withSuspense(<Settings />)} />
         <Route path={routes.profile} element={withSuspense(<ProfilePage />)} />
       </Route>

@@ -1,4 +1,3 @@
-import { useUploadAttachment } from "@/shared/hooks/useUploadAttachment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -12,7 +11,6 @@ import {
   createProjectsSchema,
   type ProjectsFormValues,
 } from "./mainProjectsFormSchema";
-import { uploadIfFile } from "@/shared/utils/uploadIfFile";
 
 export default function useProjectsForm(
   projectMainDataToEdit?: ProjectsMainDataProps,
@@ -20,8 +18,6 @@ export default function useProjectsForm(
   const isEditingSession = Boolean(projectMainDataToEdit);
 
   const { t } = useTranslation();
-  const { mutateAsync: uploadAttachment, isPending: uploadLoading } =
-    useUploadAttachment();
   const { addProjectsMainData, addProjectsLoading } =
     useCreateProjectsMainData();
   const { updateProjectData, updateProjectsLoading } =
@@ -32,39 +28,18 @@ export default function useProjectsForm(
   const form = useForm<ProjectsFormValues>({
     defaultValues: getProjectsDefaultValues(projectMainDataToEdit),
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const handleAddEditProject = async (data: ProjectsFormValues) => {
-    const uploadedLogos = await Promise.all(
-      (data.logos_section?.logos || []).map(async (logoItem) => {
-        const uploadedImageUrl = await uploadIfFile(
-          logoItem.logo_image,
-          uploadAttachment,
-          "pages",
-        );
-
-        return {
-          ...logoItem,
-          logo_image: uploadedImageUrl,
-        };
-      }),
-    );
-
-    const formattedData: ProjectsFormValues = {
-      ...data,
-      logos_section: {
-        ...data.logos_section,
-        logos: uploadedLogos,
-      },
-    };
-
-    const formData = buildProjectsMainFormData(formattedData, {
+    const formData = buildProjectsMainFormData(data, {
       isEdit: isEditingSession,
     });
 
     if (isEditingSession) {
-      updateProjectData(formData);
+      updateProjectData(formData, {
+        onSuccess: () => form.reset(data),
+      });
     } else {
       addProjectsMainData(formData);
     }
@@ -72,9 +47,7 @@ export default function useProjectsForm(
 
   return {
     form,
-    isLoading: Boolean(
-      addProjectsLoading || updateProjectsLoading || uploadLoading,
-    ),
+    isLoading: Boolean(addProjectsLoading || updateProjectsLoading),
     isEditingSession,
     handleAddEditProject,
   };

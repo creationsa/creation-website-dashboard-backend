@@ -1,22 +1,13 @@
-import AddNewBlock from "@/features/pagesBuilder/components/pagesBuilderForm/AddNewBlock";
+import AddNewBlock from "@/shared/components/blockControls/AddNewBlock";
 import {
   useFieldArray,
   type ArrayPath,
   type Control,
   type FieldValues,
-  type UseFormReturn,
 } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import AccordionItemFields from "./AccordionItemFields";
-
-export interface DynamicAccordionFieldsProps<
-  TFieldValues extends FieldValues,
-  TName extends ArrayPath<TFieldValues>,
-> {
-  form: UseFormReturn<TFieldValues>;
-  name: TName;
-  itemInitialState: Record<string, unknown>;
-  disabled?: boolean;
-}
+import type { DynamicAccordionFieldsProps } from "./types";
 
 export default function DynamicAccordionFields<
   TFieldValues extends FieldValues,
@@ -26,7 +17,11 @@ export default function DynamicAccordionFields<
   name,
   itemInitialState,
   disabled,
+  managementLabel,
+  addLabel,
+  rowLabelKey,
 }: DynamicAccordionFieldsProps<TFieldValues, TName>) {
+  const { t } = useTranslation();
   const { control } = form;
 
   const { fields, append, remove } = useFieldArray({
@@ -39,6 +34,8 @@ export default function DynamicAccordionFields<
       <AddNewBlock
         count={fields.length}
         onAdd={() => append(itemInitialState as never)}
+        managementLabel={managementLabel}
+        addLabel={addLabel}
       />
 
       <div className="flex flex-col gap-4">
@@ -47,10 +44,10 @@ export default function DynamicAccordionFields<
             key={field.id}
             form={form}
             basePath={`${name}.${itemIndex}`}
-            itemIndex={itemIndex}
             isDeleteDisabled={fields.length === 1}
             onRemove={() => remove(itemIndex)}
             disabled={disabled}
+            rowLabel={t(rowLabelKey, { index: itemIndex + 1 })}
           />
         ))}
       </div>

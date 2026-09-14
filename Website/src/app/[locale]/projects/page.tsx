@@ -1,10 +1,15 @@
-import Network from "@/components/common/network";
+import Clients from "@/components/common/clients";
+import { getClients } from "@/components/common/clients/getClients";
 import PageBanner from "@/components/common/pageBanner";
 import AllProjects from "@/components/pages/project/AllProjects";
+import { getProjects } from "@/components/pages/project/getProjects";
+import { getProjectsMainData } from "@/components/pages/project/getProjectsMainData";
 import { LanguageType } from "@/i18n.config";
+import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 import getTrans from "@/lib/translation";
 import { Metadata } from "next";
+import { parseKeywords } from "../../../../utils/parseKeywords";
 
 export async function generateMetadata({
   params,
@@ -13,124 +18,32 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
-  const [common, project] = await Promise.all([
-    getTrans(locale, "common"),
-    getTrans(locale, "project"),
+  const [{ site_name }, seoData] = await Promise.all([
+    getSeoForPage("home", locale),
+    getSeoForPage("projects", locale),
   ]);
 
-  const title = `${common.creation} | ${common.portfolio}`;
+  const {
+    title: seoTitle,
+    description,
+    image,
+    image_alt,
+    image_type,
+  } = seoData;
 
-  const description = project.seo_description;
+  const title = `${site_name} | ${seoTitle}`;
+
+  const keywords = seoData.keywords
+    ? parseKeywords(seoData.keywords)
+    : undefined;
 
   const currentUrl = `https://www.creation.sa/${locale}/projects`;
-  const imageUrl = `https://www.creation.sa/images/home/creation-seo-${locale}-cover.jpg`;
 
   return {
     title,
     description,
 
-    keywords: [
-      "مشاريع إبداعية",
-      "مشاريع براندنج",
-      "معرض الأعمال",
-      "بورتفوليو إبداعي",
-      "مشاريع رقمية",
-      "حملات تسويقية",
-      "مشاريع الهوية البصرية",
-      "مشاريع المواقع الإلكترونية",
-      "مشاريع UI/UX",
-      "حملات إعلانية",
-      "مشاريع الإنتاج",
-      "دراسات حالة إبداعية",
-      "الأعمال المميزة",
-      "بورتفوليو الوكالة",
-      "مشاريع براندنج استراتيجية",
-      "مشاريع التجارب الرقمية",
-      "الإنتاج التجاري",
-      "عرض الهويات البصرية",
-      "حلول إبداعية",
-      "مشاريع تطوير العلامات التجارية",
-      "أفضل مشاريع البراندنج",
-      "معرض أعمال وكالة إبداعية",
-      "دراسات حالة التسويق الرقمي",
-      "معرض تصميم المواقع",
-      "مشاريع وكالة إعلانات",
-      "بورتفوليو حملات السوشيال ميديا",
-      "أعمال الاستوديو الإبداعي",
-      "هندسة الثقافة",
-      "أعمال إبداعية استراتيجية",
-      "علامات تجارية صُممت للريادة",
-      "تجارب علامات تجارية جاهزة للمستقبل",
-      "عالمي بالتصميم",
-      "أنظمة وتجارب إبداعية",
-      "إبداع قائم على الدقة",
-      "وكالة إبداعية في السعودية",
-      "وكالة إعلانات في الرياض",
-      "وكالة إبداعية في مصر",
-      "تصميم الهوية البصرية",
-      "تصميم الشعارات والهوية",
-      "أعمال الحملات الرقمية",
-      "دراسات الحملات الإعلانية",
-      "حملات السوشيال ميديا",
-      "تطوير العلامات التجارية",
-      "بناء وتموضع العلامة التجارية",
-      "أعمال الإنتاج",
-      "الحملات الرقمية",
-      "العلامات التجارية والإعلان",
-      "التسويق الرقمي والخدمات",
-      "تصميم المواقع وتطوير التطبيقات",
-      "الإنتاج والخدمات المتكاملة",
-      "صناعة محتوى",
-      "براندات",
-      "شركات ناشئة",
-      "Marketing Automation Agency",
-      "Conversion Focused Marketing",
-      "Growth Marketing Solutions",
-      "Paid Media Strategy",
-      "Digital Strategy Agency",
-      "Performance Marketing Agency",
-      "Google Ads Agency Riyadh",
-      "Premium Brand Strategy",
-      "Cultural Branding Agency",
-      "Industry Benchmark Branding",
-      "Strategic Creative Consultancy",
-      "Cultural Branding",
-      "Website Design Company for Luxury Brands",
-      "Strategic Digital Marketing for Businesses",
-      "Logo & Identity Design",
-      "Creative Brand Development",
-      "Brand Positioning",
-      "Production Portfolio",
-      "Branding Case Studies",
-      "Marketing Campaign Projects",
-      "Creative Work Showcase",
-      "Social Media Campaigns",
-      "UI UX Projects",
-      "Digital Campaign",
-      "Performance Marketing",
-      "Branding Projects",
-      "Portfolio",
-      "Featured Work",
-      "Agency Portfolio",
-      "Creative Solutions",
-      "Strategic Creative Work",
-      "Brands Built to Lead",
-      "Global by Design",
-      "Precision-Led Creativity",
-      "Trusted by Industry Pioneers",
-      "Studio Work",
-      "Executions",
-      "Creations",
-      "Experiences",
-      "Collaborations",
-      "Digital Experiences",
-      "Brand Authority",
-      "Branding and Advertising",
-      "Digital Marketing and Services",
-      "Websites and Platforms",
-      "Production and Services",
-      "Content Creation",
-    ],
+    ...(keywords?.length && { keywords }),
 
     alternates: {
       canonical: currentUrl,
@@ -147,11 +60,11 @@ export async function generateMetadata({
       description,
       images: [
         {
-          url: imageUrl,
+          url: image,
           width: 1200,
           height: 630,
-          alt: common.creation,
-          type: "image/jpeg",
+          alt: image_alt,
+          type: image_type || "image/jpeg",
         },
       ],
     },
@@ -160,7 +73,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [image],
       site: currentUrl,
     },
   };
@@ -169,10 +82,12 @@ export async function generateMetadata({
 export default async function Project() {
   const locale = await getCurrentLocale();
 
-  const [{ home }, project, network] = await Promise.all([
+  const [{ home }, project, clients, projects, mainData] = await Promise.all([
     getTrans(locale, "common"),
     getTrans(locale, "project"),
-    getTrans(locale, "network"),
+    getClients(locale),
+    getProjects(locale),
+    getProjectsMainData(locale),
   ]);
 
   return (
@@ -183,9 +98,9 @@ export default async function Project() {
         titleCut={project.title_cut}
       />
 
-      <AllProjects project={project} locale={locale} />
+      <AllProjects mainData={mainData} locale={locale} projects={projects} />
 
-      <Network network={network} />
+      <Clients data={clients} />
     </>
   );
 }

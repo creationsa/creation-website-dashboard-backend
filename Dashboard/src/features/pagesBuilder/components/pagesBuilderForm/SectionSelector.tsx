@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next";
 import { SECTION_TYPES } from "../../constants/sectionTypes";
 import type { SectionSelectorProps } from "../../types";
 
-export default function SectionSelector({ onSelect }: SectionSelectorProps) {
+export default function SectionSelector({
+  onSelect,
+  disabled,
+}: SectionSelectorProps) {
   const { t } = useTranslation();
   const [value, setValue] = useState<string | number | undefined>();
 
@@ -58,6 +61,22 @@ export default function SectionSelector({ onSelect }: SectionSelectorProps) {
         label: t("pages.logos.section_title"),
         value: SECTION_TYPES.LOGOS,
       },
+      {
+        label: t("pages.reviews.section_title"),
+        value: SECTION_TYPES.REVIEWS,
+      },
+      {
+        label: t("pages.contact_section.section_title"),
+        value: SECTION_TYPES.CONTACT,
+      },
+      {
+        label: t("pages.text_list_section.section_title"),
+        value: SECTION_TYPES.TEXT_LIST,
+      },
+      {
+        label: t("pages.blogs_teaser.section_title"),
+        value: SECTION_TYPES.BLOGS_TEASER,
+      },
     ],
     [t],
   );
@@ -76,6 +95,7 @@ export default function SectionSelector({ onSelect }: SectionSelectorProps) {
       options={options}
       onChange={handleChange}
       placeholder={t("pages.choose_section")}
+      disabled={disabled}
     />
   );
 }

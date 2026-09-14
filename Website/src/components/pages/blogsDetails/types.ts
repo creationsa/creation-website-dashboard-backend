@@ -3,13 +3,8 @@ import {
   BlogItem,
   RelatedBlog,
 } from "@/components/common/blogsCategories/types";
-import {
-  BlogsTranslations,
-  ProjectDetailsContent,
-  ProjectDetailsTranslations,
-} from "@/dictionaries/types";
+import { BlogsTranslations } from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-import { StaticImageData } from "next/image";
 
 export interface BlogDetailsProps {
   params: Promise<{
@@ -36,56 +31,6 @@ export interface NextTwoBlogsProps {
   relatedBlogs: RelatedBlog[];
 }
 
-export interface MainSectionProps {
-  certainImage: StaticImageData;
-}
-
-export interface ImportantContentProps {
-  translations: ProjectDetailsTranslations;
-  project: ProjectDetailsContent;
-}
-
-export interface AboutTheProjectProps {
-  locale: LanguageType;
-  project: ProjectDetailsContent;
-  title: string;
-  certainImage: StaticImageData;
-}
-
-export interface ResultsProps {
-  projectData: ProjectDetailsContent;
-  translations: ProjectDetailsTranslations;
-  locale: LanguageType;
-}
-
-export interface ImagesProps {
-  images: StaticImageData[];
-}
-
-export interface TwoGridProps {
-  images: StaticImageData[];
-  startIndex?: number;
-}
-
-export interface ImageItemProps {
-  src: StaticImageData;
-  full?: boolean;
-  index?: number;
-}
-
-export interface ImgProps {
-  src: StaticImageData;
-  alt: string;
-}
-
-export interface ProjectNavigationProps {
-  slug: string;
-  locale: LanguageType;
-  project_details: ProjectDetailsTranslations;
-  previousLabel: string;
-  nextLabel: string;
-}
-
 export interface SingleBlogBySlugProps {
   id: number;
   title: string;
@@ -107,4 +52,5 @@ export interface SingleBlogBySlugProps {
 export interface BlogSlug {
   slug_ar: string;
   slug_en: string;
+  updated_at: string;
 }

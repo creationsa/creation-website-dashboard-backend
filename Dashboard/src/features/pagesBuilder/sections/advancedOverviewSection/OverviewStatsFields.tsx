@@ -34,10 +34,25 @@ export default function OverviewStatsFields({
             className="flex flex-col gap-3 rounded-xl border p-4 lg:gap-5"
           >
             <Input
-              name={`stat${num}_number`}
-              label={t(`pages.advanced_overview_section.stat_number`, { num })}
-              error={sectionErrors?.[`stat${num}_number`]?.message}
-              register={register(`sections.${index}.content.stat${num}_number`)}
+              name={`stat${num}_number_en`}
+              label={t(`pages.advanced_overview_section.stat_number_en`, {
+                num,
+              })}
+              error={sectionErrors?.[`stat${num}_number_en`]?.message}
+              register={register(
+                `sections.${index}.content.stat${num}_number_en`,
+              )}
+              disabled={disabled}
+            />
+            <Input
+              name={`stat${num}_number_ar`}
+              label={t(`pages.advanced_overview_section.stat_number_ar`, {
+                num,
+              })}
+              error={sectionErrors?.[`stat${num}_number_ar`]?.message}
+              register={register(
+                `sections.${index}.content.stat${num}_number_ar`,
+              )}
               disabled={disabled}
             />
             <Input

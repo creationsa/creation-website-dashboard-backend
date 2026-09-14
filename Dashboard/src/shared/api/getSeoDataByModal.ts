@@ -1,4 +1,4 @@
-import type { Metadata } from "../types/seo";
+import type { Metadata } from "../components/seoForm/types";
 import instance from "./axios";
 import { endpoints } from "./endpoints";
 

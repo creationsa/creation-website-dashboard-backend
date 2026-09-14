@@ -12,7 +12,7 @@ export default function TranslateButton() {
   return (
     <button
       onClick={changeLanguage}
-      className="hover:text-tiffany-600 dark:hover:text-tiffany-100 flex items-center gap-0.5 text-sm font-semibold sm:text-base"
+      className="hover:text-tiffany-600 dark:hover:text-tiffany-100 dark:text-white-100 text-black-100 flex items-center gap-0.5 text-sm font-semibold sm:text-base"
     >
       {i18n.language === "en" ? "العربية" : "English"}
     </button>

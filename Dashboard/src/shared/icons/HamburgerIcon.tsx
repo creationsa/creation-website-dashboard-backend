@@ -1,9 +1,7 @@
-import { type SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type HamburgerIconProps = SVGProps<SVGSVGElement>;
-
-export default function HamburgerIcon(props: HamburgerIconProps) {
+export default function HamburgerIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 1024 1024">
       <path

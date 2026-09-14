@@ -25,6 +25,6 @@ class ProfileController extends Controller
             $user->profile()->updateOrCreate(['user_id' => $user->id], ['allow_session_from' => now()]);
         }
 
-        return (new UserResource($user->fresh()))->additional(['status' => 'success', 'message' =>  trans('dashboard/admin.auth.success_update')]);
+        return (new UserResource($user->fresh()))->additional(['status' => 'success', 'message' =>  trans('Updated successfully')]);
     }
 }

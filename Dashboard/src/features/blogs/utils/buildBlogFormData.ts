@@ -14,8 +14,6 @@ export function buildBlogFormData(
 
   const formData = new FormData();
 
-  formData.append("show_in_home", values.show_in_home ? "1" : "0");
-
   formData.append("ar[title]", values.title_ar);
   formData.append("en[title]", values.title_en);
 

@@ -1,31 +1,27 @@
-import { CommonTranslations, FooterTranslations } from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-
-export type FooterData = FooterTranslations;
+import { FooterData as FooterApiData, FooterBadge } from "@/lib/api/getFooter";
+import { HeaderMenuItem } from "@/lib/api/getHeader";
 
 export interface FooterStatementProps {
-  footer: FooterData;
+  data?: FooterApiData | null;
 }
 
 export interface CopyRightProps {
-  footer: FooterData;
-}
-
-export interface FooterTitleProps {
-  title: string;
+  locale: LanguageType;
+  data?: FooterApiData | null;
 }
 
 export interface ProjectMenusProps {
   mainFooterTitle: string;
-  trans: CommonTranslations;
   locale: LanguageType;
+  menuItems?: HeaderMenuItem[];
 }
 
 export interface SiteDescriptionProps {
-  footer: FooterData;
   locale: LanguageType;
+  data?: FooterApiData | null;
 }
 
 export interface TrustedPartnersProps {
-  footer: FooterData;
+  badges?: FooterBadge[];
 }

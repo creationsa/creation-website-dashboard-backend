@@ -17,8 +17,6 @@ export function buildProjectFormData(
   formData.append("title_en", values.title_en || "");
   formData.append("title_ar", values.title_ar || "");
   formData.append("slug_en", values.slug_en || "");
-  formData.append("seo_desc_en", values.seo_desc_en || "");
-  formData.append("seo_desc_ar", values.seo_desc_ar || "");
 
   formData.append("first_title_en", values.first_title_en || "");
   formData.append("first_title_ar", values.first_title_ar || "");
@@ -61,6 +59,14 @@ export function buildProjectFormData(
   appendMediaObject(formData, "sixth_media", values.sixth_media);
   appendMediaObject(formData, "seventh_media", values.seventh_media);
   appendMediaObject(formData, "eighth_media", values.eighth_media);
+
+  // 4. Display toggles
+  if (values.cover_media_field) {
+    formData.append("cover_media_field", values.cover_media_field);
+  }
+  if (values.feature_media_field) {
+    formData.append("feature_media_field", values.feature_media_field);
+  }
 
   values.ticker_items?.forEach((item, index) => {
     if (item.text_en)

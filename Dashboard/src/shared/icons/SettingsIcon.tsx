@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type SettingsIconProps = SVGProps<SVGSVGElement>;
-
-export default function SettingsIcon(props: SettingsIconProps) {
+export default function SettingsIcon(props: IconProps) {
   return (
     <Icon {...props} fill="none">
       <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" />

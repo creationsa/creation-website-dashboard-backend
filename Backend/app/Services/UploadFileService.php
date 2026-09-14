@@ -2,13 +2,11 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Str;
-use enshrined\svgSanitize\Sanitizer;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File as File;
-use Intervention\Image\Facades\Image as Image;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
-class  UploadFileService
+class UploadFileService
 {
     public static function uploadImg($files, $url = 'images', $key = 'image', $width = null, $height = null)
     {
@@ -19,35 +17,19 @@ class  UploadFileService
         } elseif (File::isDirectory(storage_path('app/public/images/' . $url . "/"))) {
             $dist = storage_path('app/public/images/' . $url . "/");
         }
+        // SVGs are vector images: getimagesize()/Intervention can't process
+        // them like a raster image, so store them as-is instead of resizing.
+        if (!is_array($files) && strtolower($files->getClientOriginalExtension()) === 'svg') {
+            $fileName = $files->hashName();
+            $files->move($dist, $fileName);
+            return $fileName;
+        }
+
         $image = "";
         if (!is_array($files)) {
-            if($files->getClientOriginalExtension() === 'svg'){
-                $fileContent = file_get_contents($files->getPathname());
-                // dd($fileContent);
-                $width = $height = null;
-
-                if (preg_match('/<svg[^>]* width="(\d+)(px)?"[^>]*>/i', $fileContent, $widthMatch)) {
-                    $width = $widthMatch[1];
-                }
-
-                if (preg_match('/<svg[^>]* height="(\d+)(px)?"[^>]*>/i', $fileContent, $heightMatch)) {
-                    $height = $heightMatch[1];
-                }
-
-                // Alternative way: Look for viewBox attribute if width and height aren't specified directly
-                if (!$width || !$height) {
-                    if (preg_match('/viewBox="(\d+\s+\d+\s+(\d+)\s+(\d+))"/i', $fileContent, $viewBoxMatch)) {
-                        $width = $viewBoxMatch[2];
-                        $height = $viewBoxMatch[3];
-                    }
-                }
-                $dim = [];
-                $dim['mime'] = '';
-            }else{
-                $dim = getimagesize($files);
-                $width = $width ?? $dim[0];
-                $height = $height ?? $dim[1];
-            }
+            $dim = getimagesize($files);
+            $width = $width ?? $dim[0];
+            $height = $height ?? $dim[1];
         }
 
         if (gettype($files) == 'array') {
@@ -69,14 +51,10 @@ class  UploadFileService
         } elseif ($dim && $dim['mime'] == "image/gif") {
             $image = self::uploadGIFImg($files, $dist);
         } else {
-            if($files->getClientOriginalExtension() === 'svg'){
-                $image = self::sanitizeAndStoreSvg($fileContent, $files, $url);
-            }else{
-                Image::make($files)->resize($width, $height, function ($cons) {
-                    $cons->aspectRatio();
-                })->save($dist . $files->hashName());
-                $image = $files->hashName();
-            }
+            Image::make($files)->resize($width, $height, function ($cons) {
+                $cons->aspectRatio();
+            })->save($dist . $files->hashName());
+            $image = $files->hashName();
         }
         return $image;
     }
@@ -120,18 +98,5 @@ class  UploadFileService
         }
 
         return $file;
-    }
-
-    public static function sanitizeAndStoreSvg($svgContent, $fileName, $url)
-    {
-        $sanitizer = new Sanitizer();
-        $cleanSvg = $sanitizer->sanitize($svgContent);
-        
-        $new_name = $fileName->hashName();
-        
-        $new_dist = 'images/'. $url .'/'. $new_name;
-        Storage::disk('public')->put($new_dist, $cleanSvg);
-
-        return $new_name; // Return the public URL
     }
 }

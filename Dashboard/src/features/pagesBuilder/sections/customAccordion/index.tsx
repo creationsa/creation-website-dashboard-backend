@@ -1,14 +1,14 @@
 import DynamicAccordionFields from "@/shared/components/dynamicAccordionFields";
 import { ACCORDION_ITEM_INITIAL_STATE } from "@/shared/components/dynamicAccordionFields/getAccordionDefaultValues";
 import SmartMediaField from "@/shared/components/smartMediaField";
-import Box from "@/shared/ui/Box";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import type { SectionProps } from "../../types";
 import Header from "../header";
+import AccordionSideLabel from "./AccordionSideLabel";
 import AccordionWithButton from "./AccordionWithButton";
 import withButton from "./assets/with-button.png";
+import withoutButton from "./assets/without-button.png";
 import withMedia from "./assets/with-media.png";
 import {
   CUSTOM_ACCORDION_TYPES,
@@ -18,6 +18,7 @@ import LayoutType from "./LayoutType";
 
 const PREVIEW_IMAGES: Record<CustomAccordionType, string> = {
   [CUSTOM_ACCORDION_TYPES.WITH_BUTTON]: withButton,
+  [CUSTOM_ACCORDION_TYPES.HEADING_ONLY]: withoutButton,
   [CUSTOM_ACCORDION_TYPES.WITH_MEDIA]: withMedia,
 };
 
@@ -25,7 +26,6 @@ export default function CustomAccordionSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
   const { watch } = form;
@@ -39,10 +39,7 @@ export default function CustomAccordionSection({
     PREVIEW_IMAGES[CUSTOM_ACCORDION_TYPES.WITH_BUTTON];
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.custom_accordion.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <div className="gap3 flex flex-col rounded-xl border p-4 lg:gap-5">
         <LayoutType form={form} disabled={disabled} index={index} />
 
@@ -60,6 +57,10 @@ export default function CustomAccordionSection({
             />
           </div>
         )}
+
+        {layoutType === CUSTOM_ACCORDION_TYPES.WITH_MEDIA && (
+          <AccordionSideLabel form={form} disabled={disabled} index={index} />
+        )}
       </div>
 
       <SectionPreview
@@ -73,9 +74,10 @@ export default function CustomAccordionSection({
         name={`sections.${index}.content.accordion_items`}
         itemInitialState={ACCORDION_ITEM_INITIAL_STATE}
         disabled={disabled}
+        managementLabel={t("blockControls.accordion_item_management")}
+        addLabel={t("blockControls.add_new_accordion_item")}
+        rowLabelKey="blockControls.accordion_item_row"
       />
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

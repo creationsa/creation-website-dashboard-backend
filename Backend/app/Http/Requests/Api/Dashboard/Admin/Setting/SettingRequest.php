@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard\Admin\Setting;
 
-
 use App\Http\Requests\Api\ApiMasterRequest;
+use App\Rules\SvgFile;
 
 class SettingRequest extends ApiMasterRequest
 {
@@ -25,19 +25,19 @@ class SettingRequest extends ApiMasterRequest
     public function rules()
     {
         return [
-            'phone'     => "nullable|numeric",
-            'email'     => "nullable|string",
-            'facebook'  => "nullable|url",
-            'twitter'   => "nullable|url",
-            'youtube'   => "nullable|url",
-            'instagram' => "nullable|url",
-            'whatsapp'  => "nullable|string|max:250",
+            'logo_en.media' => ['nullable', 'string', new SvgFile()],
+            'logo_en.en.alt' => 'nullable|string|between:3,100',
+            'logo_en.ar.alt' => 'nullable|string|between:3,100',
 
-            'years_experience'        => "nullable|numeric|min:0",
-            'numbers_employee'        => "nullable|numeric|min:0",
-            'numbers_drivers'         => "nullable|numeric|min:0",
-            'numbers_companies'       => "nullable|numeric|min:0",
-            'numbers_completed_order' => "nullable|numeric|min:0",
+            'logo_ar.media' => ['nullable', 'string', new SvgFile()],
+            'logo_ar.en.alt' => 'nullable|string|between:3,100',
+            'logo_ar.ar.alt' => 'nullable|string|between:3,100',
+
+            'socials' => 'required|array|min:1',
+            'socials.*.id' => 'nullable|integer|exists:setting_socials,id',
+            'socials.*.title_en' => 'required|string|between:3,100',
+            'socials.*.title_ar' => 'required|string|between:3,100',
+            'socials.*.link' => 'required|string|max:255',
         ];
     }
 }

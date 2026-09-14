@@ -1,36 +1,38 @@
 import {
+  MAX_IMAGE_ALT_LENGTH,
+  MAX_LINK_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_IMAGE_ALT_LENGTH,
+  MIN_LINK_LENGTH,
+  MIN_TITLE_LENGTH,
+} from "@/shared/constants/constants";
+import {
   englishField,
-  imageField,
   normalField,
+  svgImageField,
 } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
 import { z } from "zod";
 
+const createSocialItemSchema = (t: TFunction) =>
+  z.object({
+    id: z.number().optional(),
+    title_en: englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    title_ar: normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    link: englishField(t, MIN_LINK_LENGTH, MAX_LINK_LENGTH),
+  });
+
 export const createSettingsSchema = (t: TFunction) =>
   z.object({
-    logo_en: imageField(t),
-    logo_en_alt_en: englishField(t, 3, 100),
-    logo_en_alt_ar: normalField(t, 3, 100),
+    logo_en: svgImageField(t),
+    logo_en_alt_en: englishField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
+    logo_en_alt_ar: normalField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
 
-    logo_ar: imageField(t),
-    logo_ar_alt_en: englishField(t, 3, 100),
-    logo_ar_alt_ar: normalField(t, 3, 100),
+    logo_ar: svgImageField(t),
+    logo_ar_alt_en: englishField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
+    logo_ar_alt_ar: normalField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
 
-    instagram_title_en: englishField(t, 3, 100),
-    instagram_title_ar: normalField(t, 3, 100),
-    instagram_link: englishField(t, 3, 100),
-
-    facebook_title_en: englishField(t, 3, 100),
-    facebook_title_ar: normalField(t, 3, 100),
-    facebook_link: englishField(t, 3, 100),
-
-    behance_title_en: englishField(t, 3, 100),
-    behance_title_ar: normalField(t, 3, 100),
-    behance_link: englishField(t, 3, 100),
-
-    linkedin_title_en: englishField(t, 3, 100),
-    linkedin_title_ar: normalField(t, 3, 100),
-    linkedin_link: englishField(t, 3, 100),
+    socials: z.array(createSocialItemSchema(t)).min(1),
   });
 
 export type SettingsFormValues = z.infer<

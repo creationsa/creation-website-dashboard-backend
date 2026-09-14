@@ -1,6 +1,8 @@
 import {
+  MAX_IMAGE_ALT_LENGTH,
   MAX_SEO_DESCRIPTION_LENGTH,
   MAX_TITLE_LENGTH,
+  MIN_IMAGE_ALT_LENGTH,
   MIN_SEO_DESCRIPTION_LENGTH,
   MIN_TITLE_LENGTH,
 } from "@/shared/constants/constants";
@@ -12,7 +14,14 @@ import {
 import type { TFunction } from "i18next";
 import { z } from "zod";
 
-export const createSeoSchema = (t: TFunction) =>
+const optionalImageField = () =>
+  z.union([z.instanceof(File), z.string()]).optional();
+
+export const createSeoSchema = (
+  t: TFunction,
+  isLinkedRecord = false,
+  isHomeForm = false,
+) =>
   z.object({
     title_en: englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
     title_ar: normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
@@ -29,8 +38,23 @@ export const createSeoSchema = (t: TFunction) =>
     ),
 
     keywords: z.array(z.string()),
-    image_en: imageField(t),
-    image_ar: imageField(t),
+    image_en: isLinkedRecord ? optionalImageField() : imageField(t),
+    image_ar: isLinkedRecord ? optionalImageField() : imageField(t),
+    image_alt_en: isLinkedRecord
+      ? z.string().optional()
+      : englishField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
+    image_alt_ar: isLinkedRecord
+      ? z.string().optional()
+      : normalField(t, MIN_IMAGE_ALT_LENGTH, MAX_IMAGE_ALT_LENGTH),
+    image_type_en: z.string().optional(),
+    image_type_ar: z.string().optional(),
+
+    site_name_en: isHomeForm
+      ? englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH)
+      : z.string().optional(),
+    site_name_ar: isHomeForm
+      ? normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH)
+      : z.string().optional(),
   });
 
 export type SeoFormValues = z.infer<ReturnType<typeof createSeoSchema>>;

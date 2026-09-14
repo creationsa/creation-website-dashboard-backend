@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type UploadIconProps = SVGProps<SVGSVGElement>;
-
-export default function UploadIcon(props: UploadIconProps) {
+export default function UploadIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 24 24">
       <path

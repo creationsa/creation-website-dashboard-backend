@@ -1,14 +1,17 @@
 import { NavTranslations } from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
+import { HeaderMenuItem } from "@/lib/api/getHeader";
 
 export interface DesktopNavLinksProps {
   locale: LanguageType;
-  nav: NavTranslations;
+  menuItems?: HeaderMenuItem[];
 }
 
 export interface NavLinksProps {
   locale: LanguageType;
-  nav: NavTranslations;
+  logoUrl?: string | null;
+  logoAlt?: string;
+  menuItems?: HeaderMenuItem[];
 }
 
 export interface LanguageSwitcherProps {

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\Dashboard\Admin\Role;
 
-use App\Http\Requests\Api\ApiMasterRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends ApiMasterRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class RoleRequest extends ApiMasterRequest
           "permission_ids.*"  => "exists:permissions,id"
         ];
         foreach (config('translatable.locales') as $locale) {
-            $rules[$locale . '.name'] = 'required|string|between:3,250|unique:role_translations,name,' . $this->role.'id' . ',role_id';
+            $rules[$locale . '.name'] = 'required|string|between:3,250';
         }
         return $rules;
     }

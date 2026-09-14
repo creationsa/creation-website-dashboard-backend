@@ -1,0 +1,12 @@
+apps:
+  - name: sekka_redis_subscribe
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - redis:subscribe
+    autorestart: true
+    restart_delay: 5000
+    max_restarts: 10
+

@@ -23,7 +23,6 @@ class CreateContactsTable extends Migration
             $table->string('title')->nullable();
             $table->longText('content')->nullable();
             $table->timestamp('read_at')->nullable();
-
             $table->timestamps();
         });
     }

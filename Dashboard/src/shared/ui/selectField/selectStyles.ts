@@ -5,10 +5,10 @@ export interface SelectOption {
   value: string | number;
 }
 
-export function buildSelectStyles(
+export function buildSelectStyles<IsMulti extends boolean = false>(
   error?: string,
   theme?: string,
-): StylesConfig<SelectOption, false> {
+): StylesConfig<SelectOption, IsMulti> {
   const isDark = theme === "dark";
 
   const borderColor = error
@@ -34,6 +34,8 @@ export function buildSelectStyles(
   const activeColor = isDark
     ? "var(--color-tiffany-100)"
     : "var(--color-tiffany-600)";
+
+  const errorColor = isDark ? "var(--color-red-700)" : "var(--color-red-400)";
 
   return {
     control: (base) => ({
@@ -127,6 +129,25 @@ export function buildSelectStyles(
     valueContainer: (base) => ({
       ...base,
       padding: "0 10px",
+    }),
+
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: backgroundColor,
+      maxHeight: "100px",
+      overflowY: "auto",
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: textColor,
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: textColor,
+      "&:hover": {
+        backgroundColor: "transparent",
+        color: errorColor,
+      },
     }),
 
     singleValue: (base) => ({

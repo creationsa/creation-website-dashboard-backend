@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type PageBuilderIconProps = SVGProps<SVGSVGElement>;
-
-export default function PageBuilderIcon(props: PageBuilderIconProps) {
+export default function PageBuilderIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 48 48">
       <path

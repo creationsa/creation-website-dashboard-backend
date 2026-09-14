@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Api\General;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Google\Service\AIPlatformNotebooks\Event;
-use App\Models\{City, Country, EventDetail, Faq};
-use App\Services\GmailService;
-use App\Http\Resources\Api\Dashboard\Admin\Faq\FaqResource;
-use App\Http\Requests\Api\General\EventDetail\EventDetailRequest;
+use App\Http\Resources\Api\Dashboard\Admin\CancelReason\CancelReasonResource;
 use App\Http\Resources\Api\Dashboard\Admin\City\CityItemResource;
 use App\Http\Resources\Api\Dashboard\Admin\Country\CountryItemResource;
+use App\Http\Resources\Api\Dashboard\Admin\Governrate\GovernrateItemResource;
+use App\Http\Resources\Api\Dashboard\Admin\Region\SimpleRegionResource;
+use App\Http\Resources\Api\Dashboard\Admin\Size\SizeResource;
+use App\Models\{Region, City, Country, CancelReason, Governrate};
+use App\Models\Size;
 
 class GeneralController extends Controller
 {
     public function countries()
     {
-        $countries = Country::when(request()->keyword, function ($query) {
+        $countries = Country::where('is_active', true)->when(request()->keyword, function ($query) {
             $query->whereTranslationLike('name', '%' . request()->keyword . '%')
             ->orWhereTranslationLike('short_name', '%' . request()->keyword . '%')
             ->orWhereTranslationLike('nationality', '%' . request()->keyword . '%')
@@ -26,36 +26,83 @@ class GeneralController extends Controller
         return CountryItemResource::collection($countries)->additional(['status' => 'success', 'message' => '']);
     }
 
+    public function governrates()
+    {
+        $governorates = Governrate::where('is_active', true)->when(request()->keyword, function ($query) {
+            $query->whereTranslationLike('name', '%' . request()->keyword . '%');
+        })->when(request()->country_id, function ($query) {
+            $query->where('country_id', request()->country_id);
+        })->get();
+
+        return GovernrateItemResource::collection($governorates)->additional(['status' => 'success', 'message' => '']);
+    }
+
     public function cities()
     {
         $cities = City::when(request()->keyword, function ($query) {
             $query->where(function ($query) {
-                $query->whereTranslationLike('name', '%' . request()->keyword . '%')
-                ->orWhereTranslationLike('slug', '%' . request()->keyword . '%');
+                $query->whereTranslationLike('name', '%' . request()->keyword . '%');
             });
         })
         ->when(request()->country_id, function ($query) {
             $query->where('country_id', request()->country_id);
+        })
+        ->when(request()->governrate_id, function ($query) {
+            $query->where('governrate_id', request()->governrate_id);
         })
         ->get();
 
         return CityItemResource::collection($cities)->additional(['status' => 'success', 'message' => '']);
     }
 
-    public function faqs()
+    public function regions()
     {
-        $questions = Faq::latest()->get();
-        return response()->json(['status' => 'success', 'message' => '', 'data' => FaqResource::collection($questions)]);
+        $regions = Region::where('is_active', true)->when(request()->keyword, function ($query) {
+            $query->where(function ($query) {
+                $query->whereTranslationLike('name', '%' . request()->keyword . '%')
+                ->orWhereTranslationLike('slug', '%' . request()->keyword . '%');
+            });
+        })
+        ->when(request()->city_id, function ($query) {
+            $query->where('city_id', request()->city_id);
+        })
+        ->get();
+
+        return SimpleRegionResource::collection($regions)->additional(['status' => 'success', 'message' => '']);
     }
 
-    public function eventDetails(EventDetailRequest $request)
+    public function sizes()
     {
-        $email = 'support@darf.co';
-        $eventDetail = EventDetail::create($request->validated());
-        $gmailService = new GmailService();
+        $sizes = Size::when(request()->keyword, function ($query) {
+            $query->whereTranslationLike('name', '%' . request()->keyword . '%');
+        })->get();
 
-        $htmlBody = view('emails.event_details', compact('eventDetail'))->render();
-        $gmailService->sendEmailViaGmailApi($email, $htmlBody, 'Event Details');
-        return response()->json(['status' => 'success', 'message' => 'Sent successfully', 'data' => null]);
+        return SizeResource::collection($sizes)->additional(['status' => 'success', 'message' => '']);
+    }
+
+    public function settings()
+    {
+        $settings = [
+            'subscription_price'    => (double) setting('subscription_price'),
+            'subscription_duration' => (double) setting('subscription_duration'),
+        ];
+
+        return response()->json(['status' => 'success', 'data' => $settings, 'message' => '']);
+    }
+
+    public function goLogin()
+    {
+        return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('You must login first')], 401);
+    }
+
+    public function cancelReasons()
+    {
+        $cancel_reasons = CancelReason::when(request()->keyword, function ($query) {
+            $query->whereTranslationLike('title', '%' . request()->keyword . '%');
+        })->when(request()->type, function ($query) {
+            $query->where('type', request()->type);
+        })->latest()->paginate(10);
+
+        return CancelReasonResource::collection($cancel_reasons)->additional(['status' => 'success', 'message' => '']);
     }
 }

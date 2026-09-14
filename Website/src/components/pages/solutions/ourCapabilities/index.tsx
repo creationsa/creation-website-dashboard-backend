@@ -1,35 +1,46 @@
 import Accordion from "@/components/ui/Accordion";
+import AccordionBlocks from "@/components/ui/AccordionBlocks";
 import Header from "@/components/ui/Header";
-import { SolutionsCoreProps } from "../types";
 import Video from "@/components/ui/Video";
+import { OurCapabilitiesProps } from "../types";
 
 export default function OurCapabilities({
-  solutions,
+  mainData,
   locale,
-}: SolutionsCoreProps) {
+}: OurCapabilitiesProps) {
+  const { accordion_items_header, accordion_items, accordion_media, accordion_media_poster } =
+    mainData;
+
   return (
     <section className="container flex flex-col items-center justify-between gap-10 lg:flex-row">
       <div className="flex flex-col gap-4 lg:w-[40%]">
         {/* CONTENT */}
         <Header
-          title={solutions.why_choose_us}
-          description={solutions.why_choose_us_description}
-          subDescription={solutions.why_choose_us_sub_description}
+          title={accordion_items_header.first_title}
+          description={accordion_items_header.second_title}
+          subDescription={accordion_items_header.third_title}
           hasContainer={false}
           lang={locale}
           styles="w-full mb-10"
         />
 
-        <Accordion content={solutions.capabilities} />
+        <Accordion
+          content={accordion_items.map((item) => ({
+            title: item.title,
+            description: <AccordionBlocks blocks={item.content_blocks} />,
+          }))}
+        />
       </div>
 
       {/* VIDEO */}
-      <Video
-        src="https://creation.sa/videos/dna.mp4"
-        poster="https://creation.sa/images/coverVideos/creation_dna_bg.jpg"
-        containerClassName="relative aspect-4/3 w-full lg:w-[60%]"
-        className="h-full object-cover"
-      />
+      {accordion_media && (
+        <Video
+          src={accordion_media}
+          poster={accordion_media_poster ?? ""}
+          containerClassName="relative aspect-4/3 w-full lg:w-[60%]"
+          className="h-full object-cover"
+        />
+      )}
     </section>
   );
 }

@@ -19,15 +19,14 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('role_translations', function(Blueprint $table)
-        {
+        Schema::create('role_translations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->string('name');
             $table->string('slug')->nullable();
             $table->text('desc')->nullable();
             $table->string('locale')->index();
-            $table->unique(['role_id','locale']);
+            $table->unique(['role_id', 'locale']);
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }

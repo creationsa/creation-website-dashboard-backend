@@ -5,16 +5,17 @@ import getTrans from "@/lib/translation";
 export default async function NotFound() {
   const locale = await getCurrentLocale();
 
-  const [{ project_details, back_to_home, not_found_number }, project] =
+  const [{ back_to_home, not_found_number }, project, projectDetails] =
     await Promise.all([
       getTrans(locale, "common"),
       getTrans(locale, "project"),
+      getTrans(locale, "projectDetails"),
     ]);
 
   return (
     <NotFoundPage
-      title={project_details.project_not_found_title}
-      description={project_details.project_not_found_desc}
+      title={projectDetails.project_not_found_title}
+      description={projectDetails.project_not_found_desc}
       backToHome={back_to_home}
       number={not_found_number}
       locale={locale}

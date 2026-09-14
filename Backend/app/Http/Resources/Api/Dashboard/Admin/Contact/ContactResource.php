@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Dashboard\Admin\Contact;
 
+use App\Http\Resources\Api\Dashboard\Admin\Country\CountryItemResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContactResource extends JsonResource
@@ -15,16 +16,18 @@ class ContactResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'full_name'  => $this->full_name,
-            'email'      => $this->email,
-            // 'phone'      => $this->phone,
-            // 'title'      => $this->title,
-            'content'    => $this->content,
-            'read_at'    => $this->read_at?->format('Y-m-d H:i:s'),
-            'image'      => $this->user ? $this->user->image : null,
+            'id' => $this->id,
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+            'company_name' => $this->company_name,
+            'phone' => $this->phone,
+            'country_id' => $this->country_id,
+            'country' => CountryItemResource::make($this->whenLoaded('country')),
+            'content' => $this->content,
+            'read_at' => $this->read_at?->format('Y-m-d H:i:s'),
+            'image' => $this->user ? $this->user->image : null,
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d') : null,
-            'replies'    => ContactRepliesResource::collection($this->replies)
+            'replies' => ContactRepliesResource::collection($this->replies),
 
             // 'user'       => SimpleUserResource::make($this->user),
         ];

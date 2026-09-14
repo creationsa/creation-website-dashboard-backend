@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type LogoutIconProps = SVGProps<SVGSVGElement>;
-
-export default function LogoutIcon(props: LogoutIconProps) {
+export default function LogoutIcon(props: IconProps) {
   return (
     <Icon {...props} stroke="currentColor" fill="none">
       <path

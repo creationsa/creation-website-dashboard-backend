@@ -19,9 +19,12 @@ class MetadataResource extends JsonResource
             'title'          => (string) $this->title,
             'canonical_tags' => (string) $this->canonical_tags,
             'image'          => (string) $this->image,
+            'image_alt'      => (string) $this->image_alt,
+            'image_type'     => (string) $this->image_type,
+            'site_name'      => (string) $this->site_name,
             'type'           => (string) $this->type,
             'description'    => (string) $this->description,
-            'keywords'       => (string) $this->keywords,
+            'keywords'       => $this->keywords,
         ];
     }
 }

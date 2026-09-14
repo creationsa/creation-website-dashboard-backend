@@ -16,4 +16,8 @@ export const SECTION_IMAGE_FIELDS: Record<string, string[]> = {
   [SECTION_TYPES.CTA_BANNER]: [],
   [SECTION_TYPES.HEADER]: [],
   [SECTION_TYPES.LOGOS]: ["logos.*.logo_image"],
+  [SECTION_TYPES.REVIEWS]: ["items.*.logo_image"],
+  [SECTION_TYPES.BLOGS_TEASER]: ["items.*.feature_media"],
+  [SECTION_TYPES.CONTACT]: [],
+  [SECTION_TYPES.TEXT_LIST]: [],
 };

@@ -34,18 +34,18 @@ export default function Button({
 }: AppButtonProps) {
   const isDisabled = disabled || loading;
 
-  const baseStyles = `focus:outline-hidden w-full rounded-xl relative
+  const baseStyles = ` w-full rounded-xl relative
    transition-colors duration-200 font-bold cursor-pointer text-center uppercase
   ${(disabled || loading) && "cursor-not-allowed! opacity-50!"}`;
 
   const styles = {
-    primary: `bg-tiffany-600 dark:bg-tiffany-100 text-white-100 dark:text-black-100 border border-tiffany-600 dark:border-tiffany-100
+    primary: `bg-tiffany-600 dark:bg-tiffany-100 text-white-100 dark:text-black-100 border border-tiffany-600 dark:border-tiffany-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tiffany-600 dark:focus-visible:outline-tiffany-100
       ${!disabled && !loading && "hover:bg-tiffany-600/95 dark:hover:bg-tiffany-100/95 active:bg-tiffany-600/95 dark:active:bg-tiffany-100/95"}`,
-    secondary: `bg-transparent text-tiffany-600 dark:text-tiffany-100 border border-tiffany-600 dark:border-tiffany-100
+    secondary: `bg-transparent text-tiffany-600 dark:text-tiffany-100 border border-tiffany-600 dark:border-tiffany-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tiffany-600 dark:focus-visible:outline-tiffany-100
     ${!disabled && !loading && "hover:bg-tiffany-600 dark:hover:bg-tiffany-100 hover:text-white-100 dark:hover:text-black-100"}`,
-    delete: `bg-red-400 dark:bg-red-500 text-white-100 border border-red-400 dark:border-red-500
+    delete: `bg-red-400 dark:bg-red-500 text-white-100 border border-red-400 dark:border-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 dark:focus-visible:outline-red-500
       ${!disabled && !loading && "hover:bg-red-400/90 dark:hover:bg-red-500/90 active:bg-red-400/90 dark:active:bg-red-500/90"}`,
-    danger: `bg-transparent text-red-400 dark:text-red-500 border border-red-400 dark:border-red-500
+    danger: `bg-transparent text-red-400 dark:text-red-500 border border-red-400 dark:border-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 dark:focus-visible:outline-red-500
       ${!disabled && !loading && "hover:bg-red-400 dark:hover:bg-red-500 hover:text-white-100 "}`,
   };
 

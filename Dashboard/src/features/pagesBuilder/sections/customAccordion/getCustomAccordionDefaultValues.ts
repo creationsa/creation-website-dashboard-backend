@@ -10,5 +10,7 @@ export const CUSTOM_ACCORDION_INITIAL_STATE = {
   action_button_text_ar: "",
   action_button_slug: "",
   banner_media: { ...MEDIA_INITIAL_STATE },
+  side_label_en: "",
+  side_label_ar: "",
   ...ACCORDION_ITEMS_INITIAL_STATE,
 };

@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Api\Dashboard\Admin\Page;
 
 use App\Http\Requests\Api\ApiMasterRequest;
-use App\Models\Page;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class PageRequest extends ApiMasterRequest
@@ -26,17 +24,29 @@ class PageRequest extends ApiMasterRequest
      */
     public function rules()
     {
+        $is_required = $this->page ? 'nullable' : 'required';
 
-        $rules=[
-            'ordering' => 'nullable|unique:pages,ordering,'.$this->slider,
-            'type' => 'required|in:about,privacy-policy,terms-conditions'
+        $rules = [
+            'ordering' => [
+                'nullable',
+                Rule::unique('pages', 'ordering')
+                    ->ignore($this->page) // Ignore the current page if updating
+                    ->where(function ($query) {
+                        return $query->where('type', $this->input('type'));
+                    }),
+            ],
+
+            'type'        => 'required|in:about,privacy,terms,instructions',
+            'image'       => $is_required . '|array',
+            'image.media' => $is_required . '|string',
+            'image.id'    => 'nullable|exists:app_media,id',
         ];
-        
-        foreach (config('translatable.locales') as $locale) {
-            $rules[$locale.'.title'] =  'required';
-            $rules[$locale.'.desc'] =  'required';
-        }
-        return $rules;
 
+        foreach (config('translatable.locales') as $locale) {
+            $rules[$locale . '.title'] = 'required';
+            $rules[$locale . '.desc']  = 'required';
+        }
+
+        return $rules;
     }
 }

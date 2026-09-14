@@ -25,15 +25,15 @@ class AboutRequest extends ApiMasterRequest
     {
         $is_required = $this->about ? 'nullable' : 'required';
         $rules = [
-            'is_active'          => 'required|in:0,1',
+            'is_active'        => 'required|in:0,1',
 
-            'main_image'         => $is_required . '|array',
-            'main_image.media'   => $is_required . '|string',
-            'main_image.id'      => 'nullable|exists:app_media,id',
+            'main_image'       => $is_required . '|array',
+            'main_image.media' => $is_required . '|string',
+            'main_image.id'    => 'nullable|exists:app_media,id',
 
-            'images'             => $is_required . '|array',
-            'images.*.media'     => $is_required . '|string',
-            'images.*.id'        => 'nullable|exists:app_media,id',
+            'images'           => $is_required . '|array',
+            'images.*.media'   => $is_required . '|string',
+            'images.*.id'      => 'nullable|exists:app_media,id',
         ];
 
         foreach(config('translatable.locales') as $locale)

@@ -1,9 +1,7 @@
 import DynamicFeaturedItemsFields from "@/shared/components/dynamicFeaturedItemsFields";
 import { ITEMS_INITIAL_STATE } from "@/shared/components/dynamicFeaturedItemsFields/getDynamicFeaturedItemsFieldsDefaultValues";
-import Box from "@/shared/ui/Box";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import type { SectionProps } from "../../types";
 import Header from "../header";
 import contained from "./assets/contained.png";
@@ -23,7 +21,6 @@ export default function FeaturedWorksSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
 
@@ -38,10 +35,7 @@ export default function FeaturedWorksSection({
     PREVIEW_IMAGES[FEATURED_LAYOUT_TYPES.CONTAINED];
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.featured_works.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <FeaturedLayoutConfigFields
         form={form}
         index={index}
@@ -61,9 +55,11 @@ export default function FeaturedWorksSection({
         name={`sections.${index}.content.items`}
         itemInitialState={ITEMS_INITIAL_STATE}
         disabled={disabled}
+        allowProjectPicker
+        managementLabel={t("pages.featured_work_management")}
+        addLabel={t("pages.add_new_featured_work")}
+        rowLabelKey="pages.featured_work_row"
       />
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

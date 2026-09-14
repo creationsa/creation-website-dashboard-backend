@@ -21,7 +21,7 @@ export function useProfileForm(profile: LoginResponse) {
       gender: profile.gender,
     },
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const onSubmit = (data: ProfileFormValues) => {
@@ -33,7 +33,10 @@ export function useProfileForm(profile: LoginResponse) {
     formData.append("gender", data.gender);
     formData.append("_method", "PUT");
 
-    updateProfile({ formData });
+    updateProfile(
+      { formData },
+      { onSuccess: () => form.reset(data) },
+    );
   };
 
   return {

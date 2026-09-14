@@ -10,7 +10,6 @@ use Astrotomic\Translatable\Translatable;
 class Faq extends Model implements TranslatableContract
 {
     use Translatable;
-    
     protected $guarded = ['id','created_at','updated_at'];
     public $translatedAttributes = ['title','desc'];
 

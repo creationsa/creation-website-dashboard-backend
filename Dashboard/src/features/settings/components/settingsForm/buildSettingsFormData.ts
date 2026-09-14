@@ -25,21 +25,14 @@ export function buildSettingsFormData(
   formData.append("logo_ar[ar][alt]", values.logo_ar_alt_ar);
   formData.append("logo_ar[en][alt]", values.logo_ar_alt_en);
 
-  formData.append("en[instagram_title]", values.instagram_title_en);
-  formData.append("ar[instagram_title]", values.instagram_title_ar);
-  formData.append("instagram_link", values.instagram_link);
-
-  formData.append("en[facebook_title]", values.facebook_title_en);
-  formData.append("ar[facebook_title]", values.facebook_title_ar);
-  formData.append("facebook_link", values.facebook_link);
-
-  formData.append("en[behance_title]", values.behance_title_en);
-  formData.append("ar[behance_title]", values.behance_title_ar);
-  formData.append("behance_link", values.behance_link);
-
-  formData.append("en[linkedin_title]", values.linkedin_title_en);
-  formData.append("ar[linkedin_title]", values.linkedin_title_ar);
-  formData.append("linkedin_link", values.linkedin_link);
+  values.socials?.forEach((social, index) => {
+    if (social.id) {
+      formData.append(`socials[${index}][id]`, String(social.id));
+    }
+    formData.append(`socials[${index}][title_en]`, social.title_en || "");
+    formData.append(`socials[${index}][title_ar]`, social.title_ar || "");
+    formData.append(`socials[${index}][link]`, social.link || "");
+  });
 
   formData.append("_method", "PUT");
 

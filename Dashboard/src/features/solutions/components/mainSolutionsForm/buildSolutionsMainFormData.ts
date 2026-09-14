@@ -23,6 +23,9 @@ export function buildSolutionsMainFormData(
   formData.append("core_desc_en", values.core_desc_en || "");
   formData.append("core_desc_ar", values.core_desc_ar || "");
 
+  formData.append("core_sub_desc_en", values.core_sub_desc_en || "");
+  formData.append("core_sub_desc_ar", values.core_sub_desc_ar || "");
+
   formData.append(
     "items_header_first_title_en",
     values.items_header.first_title_en || "",
@@ -49,6 +52,19 @@ export function buildSolutionsMainFormData(
   );
 
   values.items?.forEach((item, index) => {
+    formData.append(`items[${index}][source]`, item.source);
+
+    if (item.source === "project") {
+      formData.append(`items[${index}][project_id]`, String(item.project_id));
+      if (item.project_media_field) {
+        formData.append(
+          `items[${index}][project_media_field]`,
+          item.project_media_field,
+        );
+      }
+      return;
+    }
+
     appendMediaObject(
       formData,
       `items[${index}][feature_media]`,
@@ -70,36 +86,46 @@ export function buildSolutionsMainFormData(
   values.accordion_items?.forEach((item, index) => {
     formData.append(`accordion_items[${index}][title_en]`, item.title_en);
     formData.append(`accordion_items[${index}][title_ar]`, item.title_ar);
-    formData.append(`accordion_items[${index}][content_en]`, item.content_en);
-    formData.append(`accordion_items[${index}][content_ar]`, item.content_ar);
+
+    item.content_blocks?.forEach((block, blockIndex) => {
+      const path = `accordion_items[${index}][content_blocks][${blockIndex}]`;
+      formData.append(`${path}[subtitle_en]`, block.subtitle_en || "");
+      formData.append(`${path}[subtitle_ar]`, block.subtitle_ar || "");
+      formData.append(`${path}[description_en]`, block.description_en);
+      formData.append(`${path}[description_ar]`, block.description_ar);
+    });
   });
 
   appendMediaObject(formData, "accordion_media", values.accordion_media);
 
   formData.append(
-    "accordion_items_header_first_title_ar ",
+    "accordion_items_header_first_title_ar",
     values.accordion_items_header.first_title_ar || "",
   );
   formData.append(
-    "accordion_items_header_first_title_en ",
+    "accordion_items_header_first_title_en",
     values.accordion_items_header.first_title_en || "",
   );
   formData.append(
-    "accordion_items_header_second_title_ar ",
+    "accordion_items_header_second_title_ar",
     values.accordion_items_header.second_title_ar || "",
   );
   formData.append(
-    "accordion_items_header_second_title_en ",
+    "accordion_items_header_second_title_en",
     values.accordion_items_header.second_title_en || "",
   );
   formData.append(
-    "accordion_items_header_third_title_ar ",
+    "accordion_items_header_third_title_ar",
     values.accordion_items_header.third_title_ar || "",
   );
   formData.append(
-    "accordion_items_header_third_title_en ",
+    "accordion_items_header_third_title_en",
     values.accordion_items_header.third_title_en || "",
   );
+
+  formData.append("nav_title_en", values.nav_title_en || "");
+  formData.append("nav_title_ar", values.nav_title_ar || "");
+  formData.append("slug_en", values.slug_en || "");
 
   if (isEdit) {
     formData.append("_method", "PUT");

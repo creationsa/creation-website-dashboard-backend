@@ -1,10 +1,5 @@
-import {
-  NewsTranslations,
-  SolutionDetailsContent,
-  SolutionDetailsTranslations,
-} from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-import { StaticImageData } from "next/image";
+import { SmartMediaContent } from "@/types/media";
 
 export interface SolutionDetailsProps {
   params: Promise<{
@@ -13,52 +8,73 @@ export interface SolutionDetailsProps {
   }>;
 }
 
-export type SolutionSlug =
-  | "branding"
-  | "digital-marketing"
-  | "web-design"
-  | "production";
+export interface SolutionExecutionKey {
+  label: string;
+  value: string;
+}
 
-export interface SolutionDetailsItem {
-  slug: SolutionSlug;
-  translationKey:
-    | "branding_advertising"
-    | "digital_marketing"
-    | "web_design"
-    | "production_services";
-  images: StaticImageData[];
+export interface SolutionSeo {
+  title: string;
+  description: string;
+  image: string | null;
+  image_alt: string | null;
+  image_type: string | null;
+  keywords: string | null;
+}
+
+export interface SolutionNavItem {
+  slug: string;
+  title: string;
+}
+
+export interface SingleSolutionBySlugProps {
+  title: string;
+  slug: string;
+  first_title: string;
+  second_title: string;
+  third_title: string;
+  proposition_title: string;
+  proposition_desc: string;
+  small_description: string;
+  execution_title: string;
+  execution_keys: SolutionExecutionKey[];
+  gallery: SmartMediaContent[];
+  ticker_items: string[];
+  seo: SolutionSeo;
+  prev: SolutionNavItem | null;
+  next: SolutionNavItem | null;
+}
+
+export interface SolutionSlug {
+  slug_en: string;
+  slug_ar: string;
+  updated_at: string;
 }
 
 export interface MainSectionProps {
   locale: LanguageType;
-  solutionData: SolutionDetailsContent;
-  solution_details: SolutionDetailsTranslations;
+  data: SingleSolutionBySlugProps;
 }
 
 export interface DeepDetailsProps {
-  solutionData: SolutionDetailsContent;
-  solution_details: SolutionDetailsTranslations;
+  data: SingleSolutionBySlugProps;
 }
 
 export interface ImageSliderProps {
-  images: StaticImageData[];
+  images: SmartMediaContent[];
   solutionTitle: string;
 }
 
 export interface ImageSlideItemProps {
-  src: StaticImageData;
+  src: SmartMediaContent;
   solutionTitle: string;
   index: number;
 }
 
-export interface SolutionsTickerProps {
-  news: NewsTranslations;
-}
-
 export interface SolutionNavigationProps {
-  slug: string;
   locale: LanguageType;
-  solution_details: SolutionDetailsTranslations;
   previousLabel: string;
   nextLabel: string;
+  prevItem: SolutionNavItem;
+  nextItem: SolutionNavItem;
 }

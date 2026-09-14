@@ -36,7 +36,20 @@ class MetadataTranslation extends Model
 
     public function getImageAttribute($key)
     {
-        $image = $this->attributes['image'] ? asset('storage/images/metadata/' . $this->attributes['image']) : null;
-        return $image;
+        $value = $this->attributes['image'] ?? null;
+        if (!$value) {
+            return null;
+        }
+
+        // A value picked from another model's own already-uploaded media
+        // (e.g. one of a project's 10 images) is stored as the full URL
+        // it already resolved to — only a genuinely new upload through
+        // this model's own attachment slot is a bare filename needing
+        // `storage/images/metadata/` prepended.
+        if (str_starts_with($value, 'http')) {
+            return $value;
+        }
+
+        return asset('storage/images/metadata/' . $value);
     }
 }

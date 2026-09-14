@@ -28,4 +28,13 @@ class Profile extends Model
     {
         return $query->whereRaw("ST_Distance_Sphere(point(lng, lat), point(?, ?)) / 1000  <= ?", [$longitude, $latitude, setting('radius') != false ? setting('radius') : 5]);
     }
+
+    public function getGeoLocationAttribute()
+    {
+        return [
+            'lat' => (float) $this->lat,
+            'lng' => (float) $this->lng,
+            'location' => $this->location
+        ];
+    }
 }

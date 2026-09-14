@@ -1,4 +1,8 @@
 import {
+  MAX_IMAGE_ALT_LENGTH,
+  MIN_IMAGE_ALT_LENGTH,
+} from "@/shared/constants/constants";
+import {
   englishField,
   imageField,
   normalField,
@@ -17,8 +21,16 @@ export const createMediaSchema = (t: TFunction) =>
     })
     .superRefine((data, ctx) => {
       if (data.type === "image") {
-        const altEn = englishField(t, 3, 100).safeParse(data.alt_en);
-        const altAr = normalField(t, 3, 100).safeParse(data.alt_ar);
+        const altEn = englishField(
+          t,
+          MIN_IMAGE_ALT_LENGTH,
+          MAX_IMAGE_ALT_LENGTH,
+        ).safeParse(data.alt_en);
+        const altAr = normalField(
+          t,
+          MIN_IMAGE_ALT_LENGTH,
+          MAX_IMAGE_ALT_LENGTH,
+        ).safeParse(data.alt_ar);
 
         if (!altEn.success) {
           ctx.addIssue({

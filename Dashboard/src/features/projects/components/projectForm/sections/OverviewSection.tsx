@@ -4,6 +4,7 @@ import SmartMediaField from "@/shared/components/smartMediaField";
 import Box from "@/shared/ui/Box";
 import TextArea from "@/shared/ui/textField/TextArea";
 import { useTranslation } from "react-i18next";
+import CoverToggle from "../CoverToggle";
 
 export default function OverviewSection({ form, disabled }: SectionProps) {
   const { t } = useTranslation();
@@ -23,6 +24,11 @@ export default function OverviewSection({ form, disabled }: SectionProps) {
           form={form}
           name="first_cover_media"
           label={t("projects.first_cover_media")}
+          disabled={disabled}
+        />
+        <CoverToggle
+          form={form}
+          fieldName="first_cover_media"
           disabled={disabled}
         />
       </div>

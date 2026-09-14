@@ -1,23 +1,5 @@
-import {
-  ProjectDetailsContent,
-  ProjectDetailsTranslations,
-} from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-import { StaticImageData } from "next/image";
-
-export type ProjectSlug =
-  | "mouj"
-  | "boulevard-world"
-  | "maybach-boutique"
-  | "errva"
-  | "tasier"
-  | "nozomi"
-  | "cupic"
-  | "phase"
-  | "darf"
-  | "btic-group"
-  | "damons"
-  | "shovel";
+import { SmartMediaContent } from "@/types/media";
 
 export interface ProjectDetailsProps {
   params: Promise<{
@@ -26,48 +8,82 @@ export interface ProjectDetailsProps {
   }>;
 }
 
-export interface ImportantContentProps {
-  translations: ProjectDetailsTranslations;
-  project: ProjectDetailsContent;
+export interface ProjectStat {
+  label: string;
+  value: string;
+}
+
+export interface ProjectNavItem {
+  slug: string;
+  title: string;
+  image: SmartMediaContent | null;
+}
+
+export interface ProjectSeo {
+  title: string;
+  description: string;
+  image: string | null;
+  image_alt: string | null;
+  image_type: string | null;
+  keywords: string | null;
+}
+
+export interface SingleProjectBySlugProps {
+  title: string;
+  slug: string;
+  first_title: string;
+  second_title: string;
+  third_title: string;
+  overview_description: string;
+  main_image: SmartMediaContent | null;
+  about_image: SmartMediaContent | null;
+  gallery: SmartMediaContent[];
+  stats_title: string;
+  stats: ProjectStat[];
+  ticker_items: string[];
+  seo: ProjectSeo;
+  prev: ProjectNavItem | null;
+  next: ProjectNavItem | null;
+}
+
+export interface ProjectSlug {
+  slug_en: string;
+  slug_ar: string;
+  updated_at: string;
 }
 
 export interface AboutTheProjectProps {
   locale: LanguageType;
-  project: ProjectDetailsContent;
-  title: string;
-  certainImage: StaticImageData;
+  data: SingleProjectBySlugProps;
+  certainImage: SmartMediaContent | null;
 }
 
 export interface ResultsProps {
-  projectData: ProjectDetailsContent;
-  translations: ProjectDetailsTranslations;
+  data: SingleProjectBySlugProps;
 }
 
 export interface ImagesProps {
-  images: StaticImageData[];
+  images: SmartMediaContent[];
   title: string;
-  translations: ProjectDetailsTranslations;
 }
 
 export interface TwoGridProps {
-  images: StaticImageData[];
+  images: SmartMediaContent[];
   startIndex?: number;
   title: string;
-  translations: ProjectDetailsTranslations;
 }
 
 export interface ImageItemProps {
-  src: StaticImageData;
+  src: SmartMediaContent;
   full?: boolean;
   index?: number;
   title: string;
-  translations: ProjectDetailsTranslations;
 }
 
 export interface ProjectNavigationProps {
-  slug: string;
   locale: LanguageType;
-  project_details: ProjectDetailsTranslations;
   previousLabel: string;
   nextLabel: string;
+  prevItem: ProjectNavItem;
+  nextItem: ProjectNavItem;
 }

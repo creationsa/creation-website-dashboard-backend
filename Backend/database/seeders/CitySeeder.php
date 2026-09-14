@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\Country;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CitySeeder extends Seeder
@@ -18,20 +17,10 @@ class CitySeeder extends Seeder
     {
         City::create([
             'ar' => [
-                "name" => "الفروانية",
+                "name" => "الرياض",
             ],
             'en' => [
-                "name" => "Farwaniya",
-            ],
-            'country_id' => Country::first()->id,
-        ]);
-
-        City::create([
-            'ar' => [
-                "name" => "الكويت",
-            ],
-            'en' => [
-                "name" => "Kuwait",
+                "name" => "Riyadh",
             ],
             'country_id' => Country::first()->id,
         ]);

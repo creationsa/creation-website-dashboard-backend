@@ -1,10 +1,16 @@
-import type { KeywordsInputProps } from "@/shared/types/seo";
+import type { KeywordsInputProps } from "@/shared/components/seoForm/types";
 import { useState } from "react";
 
-export default function KeywordsInput({ value, onChange }: KeywordsInputProps) {
+export default function KeywordsInput({
+  value,
+  onChange,
+  disabled,
+}: KeywordsInputProps) {
   const [input, setInput] = useState("");
 
   const addKeyword = () => {
+    if (disabled) return;
+
     const keyword = input.trim();
 
     if (!keyword) return;
@@ -17,6 +23,8 @@ export default function KeywordsInput({ value, onChange }: KeywordsInputProps) {
   };
 
   const removeKeyword = (keyword: string) => {
+    if (disabled) return;
+
     onChange(value.filter((item) => item !== keyword));
   };
 
@@ -28,7 +36,8 @@ export default function KeywordsInput({ value, onChange }: KeywordsInputProps) {
             key={keyword}
             type="button"
             onClick={() => removeKeyword(keyword)}
-            className="rounded-xl border p-2"
+            disabled={disabled}
+            className="rounded-xl border p-2 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {keyword} <span className="text-red-400 dark:text-red-500">x</span>
           </button>
@@ -44,6 +53,7 @@ export default function KeywordsInput({ value, onChange }: KeywordsInputProps) {
             addKeyword();
           }
         }}
+        disabled={disabled}
       />
     </div>
   );

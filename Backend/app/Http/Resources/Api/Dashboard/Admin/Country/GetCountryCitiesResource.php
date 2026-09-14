@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\Dashboard\Admin\Country;
 
-use App\Http\Resources\Api\Dashboard\Admin\Country\CountryItemResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetCountryCitiesResource extends JsonResource
@@ -15,11 +14,10 @@ class GetCountryCitiesResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
-            'id' => $this->id,
+            'id'   => $this->id,
             'name' => $this->name,
+            'is_active' => (bool) $this->is_active,
         ];
-
     }
 }

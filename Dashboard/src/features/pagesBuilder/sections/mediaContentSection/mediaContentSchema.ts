@@ -1,8 +1,11 @@
+import { createAccordionContentBlockSchema } from "@/shared/components/dynamicAccordionFields/accordionSchema";
 import { createHeaderSchema } from "@/shared/components/headerFields/headerSchema";
 import { createMediaSchema } from "@/shared/components/smartMediaField/smartMediaFieldSchema";
 import {
   MAX_DESCRIPTION_LENGTH,
+  MAX_LONG_TITLE_LENGTH,
   MIN_DESCRIPTION_LENGTH,
+  MIN_LONG_TITLE_LENGTH,
 } from "@/shared/constants/constants";
 import { englishField, normalField } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
@@ -38,10 +41,11 @@ const createAccordionVariant = (t: TFunction) =>
     accordion_items: z
       .array(
         z.object({
-          title_en: englishField(t, 3, 150),
-          title_ar: normalField(t, 3, 150),
-          content_en: englishField(t, 3, 1000),
-          content_ar: normalField(t, 3, 1000),
+          title_en: englishField(t, MIN_LONG_TITLE_LENGTH, MAX_LONG_TITLE_LENGTH),
+          title_ar: normalField(t, MIN_LONG_TITLE_LENGTH, MAX_LONG_TITLE_LENGTH),
+          content_blocks: z
+            .array(createAccordionContentBlockSchema(t))
+            .min(1, t("errors.fieldRequired")),
         }),
       )
       .min(1, t("errors.fieldRequired")),

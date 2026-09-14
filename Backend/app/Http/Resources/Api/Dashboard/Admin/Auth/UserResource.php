@@ -3,8 +3,11 @@
 namespace App\Http\Resources\Api\Dashboard\Admin\Auth;
 
 use App\Http\Resources\Api\Dashboard\Admin\Country\CountryItemResource;
-use App\Http\Resources\Api\Dashboard\Admin\Country\CountrySimpleResource;
+use App\Http\Resources\Api\Dashboard\Admin\Role\RoleResource;
+use App\Models\Permission;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\Dashboard\Admin\Admin\{PermissionResource};
+
 
 class UserResource extends JsonResource
 {
@@ -16,6 +19,13 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        if($this->user_type == 'super_admin') {
+            $permissions  =  Permission::get();
+        } else {
+            $permissions  =  $this->role ? $this->role?->permissions()->get() : [];
+        }
+
         return [
             'id'            => (int) $this->id,
             'full_name'     => (string) $this->full_name,
@@ -31,8 +41,9 @@ class UserResource extends JsonResource
             'role_id'       => $this->role_id,
             'country'       => new CountryItemResource($this->country),
             'locale'        => (string) $this->locale,
-            'otp_num'      => (int) $this->otp_num,
             'token'         => $this->when($this->token, $this->token),
+            'role'          => RoleResource::make($this->role),
+            'permission'   => PermissionResource::collection($permissions),
             'created_at'    => $this->created_at ? $this->created_at->format('Y-m-d') : null,
         ];
     }

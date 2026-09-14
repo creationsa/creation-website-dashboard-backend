@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type MoonIconProps = SVGProps<SVGSVGElement>;
-
-export default function MoonIcon(props: MoonIconProps) {
+export default function MoonIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 24 24">
       <path

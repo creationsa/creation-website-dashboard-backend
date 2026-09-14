@@ -14,7 +14,7 @@ const containerVariants = {
   },
 };
 
-export default function ProjectsGrid({ projects, project }: ProjectsGridProps) {
+export default function ProjectsGrid({ projects }: ProjectsGridProps) {
   return (
     <motion.div
       variants={containerVariants}
@@ -25,12 +25,7 @@ export default function ProjectsGrid({ projects, project }: ProjectsGridProps) {
     >
       <AnimatePresence mode="wait">
         {projects.map((item, index) => (
-          <ProjectCard
-            key={index}
-            item={item}
-            project={project}
-            directionIndex={index}
-          />
+          <ProjectCard key={item.slug} item={item} directionIndex={index} />
         ))}
       </AnimatePresence>
     </motion.div>

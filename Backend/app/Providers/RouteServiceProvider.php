@@ -26,8 +26,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string|null
      */
-    protected $namespace = 'App\\Http\\Controllers';
-    protected $api = 'App\\Http\\Controllers\\Api';
+    protected $namespace           = 'App\\Http\\Controllers';
+    protected $api                 = 'App\\Http\\Controllers\\Api';
     protected $dashboard_namespace = 'App\Http\Controllers\Dashboard';
 
     /**
@@ -40,7 +40,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-
             Route::prefix('api/general')
                 ->middleware('api')
                 ->namespace($this->api)
@@ -51,11 +50,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->api)
                 ->group(base_path('routes/api/dashboard/admin.php'));
 
+
             Route::prefix('api/website')
                 ->middleware('api')
                 ->namespace($this->api)
                 ->group(base_path('routes/api/website/website.php'));
-
+                
 
             Route::prefix('/')
                 ->middleware('web')

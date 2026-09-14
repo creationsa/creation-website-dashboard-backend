@@ -1,7 +1,7 @@
 import { useUploadAttachment } from "@/shared/hooks/useUploadAttachment";
 import { uploadIfFile } from "@/shared/utils/uploadIfFile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useUpdateFooter } from "../hooks/useUpdateFooter";
@@ -14,34 +14,52 @@ export default function useFooterForm(footerToEdit?: FooterProps) {
   const { t } = useTranslation();
 
   const { updateFooter, updateFooterLoading } = useUpdateFooter();
-  const { mutateAsync: uploadAttachment, isPending: uploadLoading } =
-    useUploadAttachment();
+  const { mutateAsync: uploadAttachment } = useUploadAttachment();
+  const [isUploading, setIsUploading] = useState(false);
 
   const schema = useMemo(() => createFooterSchema(t), [t]);
 
   const form = useForm<FooterFormValues>({
     defaultValues: getFooterDefaultValues(footerToEdit),
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const handleUpdateFooter = async (data: FooterFormValues) => {
-    const statement_image = await uploadIfFile(
-      data.statement_image,
-      uploadAttachment,
-      "footer",
-    );
+    setIsUploading(true);
+    try {
+      const [statement_image, ...badge_images] = await Promise.all([
+        uploadIfFile(data.statement_image, uploadAttachment, "footer"),
+        ...data.badges.map((badge) =>
+          uploadIfFile(badge.image, uploadAttachment, "footer"),
+        ),
+      ]);
 
-    const formData = buildFooterFormData(data, {
-      statement_image,
-    });
+      const processedData: FooterFormValues = {
+        ...data,
+        statement_image,
+        badges: data.badges.map((badge, index) => ({
+          ...badge,
+          image: badge_images[index],
+        })),
+      };
 
-    updateFooter(formData);
+      const formData = buildFooterFormData(processedData, {
+        statement_image,
+        badge_images,
+      });
+
+      updateFooter(formData, {
+        onSuccess: () => form.reset(processedData),
+      });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return {
     form,
-    isLoading: Boolean(updateFooterLoading || uploadLoading),
+    isLoading: Boolean(updateFooterLoading || isUploading),
     handleUpdateFooter,
   };
 }

@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Support\Str;
 
 class ContactNotification extends Notification implements ShouldBroadcast
 {
@@ -31,19 +32,36 @@ class ContactNotification extends Notification implements ShouldBroadcast
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database', 'broadcast', 'redis'];
     }
 
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
+            'notify_type' => 'contact',
             'contact_id' => $this->data->id,
             'user_id'    => $this->data->user_id,
             'full_name'  => $this->data->full_name,
-            'title'      => trans('dashboard.contact.notification_message', ['name' => $this->data->full_name]),
-            'body'       => str_limit($this->data->content, 100),
+            'title'      => trans('You have a new message'),
+            'body'       => Str::limit($this->data->content, 100),
             'created_at' => date("Y-m-d h:i A"),
         ]);
+    }
+
+    public function toRedis($notifiable)
+    {
+        return [
+            "event" => "notification:" . $notifiable->id,
+            'data'  => [
+                'notify_type' => 'contact',
+                'contact_id'  => $this->data->id,
+                'user_id'     => $this->data->user_id,
+                'full_name'   => $this->data->full_name,
+                'title'       => trans('You have a new message'),
+                'body'        => Str::limit($this->data->content, 100),
+                'created_at'  => date("Y-m-d h:i A"),
+            ]
+        ];
     }
 
     /**
@@ -55,10 +73,13 @@ class ContactNotification extends Notification implements ShouldBroadcast
     public function toArray($notifiable)
     {
         return [
-            'contact_id'  => $this->data->id,
-            'title'       => trans('dashboard.contact.notification_message', ['name' => $this->data->full_name]),
-            'body'        => str_limit($this->data->content,100),
             'notify_type' => 'contact',
+            'contact_id'  => $this->data->id,
+            'user_id'     => $this->data->user_id,
+            'full_name'   => $this->data->full_name,
+            'title'       => trans('You have a new message'),
+            'body'        => Str::limit($this->data->content, 100),
+            'created_at'  => date("Y-m-d h:i A"),
         ];
     }
 }

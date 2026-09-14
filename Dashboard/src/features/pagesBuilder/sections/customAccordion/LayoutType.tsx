@@ -24,6 +24,10 @@ export default function LayoutType({ form, disabled, index }: SubSectionProps) {
       label: t("pages.custom_accordion.layout_with_button"),
     },
     {
+      value: CUSTOM_ACCORDION_TYPES.HEADING_ONLY,
+      label: t("pages.custom_accordion.layout_heading_only"),
+    },
+    {
       value: CUSTOM_ACCORDION_TYPES.WITH_MEDIA,
       label: t("pages.custom_accordion.layout_with_media"),
     },

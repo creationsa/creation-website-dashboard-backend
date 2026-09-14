@@ -18,7 +18,9 @@ export default function DeleteBlogButton({ blog }: DeleteBlogProps) {
   return (
     <Modal>
       <Modal.Open opens="deleteBlog">
-        <Button variation="delete">{t("general.delete")}</Button>
+        <Button variation="delete" size="small">
+          {t("general.delete")}
+        </Button>
       </Modal.Open>
 
       <Modal.Window name="deleteBlog">

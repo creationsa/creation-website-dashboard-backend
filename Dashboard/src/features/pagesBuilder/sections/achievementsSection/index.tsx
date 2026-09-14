@@ -1,9 +1,7 @@
 import SmartMediaField from "@/shared/components/smartMediaField";
-import Box from "@/shared/ui/Box";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
 import SubHeadTitle from "../../components/pagesBuilderForm/SubHeadTitle";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import type { SectionProps } from "../../types";
 import Header from "../header";
 import achievements from "./assets/achievements.png";
@@ -13,15 +11,11 @@ export default function AchievementsSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.achievements.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <SectionPreview
         src={achievements}
         alt={t("pages.achievements.achievements_preview")}
@@ -43,8 +37,6 @@ export default function AchievementsSection({
         <SubHeadTitle title={t("pages.achievements.stats_settings")} />
         <StatsConfigFields form={form} index={index} disabled={disabled} />
       </div>
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

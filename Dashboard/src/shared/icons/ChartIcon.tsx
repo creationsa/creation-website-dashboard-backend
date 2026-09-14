@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type ChartIconProps = SVGProps<SVGSVGElement>;
-
-export default function ChartIcon(props: ChartIconProps) {
+export default function ChartIcon(props: IconProps) {
   return (
     <Icon {...props} stroke="currentColor" fill="none">
       <g>

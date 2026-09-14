@@ -14,11 +14,6 @@ export const uploadAttachment = async (payload: UploadAttachmentPayload) => {
   const { data } = await instance.post<UploadAttachmentResponse>(
     "/general/attachments",
     formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    },
   );
 
   return data?.data;

@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type DeleteIconProps = SVGProps<SVGSVGElement>;
-
-export default function DeleteIcon(props: DeleteIconProps) {
+export default function DeleteIcon(props: IconProps) {
   return (
     <Icon {...props} stroke="currentColor" fill="none">
       <path

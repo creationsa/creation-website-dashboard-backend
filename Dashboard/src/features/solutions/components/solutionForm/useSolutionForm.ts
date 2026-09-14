@@ -1,7 +1,9 @@
+import type { MediaOnlyFeaturedItem } from "@/shared/components/dynamicFeaturedItemsFields/dynamicFeaturedItemsFieldsSchema";
 import { useUploadAttachment } from "@/shared/hooks/useUploadAttachment";
+import { uploadIfFile } from "@/shared/utils/uploadIfFile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useMemo, useState } from "react";
+import { useForm, type Resolver } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useCreateSolution } from "../../hooks/useCreateSolution";
 import { useUpdateSolution } from "../../hooks/useUpdateSolution";
@@ -18,47 +20,61 @@ export default function useSolutionForm(solutionToEdit?: SingleSolution) {
   const isEditingSession = Boolean(solutionToEdit);
 
   const { t } = useTranslation();
-  const { mutateAsync: uploadAttachment, isPending: uploadLoading } =
-    useUploadAttachment();
+  const { mutateAsync: uploadAttachment } = useUploadAttachment();
   const { addSolution, addSolutionLoading } = useCreateSolution();
   const { updateSolution, updateSolutionLoading } = useUpdateSolution();
+  const [isUploading, setIsUploading] = useState(false);
 
   const schema = useMemo(() => createSolutionSchema(t), [t]);
 
   const form = useForm<SolutionFormValues>({
     defaultValues: getSolutionDefaultValues(solutionToEdit),
-    resolver: zodResolver(schema),
-    mode: "onBlur",
+    resolver: zodResolver(schema) as Resolver<SolutionFormValues>,
+    mode: "onTouched",
   });
 
   const handleAddEditSolution = async (data: SolutionFormValues) => {
-    const [items] = await Promise.all([
-      processFeaturedItemsMedia(data.items, uploadAttachment, "pages"),
-    ]);
+    setIsUploading(true);
+    try {
+      const [items, cardIconFile] = await Promise.all([
+        processFeaturedItemsMedia<MediaOnlyFeaturedItem>(
+          data.items,
+          uploadAttachment,
+          "solutions",
+        ),
+        uploadIfFile(data.card_icon.file, uploadAttachment, "solutions"),
+      ]);
 
-    const processedData: SolutionFormValues = {
-      ...data,
-      items,
-    };
+      const processedData: SolutionFormValues = {
+        ...data,
+        items,
+        card_icon: { ...data.card_icon, file: cardIconFile },
+      };
 
-    const formData = buildSolutionFormData(processedData, {
-      isEdit: isEditingSession,
-    });
-
-    if (isEditingSession) {
-      updateSolution({
-        id: solutionToEdit!.id,
-        formData,
+      const formData = buildSolutionFormData(processedData, {
+        isEdit: isEditingSession,
       });
-    } else {
-      addSolution(formData);
+
+      if (isEditingSession) {
+        updateSolution(
+          {
+            id: solutionToEdit!.id,
+            formData,
+          },
+          { onSuccess: () => form.reset(processedData) },
+        );
+      } else {
+        addSolution(formData);
+      }
+    } finally {
+      setIsUploading(false);
     }
   };
 
   return {
     form,
     isLoading: Boolean(
-      addSolutionLoading || updateSolutionLoading || uploadLoading,
+      isUploading || addSolutionLoading || updateSolutionLoading,
     ),
     isEditingSession,
     handleAddEditSolution,

@@ -6,13 +6,17 @@ import { CloseIcon, HamburgerIcon } from "@/icons";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import NavLinkItem from "./NavLinkItem";
-import { NAV_LINKS } from "./navLinks";
 import { NavLinksProps } from "./types";
 
-export default function MobileMenu({ locale, nav }: NavLinksProps) {
+export default function MobileMenu({
+  locale,
+  logoUrl,
+  logoAlt,
+  menuItems,
+}: NavLinksProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+  const pathnameWithoutLocale = pathname?.replace(`/${locale}`, "") || "/";
 
   const toggleSidebar = () => setOpen((prev) => !prev);
 
@@ -36,12 +40,12 @@ export default function MobileMenu({ locale, nav }: NavLinksProps) {
           {/* OVERLAY */}
           <div className="fixed inset-0 z-100 h-full w-full bg-black/40 backdrop-blur-sm dark:bg-black/10" />
 
-          {/* Mobile Menu Overlay */}
+          {/* MOBILE MENU OVERLAY */}
           <nav
             ref={menuRef}
             className="bg-white-100 dark:bg-black-800 fixed end-0 bottom-0 z-101 flex h-full w-full flex-col gap-4 shadow-md drop-shadow-xl sm:w-[300px]"
           >
-            {/* CLOSE SIDEBAR BUTTON*/}
+            {/* CLOSE SIDEBAR BUTTON */}
             <div className="flex h-20 items-center justify-end px-2.5">
               <button aria-label="Close-icon" title="Close" onClick={closeMenu}>
                 <div className="flex items-center justify-center p-1">
@@ -52,16 +56,17 @@ export default function MobileMenu({ locale, nav }: NavLinksProps) {
 
             {/* LINKS */}
             <ul className="flex flex-1 flex-col gap-4 px-4 text-lg font-semibold uppercase">
-              {NAV_LINKS.map((link) => {
+              {menuItems?.map(({ key, href, label }) => {
+                const linkPath = href.replace(`/${locale}`, "") || "/";
                 const isActive =
-                  pathnameWithoutLocale === link.href ||
-                  pathnameWithoutLocale.startsWith(link.href + "/");
+                  pathnameWithoutLocale === linkPath ||
+                  pathnameWithoutLocale.startsWith(linkPath + "/");
 
                 return (
-                  <li key={link.href}>
+                  <li key={key}>
                     <NavLinkItem
-                      href={`/${locale}${link.href}`}
-                      label={nav[link.label]}
+                      href={`/${locale}/${href}`}
+                      label={label}
                       isActive={isActive}
                       onClick={closeMenu}
                     />
@@ -70,7 +75,7 @@ export default function MobileMenu({ locale, nav }: NavLinksProps) {
               })}
             </ul>
             <div className="border-border-800 dark:border-border-900 mt-auto flex flex-col items-center gap-6 border-t py-6">
-              <Logo locale={locale} />
+              <Logo locale={locale} logoUrl={logoUrl} logoAlt={logoAlt} />
             </div>
           </nav>
         </div>

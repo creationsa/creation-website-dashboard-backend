@@ -3,7 +3,7 @@
 namespace App\Http\Resources\Api\Dashboard\Admin\Role;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\Dashboard\Admin\Permission\PermissionResource;
+use App\Http\Resources\Api\Dashboard\Admin\Admin\{PermissionResource};
 
 class RoleResource extends JsonResource
 {

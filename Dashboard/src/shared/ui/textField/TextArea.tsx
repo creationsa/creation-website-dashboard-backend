@@ -15,6 +15,7 @@ export default function TextArea({
   ...rest
 }: TextAreaProps) {
   const { t } = useTranslation();
+
   const Styles = error ? STANDARD_STYLES.error : STANDARD_STYLES.default;
   return (
     <div className="w-full">
@@ -24,9 +25,9 @@ export default function TextArea({
         {...rest}
         {...(register ? register : {})}
         id={name}
-        className={`input hide-scrollbar w-full resize-none overflow-y-auto rounded-xl ps-2.5 pt-2 placeholder-gray-900 outline-none dark:placeholder-gray-100 ${disabled ? "cursor-not-allowed bg-gray-100! text-gray-900! dark:bg-gray-900! dark:text-gray-100!" : Styles} `}
+        className={`input hide-scrollbar w-full resize-none overflow-y-auto rounded-xl px-2.5 py-2 placeholder-gray-900 outline-none dark:placeholder-gray-100 ${disabled ? "cursor-not-allowed bg-gray-100! text-gray-900! dark:bg-gray-900! dark:text-gray-100!" : Styles} `}
         disabled={disabled}
-        // dir="auto"
+        dir="auto"
         rows={rows}
         placeholder={
           placeholder ||

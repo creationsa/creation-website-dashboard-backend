@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Api\Dashboard\Admin\Permission;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
 class PermissionIndexResource extends JsonResource
 {
     /**
@@ -15,11 +14,11 @@ class PermissionIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id"                        => (int) $this->id,
-            "back_route_name"           => (string) $this->back_route_name,
-            "front_route_name"          => (string) $this->front_route_name,
-            "icon"                      => (string) $this->icon,
-            "title"                     => (string) $this->title,
+            "id"               => (int) $this->id,
+            "back_route_name"  => (string) $this->back_route_name,
+            "front_route_name" => (string) $this->front_route_name,
+            "icon"             => (string) $this->icon,
+            "title"            => (string) str_replace(".","_",strtolower($this->title)),
         ];
     }
 }

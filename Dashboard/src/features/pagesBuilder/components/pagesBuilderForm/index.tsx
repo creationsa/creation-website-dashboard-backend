@@ -1,6 +1,6 @@
 import PageTabs from "@/shared/components/pageTabs";
 import SeoForm from "@/shared/components/seoForm";
-import { useGetSeoDataByModal } from "@/shared/hooks/useGetSeoDataByModal";
+import { useGetSeoDataById } from "@/shared/hooks/useGetSeoDataById";
 import Button from "@/shared/ui/Button";
 import PageTitle from "@/shared/ui/PageTitle";
 import Spinner from "@/shared/ui/spinner/Spinner";
@@ -12,14 +12,33 @@ import SectionSelector from "./SectionSelector";
 import SectionsList from "./SectionsList";
 import { usePageForm } from "./usePageForm";
 
-export default function PagesBuilderForm({ dataToEdit }: PageFormProps) {
+export default function PagesBuilderForm({
+  dataToEdit,
+  id,
+  metadataId,
+}: PageFormProps) {
   const { t } = useTranslation();
-  const { seoData, isSeoLoading } = useGetSeoDataByModal("pages");
+  const { seoData, isSeoLoading } = useGetSeoDataById(metadataId ?? undefined);
   const [activeTab, setActiveTab] = useState<"content" | "seo">("content");
 
-  const { form, fields, appendSection, remove, onSubmit, isEditingSession } =
-    usePageForm(dataToEdit);
+  const {
+    form,
+    fields,
+    appendSection,
+    remove,
+    move,
+    onSubmit,
+    isLoading,
+    isEditingSession,
+  } = usePageForm(dataToEdit, id);
   const isEditMode = !!dataToEdit;
+
+  const {
+    formState: { isDirty, isValid },
+  } = form;
+
+  const isSubmitDisabled =
+    isLoading || !isValid || (isEditingSession && !isDirty);
 
   if (isSeoLoading) return <Spinner size="lg" />;
 
@@ -47,19 +66,32 @@ export default function PagesBuilderForm({ dataToEdit }: PageFormProps) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-6"
         >
-          <PageMetaFields form={form} />
+          <PageMetaFields form={form} disabled={isLoading} />
 
-          <SectionSelector onSelect={appendSection} />
+          <SectionSelector onSelect={appendSection} disabled={isLoading} />
 
-          <SectionsList fields={fields} form={form} onRemove={remove} />
+          <SectionsList
+            fields={fields}
+            form={form}
+            onRemove={remove}
+            onMove={move}
+            disabled={isLoading}
+          />
 
-          <Button type="submit" className="ms-auto mt-6 w-full sm:w-44">
+          <Button
+            type="submit"
+            className="ms-auto mt-6 w-full sm:w-44"
+            loading={isLoading}
+            disabled={isSubmitDisabled}
+          >
             {isEditMode ? t("general.update") : t("general.add")}
           </Button>
         </form>
       )}
 
-      {activeTab === "seo" && <SeoForm seoData={seoData} forType="page" />}
+      {activeTab === "seo" && (
+        <SeoForm seoData={seoData} metadataId={id} metadataableType="page" />
+      )}
     </>
   );
 }

@@ -15,12 +15,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
-  const [common, seoData] = await Promise.all([
-    getTrans(locale, "common"),
+  const [{ site_name }, seoData] = await Promise.all([
+    getSeoForPage("home", locale),
     getSeoForPage("blogs", locale),
   ]);
 
-  const { title, description, image } = seoData;
+  const {
+    title: seoTitle,
+    description,
+    image,
+    image_alt,
+    image_type,
+  } = seoData;
+
+  const title = `${site_name} | ${seoTitle}`;
 
   const keywords = seoData.keywords
     ? parseKeywords(seoData.keywords)
@@ -55,8 +63,8 @@ export async function generateMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: common.creation,
-          type: "image/jpeg",
+          alt: image_alt,
+          type: image_type || "image/jpeg",
         },
       ],
     },

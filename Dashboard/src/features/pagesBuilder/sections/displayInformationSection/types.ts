@@ -1,6 +1,5 @@
-import type { FieldErrors, UseFormReturn } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import type { PageFormValues } from "../../components/pagesBuilderForm/pageSchema";
-import type { DisplayInfoFormValues } from "./displayInfoSchema";
 
 export interface RowBlockProps {
   form: UseFormReturn<PageFormValues>;
@@ -11,19 +10,15 @@ export interface RowBlockProps {
   isDeleteDisabled: boolean;
 }
 
-export interface LeftTextFieldsProps extends Pick<
+export type LeftTextFieldsProps = Pick<
   RowBlockProps,
   "form" | "sectionIndex" | "blockIndex" | "disabled"
-> {
-  errors?: FieldErrors<DisplayInfoFormValues["blocks"][number]>;
-}
+>;
 
 export type ImageCardPrefix = "first_right" | "second_right";
 
-export interface RightImageCardFieldsProps extends Pick<
-  RowBlockProps,
-  "form" | "sectionIndex" | "blockIndex" | "disabled"
-> {
+export interface RightImageCardFieldsProps
+  extends Pick<RowBlockProps, "form" | "sectionIndex" | "blockIndex" | "disabled"> {
   prefix: ImageCardPrefix;
-  errors?: FieldErrors<DisplayInfoFormValues["blocks"][number]>;
+  otherCardProjectId?: number | null;
 }

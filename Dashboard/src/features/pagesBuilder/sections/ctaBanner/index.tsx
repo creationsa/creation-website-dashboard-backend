@@ -1,10 +1,8 @@
-import Box from "@/shared/ui/Box";
 import Input from "@/shared/ui/textField/Input";
 import TextArea from "@/shared/ui/textField/TextArea";
 import { type FieldErrors } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import type { SectionProps } from "../../types";
 import cta from "./assets/cta.png";
 import type { CtaBannerFormValues } from "./ctaBannerSchema";
@@ -13,7 +11,6 @@ export default function CtaBannerSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
   const {
@@ -26,10 +23,7 @@ export default function CtaBannerSection({
     | undefined;
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.cta_banner.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <SectionPreview src={cta} alt={t("pages.cta_banner.cta_preview")} />
 
       <div className="grid grid-cols-1 gap-3 rounded-xl border p-4 md:grid-cols-2 lg:gap-5">
@@ -89,8 +83,6 @@ export default function CtaBannerSection({
           disabled={disabled}
         />
       </div>
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

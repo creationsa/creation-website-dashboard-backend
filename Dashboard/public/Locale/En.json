@@ -36,7 +36,10 @@
     "title": "Title",
     "upload_file": "Upload File",
     "click_to_browse": "Click to browse",
+    "invalid_image_type": "Only PNG, JPG, JPEG and SVG images are allowed",
     "something_went_wrong": "Something went wrong",
+    "error_desc": "An unexpected error occurred. Reloading the page usually fixes it.",
+    "reload_page": "Reload Page",
     "created_done": "Added successfully",
     "updated_done": "Updated successfully",
     "deleted_done": "Delete successfully",
@@ -46,6 +49,8 @@
     "title_ar": "Title (Arabic)",
     "desc_en": "Description (English)",
     "desc_ar": "Description (Arabic)",
+    "sub_desc_en": "Sub-description (English)",
+    "sub_desc_ar": "Sub-description (Arabic)",
 
     "first_title_part_en": "First Title Part (English)",
     "second_title_part_en": "Second Title Part (English)",
@@ -63,10 +68,23 @@
     "image_alt_en": "Image Alt Text (English)",
     "image_alt_ar": "Image Alt Text (Arabic)",
     "link": "Link",
-    "images": "Images"
+    "images": "Images",
+    "choose_page_that_you_want_to_add": "Choose the page that you want to add",
+
+    "page_title_settings": "Page title settings",
+    "nav_title_hint": "The title above appears as the menu link label on the website, and the slug below is the page's actual URL.",
+
+    "placeholder_logos_title": "Clients Logos",
+    "placeholder_logos_hint": "This is only a placeholder marking where the clients logos section goes in the page layout — the actual logos are edited from the Clients tab.",
+    "search_placeholder": "Search {{title}}...",
+    "newest_first": "Newest first",
+    "oldest_first": "Oldest first",
+    "no_results_title": "No results found",
+    "no_results_desc": "Try adjusting your search keyword."
   },
   "errors": {
     "fieldRequired": "This field is required",
+    "svgFileRequired": "Only SVG files are allowed",
     "onlySpaces": "Should not contain spaces only",
     "onlyText": "Letters only",
     "minLength": "Enter at least {{count}} characters",
@@ -97,10 +115,24 @@
     "description": "Description",
     "image_en": "Image (English)",
     "image_ar": "Image (Arabic)",
-    "keywords": "Keywords"
+    "image_alt_en": "Image Alt Text (English)",
+    "image_alt_ar": "Image Alt Text (Arabic)",
+    "keywords": "Keywords",
+    "pick_from_project_images": "Pick from project images",
+    "upload_custom_image": "Upload a custom image",
+    "choose_project_image": "Choose one of this project's images",
+    "image_fallback_hint": "Leave empty to use the main SEO image from Settings instead.",
+    "keywords_fallback_hint": "Leave empty to use the main SEO keywords from Settings instead.",
+    "site_name": "Site Name",
+    "site_name_en": "Site Name (English)",
+    "site_name_ar": "Site Name (Arabic)"
   },
   "statistics": {
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "overview": "Content Overview",
+    "recent_activity": "Recently Updated",
+    "no_recent_activity": "No recent activity yet",
+    "updated": "Updated"
   },
   "blogs": {
     "title": "Blogs",
@@ -109,6 +141,9 @@
     "manage_blogs": "Manage Blogs",
     "no_blog_title": "No Blogs Yet",
     "no_blog_desc": "Published blogs will appear here once they are created.",
+    "nav_section": "Listing Page Navigation",
+    "nav_title_en": "Navigation Title (English)",
+    "nav_title_ar": "Navigation Title (Arabic)",
     "show_in_home": "Show in Home page",
     "slug": "Slug",
     "slug_en": "Slug (English)",
@@ -136,28 +171,108 @@
     "point_desc_en": "Point Description (English)",
     "point_desc_ar": "Point Description (Arabic)",
     "visible_on_home": " Visible on home page",
-    "hidden_from_home": "Hidden from home page"
+    "hidden_from_home": "Hidden from home page",
+
+    "blogs_main_page": "Blogs main page"
   },
   "settings": {
     "settings": "Settings",
-    "instagram": "Instagram",
-    "facebook": "Facebook",
-    "behance": "Behance",
-    "linkedin": "LinkedIn",
+    "socials": "Social Links",
     "logo_en": "English Logo",
-    "logo_ar": "Arabic Logo"
+    "logo_ar": "Arabic Logo",
+    "social_link_management": "Socials Management",
+    "add_new_social": "Add New Social",
+    "social_link_row": "Social Link #{{index}}"
+  },
+  "blockControls": {
+    "ticker_item_management": "Ticker Items Management",
+    "add_new_ticker_item": "Add New Ticker Item",
+    "ticker_item_row": "Ticker Item #{{index}}",
+    "accordion_item_management": "Accordion Items Management",
+    "add_new_accordion_item": "Add New Accordion Item",
+    "accordion_item_row": "Accordion Item #{{index}}"
   },
   "header": {
-    "header": "Header"
+    "header": "Header",
+    "logo_hint": "The logo shown here is pulled from Settings and can't be changed from this form.",
+    "menu_section": "Menu",
+    "menu_items_label": "Menu items",
+    "toggles_section": "Display Toggles",
+    "language_switch": "Language Switcher",
+    "theme_switch": "Dark / Light Mode Switcher",
+    "visible": "Visible",
+    "hidden": "Hidden"
+  },
+  "projectPicker": {
+    "enter_manually": "Enter manually",
+    "pick_existing_project": "Pick an existing project",
+    "choose_project": "Choose a project",
+    "project_required": "Please choose a project",
+    "loading_projects": "Loading projects…"
+  },
+  "solutionPicker": {
+    "enter_manually": "Enter manually",
+    "pick_existing_solution": "Pick an existing solution",
+    "choose_solution": "Choose a solution",
+    "solution_required": "Please choose a solution",
+    "loading_solutions": "Loading solutions…"
+  },
+  "blogPicker": {
+    "enter_manually": "Enter manually",
+    "pick_existing_blog": "Pick an existing blog",
+    "choose_blog": "Choose a blog",
+    "blog_required": "Please choose a blog",
+    "loading_blogs": "Loading blogs…"
   },
   "footer": {
     "footer": "Footer",
-    "statement": "Statement Text",
-    "statement_image": "Statement Image"
+    "statement": "Statement",
+    "statement_image": "Statement Image",
+
+    "creation_section": "Creation Block",
+    "creation_logo_hint": "The logo shown here is pulled from Settings and can't be changed from this form.",
+    "tagline_en": "Tagline (English)",
+    "tagline_ar": "Tagline (Arabic)",
+
+    "menu_section": "Menu",
+    "menu_title_en": "Menu Title (English)",
+    "menu_title_ar": "Menu Title (Arabic)",
+    "menu_items_label": "Menu items",
+
+    "social_section": "Social Links",
+    "social_title_en": "Social Title (English)",
+    "social_title_ar": "Social Title (Arabic)",
+    "social_items_label": "Social links",
+
+    "copyright_section": "Copyright Row",
+    "copyright_text_en": "Copyright Text (English)",
+    "copyright_text_ar": "Copyright Text (Arabic)",
+    "copyright_text_hint_before": "Type",
+    "copyright_text_hint_after": "anywhere in the text and it will automatically be replaced with the current year ({{currentYear}}) when shown on the site — if you leave it out, the text stays exactly as written.",
+    "copyright_items_label": "Copyright links",
+
+    "badges_section": "Trust Badges",
+    "badge_image": "Badge Image ({{index}})",
+    "badge_label_en": "Badge Label (English)",
+    "badge_label_ar": "Badge Label (Arabic)",
+    "badge_link": "Badge Link",
+    "choose_socials": "Choose the social links you want to show"
+  },
+  "clients": {
+    "clients": "Clients",
+    "title_section": "Section Title",
+    "title_en_label": "Title (English)",
+    "title_ar_label": "Title (Arabic)",
+    "logos_section": "Logos",
+    "logo_image_label": "Brand Logo Image",
+    "logo_management": "Client Logos Management",
+    "add_new_logo": "Add New Logo",
+    "logo_row": "Logo #{{index}}"
   },
   "projects": {
     "title": "Projects",
     "manage_projects": "Manage Projects",
+    "video_badge": "Video",
     "project": "Project",
     "titleWithArticle": "Project",
     "no_project_title": "No Projects Yet",
@@ -167,6 +282,8 @@
     "first_cover_media": "First Cover Media",
     "overview_description_en": "Overview Description (English)",
     "overview_description_ar": "Overview Description (Arabic)",
+    "nav_title_en": "Navigation Title (English)",
+    "nav_title_ar": "Navigation Title (Arabic)",
 
     "second_cover_media": "Second Cover Media",
     "stats_section": "Stats Section",
@@ -192,23 +309,58 @@
     "seventh_media": "Seventh Media",
     "eighth_media": "Eighth Media",
 
-    "news_section": "News Section"
+    "use_as_all_projects_cover": "Use as All Projects cover",
+    "use_as_feature_image": "Use as Feature Image",
+    "selected_as_cover": "Selected as cover",
+    "not_selected_as_cover": "Not selected",
+    "cover_media_field_required": "Pick an image to use as the All Projects cover",
+    "feature_media_field_required": "Pick an image to use as the Feature Image",
+    "cover_toggle_noop_hint": "Choose another image to replace this one as the cover",
+    "feature_toggle_noop_hint": "Choose another image to replace this one as the feature image",
+
+    "news_section": "News Section",
+
+    "projects_main_page": "Projects main page",
+
+    "main_project_page_preview": "Main Project Section Layout Preview",
+    "header_overview_section": "Header & Overview"
   },
   "solutions": {
     "title": "Solutions",
     "manage_solutions": "Manage Solutions",
+    "service_management": "Services Management",
+    "add_new_service": "Add New Service",
+    "service_row": "Service #{{index}}",
+    "capability_management": "Capabilities Management",
+    "add_new_capability": "Add New Capability",
+    "capability_row": "Capability #{{index}}",
+    "gallery_section": "Gallery",
+    "gallery_item_management": "Gallery Management",
+    "add_new_gallery_item": "Add New Gallery Item",
+    "gallery_item_row": "Gallery Item #{{index}}",
     "solution": "Solution",
     "titleWithArticle": "Solution",
     "no_solution_title": "No solutions Yet",
     "no_solution_desc": "Published solutions will appear here once they are created.",
 
+    "nav_title_en": "Navigation Title (English)",
+    "nav_title_ar": "Navigation Title (Arabic)",
+
+    "header_section": "Header Section",
+    "services_section": "What We Offer",
     "news_section": "News Section",
+    "capabilities_section": "Capabilities Section",
 
     "proposition_section": "Value Proposition",
     "proposition_title_en": "Value Proposition Title (English)",
     "proposition_title_ar": "Value Proposition Title (Arabic)",
     "proposition_desc_en": "Value Proposition Description (English)",
     "proposition_desc_ar": "Value Proposition Description (Arabic)",
+    "small_description_en": "Small Description (English)",
+    "small_description_ar": "Small Description (Arabic)",
+
+    "card_icon": "Card Icon",
+    "card_icon_label": "Icon (SVG only)",
 
     "execution_framework_section": "Execution Framework",
     "execution_title_en": "Execution Framework Title (English)",
@@ -217,7 +369,9 @@
     "execution_label_en": "Label (English)",
     "execution_label_ar": "Label (Arabic)",
     "execution_value_en": "Value (English)",
-    "execution_value_ar": "Value (Arabic)"
+    "execution_value_ar": "Value (Arabic)",
+
+    "solutions_main_page": "Solutions main page"
   },
   "pages": {
     "titleWithArticle": "Page",
@@ -225,18 +379,45 @@
     "new_page": "New Page",
     "update_page": "Existing Page",
     "title": "Pages Builder",
+    "featured_work_management": "Featured Works Management",
+    "add_new_featured_work": "Add New Featured Work",
+    "featured_work_row": "Featured Work #{{index}}",
+    "text_block_management": "Text Blocks Management",
+    "add_new_text_block": "Add New Text Block",
+    "text_block_row": "Text Block #{{index}}",
+    "point_management": "Points Management",
+    "add_new_point": "Add New Point",
+    "display_row_management": "Rows Management",
+    "add_new_display_row": "Add New Row",
+    "display_row": "Row #{{index}}",
+    "list_item_management": "List Items Management",
+    "add_new_list_item": "Add New List Item",
+    "list_item_row": "List Item #{{index}}",
+    "blog_item_management": "Blog Items Management",
+    "add_new_blog_item": "Add New Blog Item",
+    "blog_item_row": "Blog Item #{{index}}",
     "new_dynamic_page": "Create a new dynamic page",
     "page_title_en": "Page title (English)",
     "page_title_ar": "Page title (Arabic)",
     "page_slug_en": "Page Slug (English)",
+    "is_home_label": "Homepage",
+    "is_home_on": "This is the homepage",
+    "is_home_off": "Not the homepage",
+    "is_home_slug_hint": "This page is served at the root URL (/) — the slug above isn't used.",
     "add_new_section": "Add New Section",
     "choose_section": "Choose the section you want to add",
     "content": "Content",
     "seo": "SEO",
+    "seo_tab_disabled_hint": "Save the item first to unlock its SEO settings.",
     "add_item": "Add New Item",
     "items_management": "Items Management",
     "delete_the_block": "Delete this block completely",
+    "confirm_delete_section": "Are you sure you want to delete this section?",
     "item_row": "Item Row #{{index}}",
+    "collapse_section": "Collapse section",
+    "expand_section": "Expand section",
+    "move_section_up": "Move up",
+    "move_section_down": "Move down",
     "no_page_title": "No Pages Yet",
     "no_page_desc": "Published pages will appear here once they are created.",
     "layout_preview": "Live UI Component Preview",
@@ -247,7 +428,14 @@
       "acc_title_en": "Accordion Item Title (English)",
       "acc_title_ar": "Accordion Item Title (Arabic)",
       "acc_content_en": "Accordion Item Content (English)",
-      "acc_content_ar": "Accordion Item Content (Arabic)"
+      "acc_content_ar": "Accordion Item Content (Arabic)",
+      "block_subtitle_en": "Subtitle (English) — optional",
+      "block_subtitle_ar": "Subtitle (Arabic) — optional",
+      "block_description_en": "Description (English)",
+      "block_description_ar": "Description (Arabic)",
+      "content_block_management": "Content Blocks",
+      "add_content_block": "Add New Content Block",
+      "content_block_row": "Content Block #{{index}}"
     },
     "banner_section": {
       "section_title": "Banner Section",
@@ -266,11 +454,16 @@
 
       "right_side_images": "Right side (Cards / Elements)",
       "left_side_texts": "Left side (texts)",
+      "pick_project_label": "Pick an existing project",
+      "pick_solution_label": "Pick an existing solution",
+      "upload_media": "Upload Image",
+      "duplicate_project": "This project is already used by the other card in this item — pick a different one",
 
       "left_title_en": "Left Title (English)",
       "left_title_ar": "Left Title (Arabic)",
       "left_desc_en": "Left Description (English)",
       "left_desc_ar": "Left Description (Arabic)",
+      "left_btn_slug": "Button Link / Slug",
       "left_btn_en": "Button Text (English)",
       "left_btn_ar": "Button Text (Arabic)",
 
@@ -279,17 +472,21 @@
       "first_right_card_title_ar": "First Card Title (Arabic)",
       "first_right_card_desc_en": "First Card Description (English)",
       "first_right_card_desc_ar": "First Card Description (Arabic)",
+      "first_right_slug": "First Card Link / Slug",
 
       "second_right_media": "Second Media",
       "second_right_card_title_en": "Second Card Title (English)",
       "second_right_card_title_ar": "Second Card Title (Arabic)",
       "second_right_card_desc_en": "Second Card Description (English)",
       "second_right_card_desc_ar": "Second Card Description (Arabic)",
+      "second_right_slug": "Second Card Link / Slug",
 
       "display_info_preview": "Display Information Section Layout Preview"
     },
     "featured_works": {
       "section_title": "Featured Works Section",
+      "pick_project_label": "Pick an existing project",
+      "duplicate_project": "This project is already used by another item in this section — pick a different one",
       "item_image": "Item Image",
       "item_title_en": "Item Title (English)",
       "item_title_ar": "Item Title (Arabic)",
@@ -319,19 +516,73 @@
 
       "achievements_preview": "Achievements & Video Vision Section Layout Preview"
     },
+    "reviews": {
+      "section_title": "Trust / Reviews Section",
+      "description_settings": "Header Description",
+      "items_settings": "Trust Badges (exactly 2)",
+      "logo_image": "Badge Logo Image",
+      "item_title_en": "Title (English)",
+      "item_title_ar": "Title (Arabic)",
+      "item_description_en": "Description (English)",
+      "item_description_ar": "Description (Arabic)",
+      "link_text_en": "Link Text (English)",
+      "link_text_ar": "Link Text (Arabic)",
+      "link_url": "Link URL",
+      "reviews_preview": "Trust / Reviews Section Layout Preview"
+    },
+    "blogs_teaser": {
+      "section_title": "Blogs Teaser",
+      "button_section": "\"View All\" Button",
+      "button_title_en": "Button Title (English)",
+      "button_title_ar": "Button Title (Arabic)",
+      "button_slug_en": "Button Link (Slug)",
+      "pick_blog_label": "Pick an existing blog",
+      "item_image": "Item Image",
+      "item_title_en": "Item Title (English)",
+      "item_title_ar": "Item Title (Arabic)",
+      "item_slug_en": "Item Slug (English)"
+    },
+    "contact_section": {
+      "section_title": "Contact Form Placeholder",
+      "placeholder_title": "Contact Form",
+      "placeholder_hint": "This is only a placeholder marking where the contact form goes in the page layout — the actual form isn't editable from the dashboard.",
+      "contact_preview": "Contact Form Section Layout Preview"
+    },
+    "text_list_section": {
+      "section_title": "Text Items List",
+      "sticky_sidebar_toggle_label": "Sticky Sidebar",
+      "sticky_sidebar_enabled": "Enabled",
+      "sticky_sidebar_disabled": "Disabled",
+      "sections_label_en": "Sticky List Label (English)",
+      "sections_label_ar": "Sticky List Label (Arabic)",
+      "sticky_description_en": "Sticky Sidebar Intro (English)",
+      "sticky_description_ar": "Sticky Sidebar Intro (Arabic)",
+      "item_header_en": "Item Header (English)",
+      "item_header_ar": "Item Header (Arabic)",
+      "body_type_description": "Description",
+      "body_type_list": "Bullet Point List",
+      "add_description_block": "+ Add Description",
+      "add_list_block": "+ Add List",
+      "remove_block": "Remove",
+      "description_en": "Description (English)",
+      "description_ar": "Description (Arabic)",
+      "point_text_en": "Point Text (English)",
+      "point_text_ar": "Point Text (Arabic)",
+      "remove_point": "Remove Point"
+    },
     "culture_identity": {
       "section_title": "Culture & Identity Hero Zone",
       "top_left_corner": "Top-Left Corner Text",
       "top_right_corner": "Top-Right Corner Text",
       "text_en": "Text (English)",
       "text_ar": "Text (Arabic)",
+      "second_text_en": "Second Text (English)",
+      "second_text_ar": "Second Text (Arabic)",
       "center_content_group": "Overlay Central Typography (On Image)",
       "center_title_en": "Main Title (English)",
       "center_title_ar": "Main Title (Arabic)",
       "center_description_en": "Sub-Description Text (English)",
       "center_description_ar": "Sub-Description Text (Arabic)",
-      "center_footer_text_en": "Bottom Brand Tag/Logo text (English)",
-      "center_footer_text_ar": "Bottom Brand Tag/Logo text (Arabic)",
       "main_image": "Hero Graphic / Background Image",
       "image_alt_en": "Image Alt (English)",
       "image_alt_ar": "Image Alt (Arabic)",
@@ -376,7 +627,8 @@
       "overlay_label_title_en": "Overlay Label (English)",
       "overlay_label_title_ar": "Overlay Label (Arabic)",
       "stats_section_title": "Bottom Metrics & Statistics Row",
-      "stat_number": "Stat {{num}} Value / Number",
+      "stat_number_en": "Stat {{num}} Value / Number (English)",
+      "stat_number_ar": "Stat {{num}} Value / Number (Arabic)",
       "stat_label_en": "Stat {{num}} Label (English)",
       "stat_label_ar": "Stat {{num}} Label (Arabic)",
       "advanced_overview_preview": "Advanced Overview Section Layout Preview"
@@ -385,11 +637,14 @@
       "section_title": "Interactive Content Builder (Accordion Blocks)",
       "layout_type_label": "Section Layout Presentation Style",
       "layout_with_button": "Split Header Layout (Heading + CTA Button Right)",
+      "layout_heading_only": "Split Header Layout (Heading)",
       "layout_with_media": "Stacked Banner Layout (Heading + Full Width Media Banner)",
       "action_text_en": "CTA Button Title (English)",
       "action_text_ar": "CTA Button Title (Arabic)",
       "action_slug": "CTA Button Navigation Target Path",
       "banner_media_label": "Section Broad Top Banner Media File",
+      "side_label_en": "Side Label (English)",
+      "side_label_ar": "Side Label (Arabic)",
       "custom_accordion_preview": "Interactive Content Builder Section Layout Preview"
     },
     "cta_banner": {
@@ -405,9 +660,6 @@
     },
     "logos": {
       "section_title": "Logos Carousel Slider",
-      "title_en_label": "Section Title (English)",
-      "title_ar_label": "Section Title (Arabic)",
-      "logo_image_label": "Brand Logo Image",
       "logos_preview": "Logos Section Layout Preview"
     }
   }

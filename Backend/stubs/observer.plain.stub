@@ -1,0 +1,26 @@
+<?php
+
+namespace {{ namespace }};
+
+class {{ class }}
+{
+     public function saved({{ modelName }} ${{ modelSmall }})
+    {
+        if (request()->has('image')) {
+            $image =  request()->image  ;
+           
+            if (${{ modelSmall }}->media()->where('option', 'image')->exists()) {
+                $image = AppMedia::where(['app_mediaable_type' => 'App\Models\{{ modelName }}','app_mediaable_id' => ${{ modelSmall }}->id ,'media_type' => 'image','option' => 'image'])->first();
+                if (file_exists(storage_path('app/public/images/{{ modelSmall }}s/'.$image->media))){
+                    \File::delete(storage_path('app/public/images/{{ modelSmall }}s/'.$image->media));
+                }
+                $image->delete();
+                ${{ modelSmall }}->media()->create(['media' => request()->image,'media_type' => 'image','option' => 'image']);
+            } else {
+                    ${{ modelSmall }}->media()->create(['media' => request()->image,'media_type' => 'image','option' => 'image']);
+            }
+        }
+       
+        
+    }
+}

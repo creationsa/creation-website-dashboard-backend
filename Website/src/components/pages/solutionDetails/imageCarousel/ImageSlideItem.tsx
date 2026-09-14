@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SmartMedia from "@/components/ui/SmartMedia";
 import { ImageSlideItemProps } from "../types";
 
 export default function ImageSlideItem({
@@ -8,11 +8,11 @@ export default function ImageSlideItem({
 }: ImageSlideItemProps) {
   return (
     <div className="relative aspect-4/6 w-full overflow-hidden">
-      <Image
-        src={src}
+      <SmartMedia
+        media={src}
         alt={`${solutionTitle} ${index + 1}`}
-        fill
-        className="object-cover sm:grayscale"
+        className="absolute inset-0 h-full w-full object-cover sm:grayscale"
+        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
       />
     </div>
   );

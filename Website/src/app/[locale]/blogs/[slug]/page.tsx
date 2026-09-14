@@ -7,6 +7,7 @@ import { getBlogSlugs } from "@/components/pages/blogsDetails/getBlogSlugs";
 import NextTwoBlogs from "@/components/pages/blogsDetails/NextTwoBlogs";
 import { BlogDetailsProps } from "@/components/pages/blogsDetails/types";
 import { Languages } from "@/constants/enums";
+import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import getTrans from "@/lib/translation";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -16,12 +17,12 @@ export async function generateMetadata({
 }: BlogDetailsProps): Promise<Metadata> {
   const { slug, locale } = await params;
 
-  const [common, blogData] = await Promise.all([
-    getTrans(locale, "common"),
+  const [{ site_name }, blogData] = await Promise.all([
+    getSeoForPage("home", locale),
     getBlogBySlug(slug, locale),
   ]);
 
-  const title = `${common.creation} | ${blogData?.title}`;
+  const title = `${site_name} | ${blogData?.title}`;
   const description = blogData?.seo_desc;
   const currentUrl = `https://www.creation.sa/${locale}/blogs/${slug}`;
 

@@ -17,6 +17,8 @@ class CityItemResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'governrate_id' => $this->governrate_id,
+            'is_active' => (bool) $this->is_active,
         ];
 
     }

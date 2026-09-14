@@ -1,5 +1,10 @@
 import { createHeaderSchema } from "@/shared/components/headerFields/headerSchema";
-import { createLogosSchema } from "@/shared/components/logosFields/logosSectionSchema";
+import {
+  MAX_SLUG_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_SLUG_LENGTH,
+  MIN_TITLE_LENGTH,
+} from "@/shared/constants/constants";
 import { englishField, normalField } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
 import { z } from "zod";
@@ -12,14 +17,20 @@ import { createCultureIdentitySchema } from "../../sections/cultureIdentity/cult
 import { createCustomAccordionSchema } from "../../sections/customAccordion/customAccordionSchema";
 import { createDisplayInfoSchema } from "../../sections/displayInformationSection/displayInfoSchema";
 import { createFeaturedWorksSchema } from "../../sections/featuredWorksSection/featuredWorksSchema";
+import { createLogosSchema } from "../../sections/logos/logosSchema";
 import { createMediaContentSchema } from "../../sections/mediaContentSection/mediaContentSchema";
+import { createContactSchema } from "../../sections/contactSection/contactSchema";
+import { createBlogsTeaserSchema } from "../../sections/blogsTeaser/blogsTeaserSchema";
 import { createNewsTickerSchema } from "../../sections/newsTickerSection/newsTickerSchema";
+import { createReviewsSchema } from "../../sections/reviewsSection/reviewsSchema";
+import { createTextListSchema } from "../../sections/textListSection/textListSchema";
 
 export const createPageSchema = (t: TFunction) =>
   z.object({
-    page_title_en: englishField(t, 3, 100),
-    page_title_ar: normalField(t, 3, 100),
-    page_slug_en: englishField(t, 3, 100),
+    page_title_en: englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    page_title_ar: normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    page_slug_en: englishField(t, MIN_SLUG_LENGTH, MAX_SLUG_LENGTH),
+    is_home: z.boolean(),
 
     sections: z.array(
       z.discriminatedUnion("type", [
@@ -81,7 +92,27 @@ export const createPageSchema = (t: TFunction) =>
         z.object({
           id: z.string().optional(),
           type: z.literal(SECTION_TYPES.LOGOS),
-          content: createLogosSchema(t),
+          content: createLogosSchema(),
+        }),
+        z.object({
+          id: z.string().optional(),
+          type: z.literal(SECTION_TYPES.REVIEWS),
+          content: createReviewsSchema(t),
+        }),
+        z.object({
+          id: z.string().optional(),
+          type: z.literal(SECTION_TYPES.BLOGS_TEASER),
+          content: createBlogsTeaserSchema(t),
+        }),
+        z.object({
+          id: z.string().optional(),
+          type: z.literal(SECTION_TYPES.CONTACT),
+          content: createContactSchema(),
+        }),
+        z.object({
+          id: z.string().optional(),
+          type: z.literal(SECTION_TYPES.TEXT_LIST),
+          content: createTextListSchema(t),
         }),
       ]),
     ),

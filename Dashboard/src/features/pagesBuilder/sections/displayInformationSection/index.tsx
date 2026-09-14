@@ -1,9 +1,7 @@
-import Box from "@/shared/ui/Box";
 import { useFieldArray } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import SectionPreview from "../../components/SectionPreview";
-import AddNewBlock from "../../components/pagesBuilderForm/AddNewBlock";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
+import SectionPreview from "../../../../shared/components/sectionPreview";
+import AddNewBlock from "@/shared/components/blockControls/AddNewBlock";
 import type { SectionProps } from "../../types";
 import Header from "../header";
 import RowBlockForm from "./RowBlockForm";
@@ -14,7 +12,6 @@ export default function DisplayInformationSection({
   form,
   index,
   disabled,
-  onRemove,
 }: SectionProps) {
   const { t } = useTranslation();
 
@@ -29,10 +26,7 @@ export default function DisplayInformationSection({
     name: `sections.${index}.content.blocks`,
   });
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.display_info_section.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <SectionPreview
         src={displayInfo}
         alt={t("pages.display_info_section.display_info_preview")}
@@ -43,6 +37,8 @@ export default function DisplayInformationSection({
       <AddNewBlock
         count={blocks.length}
         onAdd={() => appendBlock(CARD_INITIAL_STATE)}
+        managementLabel={t("pages.display_row_management")}
+        addLabel={t("pages.add_new_display_row")}
       />
 
       <div className="flex flex-col gap-8 rounded-xl border p-4">
@@ -58,8 +54,6 @@ export default function DisplayInformationSection({
           />
         ))}
       </div>
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import Box from "@/shared/ui/Box";
-import FileUpload from "@/shared/ui/FileUpload";
+import FileUpload from "@/shared/ui/fileUpload";
 import Input from "@/shared/ui/textField/Input";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";

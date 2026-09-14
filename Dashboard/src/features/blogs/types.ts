@@ -8,7 +8,6 @@ export interface Blog {
   slug: string;
   base_image: BlogImageObject;
   created_at: string;
-  show_in_home: boolean;
 }
 export interface BlogCardProps {
   blog: Blog;
@@ -55,7 +54,6 @@ export interface BlogItem {
 
 export interface SingleBlog {
   id: number;
-  show_in_home: boolean;
   base_image: string;
   base_image_object: BlogImageObject;
   cover_image: string;
@@ -77,4 +75,14 @@ export interface SectionProps {
 
 export interface BlogsGridProps {
   blogs: Blog[];
+}
+
+export interface BlogsMainDataProps {
+  nav_title_en: string;
+  nav_title_ar: string;
+  slug_en: string;
+}
+
+export interface BlogsMainDataFormProps {
+  blogsMainDataToEdit?: BlogsMainDataProps;
 }

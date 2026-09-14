@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.alalmiya.scooter",
+    "sha256_cert_fingerprints":
+    ["06:DB:5D:8A:E0:00:44:9B:39:61:46:84:E0:A7:4E:FA:EB:4F:C2:C7:A1:0E:2F:39:30:6A:45:BE:7B:20:C8:B8"]
+  }
+}]

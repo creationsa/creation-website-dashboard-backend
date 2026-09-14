@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type BlogsIconProps = SVGProps<SVGSVGElement>;
-
-export default function BlogsIcon(props: BlogsIconProps) {
+export default function BlogsIcon(props: IconProps) {
   return (
     <Icon {...props} fill="none" viewBox="-0.5 0 32 32">
       <g

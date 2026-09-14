@@ -24,11 +24,11 @@ class AttachmentController extends Controller
             return response()->json([
                 'status'  => 'success',
                 'data'    => $name,
-                'message' => trans('dashboard.messages.success_add'),
+                'message' => trans('Created successfully'),
             ]);
         } catch (Exception $e) {
             info($e);
-            return response()->json(['status' => 'fail', 'message' => trans('general.messages.error_occurred_please_try_again_later'), 'data' => null], 422);
+            return response()->json(['status' => 'fail', 'message' => trans('Something went wrong, please try again'), 'data' => null], 422);
         }
     }
 
@@ -40,6 +40,6 @@ class AttachmentController extends Controller
 
         $media->delete();
 
-        return response()->json(['status' => 'success', 'message' => trans('dashboard.messages.success_delete')]);
+        return response()->json(['status' => 'success', 'message' => trans('Deleted successfully')]);
     }
 }

@@ -1,6 +1,13 @@
 import { BlogsTranslations } from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-import { ReactNode } from "react";
+
+export interface BlogImageObject {
+  id: number;
+  media: string;
+  alt: string;
+  en: ImageLocalization;
+  ar: ImageLocalization;
+}
 
 // MAIN BLOG TYPES
 export interface Blog {
@@ -8,7 +15,6 @@ export interface Blog {
   title: string;
   slug: string;
   base_image: BlogImageObject;
-  show_in_home: boolean;
   created_at: string;
   seo_desc: string;
 }
@@ -19,14 +25,12 @@ export interface RelatedBlog {
   title: string;
   slug: string;
   base_image: BlogImageObject;
-  show_in_home: boolean;
   created_at: string;
 }
 
 export interface BlogsProps {
   blogsTranslation: BlogsTranslations;
   bigBottomPadding?: boolean;
-  numbersToDisplay?: number;
   locale: LanguageType;
   allBlogsData: Blog[] | RelatedBlog[];
 }
@@ -38,21 +42,8 @@ export interface BlogCardProps {
   locale: LanguageType;
 }
 
-export interface BlogContentProps {
-  title: string;
-  children: ReactNode;
-}
-
 export interface ImageLocalization {
   alt: string;
-}
-
-export interface BlogImageObject {
-  id: number;
-  media: string;
-  alt: string;
-  en: ImageLocalization;
-  ar: ImageLocalization;
 }
 
 export interface BlogItemLocalization {

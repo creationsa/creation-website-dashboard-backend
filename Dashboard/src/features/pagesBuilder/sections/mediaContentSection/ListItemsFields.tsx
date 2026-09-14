@@ -1,8 +1,8 @@
 import Input from "@/shared/ui/textField/Input";
 import { useFieldArray, type FieldErrors } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import AddNewBlock from "../../components/pagesBuilderForm/AddNewBlock";
-import BlockHeader from "../../components/pagesBuilderForm/BlockHeader";
+import AddNewBlock from "@/shared/components/blockControls/AddNewBlock";
+import BlockHeader from "@/shared/components/blockControls/BlockHeader";
 import type { SubSectionProps } from "../../types";
 import { LIST_ITEM_INITIAL_STATE } from "./getMediaContentDefaultValues";
 import type { ListVariant } from "./mediaContentSchema";
@@ -32,6 +32,8 @@ export default function ListItemsFields({
       <AddNewBlock
         count={fields.length}
         onAdd={() => append(LIST_ITEM_INITIAL_STATE)}
+        managementLabel={t("pages.list_item_management")}
+        addLabel={t("pages.add_new_list_item")}
       />
       <div className="flex flex-col gap-3 lg:gap-5">
         {fields.map((field, itemIndex) => (
@@ -40,7 +42,7 @@ export default function ListItemsFields({
             className="flex flex-col gap-3 rounded-xl border p-4 lg:gap-5"
           >
             <BlockHeader
-              index={itemIndex}
+              rowLabel={t("pages.list_item_row", { index: itemIndex + 1 })}
               onRemove={() => remove(itemIndex)}
               isDeleteDisabled={fields.length === 1}
             />

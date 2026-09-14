@@ -1,0 +1,41 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Http\ApiMasterRequest;
+
+class {{ class }} extends ApiMasterRequest
+{
+    
+    public function authorize()
+    {
+        return true;
+    }
+
+   
+    public function rules()
+    {
+        $table = (new \App\City)->getTable();
+        $columns = Schema::getColumnListing($table);
+        $rules = [];
+
+        foreach ($columns as $column) {
+            switch ($column) {
+                case 'id':
+                    $rules[$column] = 'required|numeric';
+                    break;
+                case 'name':
+                    $rules[$column] = 'required|string';
+                    break;
+                // Add more cases for other columns as needed
+                default:
+                    // Default rule if no specific rule is defined for a column
+                    $rules[$column] = 'nullable'; // Adjust as needed
+                    break;
+            }
+        }
+
+        return $rules;
+    }
+
+}

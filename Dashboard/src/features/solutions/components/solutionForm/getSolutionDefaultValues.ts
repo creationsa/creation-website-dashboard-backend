@@ -1,7 +1,6 @@
 import { MEDIA_ONLY_ITEM_INITIAL_STATE } from "@/shared/components/dynamicFeaturedItemsFields/getDynamicFeaturedItemsFieldsDefaultValues";
 import { DYNAMIC_ITEM_INITIAL_STATE } from "@/shared/components/dynamicItemsFields/getDynamicItemsFieldsDefaultValues";
 import { HEADER_INITIAL_STATE } from "@/shared/components/headerFields/getHeaderDefaultValues";
-import { SLUG_SECTION_INITIAL_STATE } from "@/shared/components/slugSection/getSlugSectionDefaultValues";
 import { TITLE_SECTION_INITIAL_STATE } from "@/shared/components/titleSection/getTitleSectionDefaultValues";
 import type { SingleSolution } from "../../types";
 import type { SolutionFormValues } from "./solutionSchema";
@@ -13,15 +12,24 @@ export const EXECUTION_INITIAL_STATE = {
   value_ar: "",
 };
 
+export const CARD_ICON_INITIAL_STATE = {
+  file: "",
+  alt_en: "",
+  alt_ar: "",
+};
+
 export const SOLUTION_INITIAL_STATE = {
   ...TITLE_SECTION_INITIAL_STATE,
-  ...SLUG_SECTION_INITIAL_STATE,
+  slug_en: "",
   ...HEADER_INITIAL_STATE,
 
   proposition_title_en: "",
   proposition_title_ar: "",
   proposition_desc_en: "",
   proposition_desc_ar: "",
+  small_description_en: "",
+  small_description_ar: "",
+  card_icon: CARD_ICON_INITIAL_STATE,
 
   execution_title_en: "",
   execution_title_ar: "",
@@ -52,6 +60,9 @@ export default function getSolutionDefaultValues(
     proposition_title_ar: solutionToEdit.proposition_title_ar || "",
     proposition_desc_en: solutionToEdit.proposition_desc_en || "",
     proposition_desc_ar: solutionToEdit.proposition_desc_ar || "",
+    small_description_en: solutionToEdit.small_description_en || "",
+    small_description_ar: solutionToEdit.small_description_ar || "",
+    card_icon: solutionToEdit.card_icon || CARD_ICON_INITIAL_STATE,
 
     items: solutionToEdit.items?.length
       ? solutionToEdit.items

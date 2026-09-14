@@ -2,17 +2,13 @@ import Header from "@/components/ui/Header";
 import TextWithMotion from "@/components/ui/TextWithMotion";
 import { MainSectionProps } from "../types";
 
-export default function MainSection({
-  locale,
-  solutionData,
-  solution_details,
-}: MainSectionProps) {
+export default function MainSection({ locale, data }: MainSectionProps) {
   return (
     <section className="container">
       <Header
-        title={solutionData.title}
-        description={solutionData.section1_description}
-        subDescription={solutionData.section1_sub_desc}
+        title={data.title}
+        description={data.second_title}
+        subDescription={data.third_title}
         hasContainer={false}
         lang={locale}
         styles="w-full xl:w-[50%]"
@@ -20,10 +16,10 @@ export default function MainSection({
 
       <div className="ms-auto mt-20 w-full xl:w-1/2">
         <h3 className="mb-8 text-xl capitalize sm:text-2xl">
-          {solution_details.value_proposition}
+          {data.proposition_title}
         </h3>
         <TextWithMotion
-          text={solutionData.section1_paragraph}
+          text={data.proposition_desc}
           lang={locale}
           direction="start"
           styles="md:w-full!"

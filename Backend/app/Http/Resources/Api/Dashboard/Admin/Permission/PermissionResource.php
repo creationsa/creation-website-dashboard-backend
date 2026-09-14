@@ -19,11 +19,11 @@ class PermissionResource extends JsonResource
             $locales[$locale]['title'] = @$this->translate($locale)->title;
         }
         return [
-            "id"                        => (int) $this->id,
-            "back_route_name"           => (string) $this->back_route_name,
-            "front_route_name"          => (string) $this->front_route_name,
-            "icon"                      => (string) $this->icon,
-            "title"                     => (string) $this->title,
-        ]+$locales;
+            "id"               => (int) $this->id,
+            "back_route_name"  => (string) $this->back_route_name,
+            "front_route_name" => (string) $this->front_route_name,
+            "icon"             => (string) $this->icon,
+            "title"            => (string) $this->title,
+        ] + $locales;
     }
 }

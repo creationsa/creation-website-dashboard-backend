@@ -22,6 +22,7 @@ export default function BlogCard({
           src={base_image?.media}
           alt={`${base_image?.[locale]?.alt}`}
           fill
+          sizes="(min-width: 1280px) 256px, (min-width: 640px) 20vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>

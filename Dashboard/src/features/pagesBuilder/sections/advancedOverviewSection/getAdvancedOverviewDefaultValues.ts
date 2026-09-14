@@ -13,19 +13,23 @@ export const ADVANCED_OVERVIEW_INITIAL_STATE = {
   overlay_label_title_en: "",
   overlay_label_title_ar: "",
 
-  stat1_number: "",
+  stat1_number_en: "",
+  stat1_number_ar: "",
   stat1_label_en: "",
   stat1_label_ar: "",
 
-  stat2_number: "",
+  stat2_number_en: "",
+  stat2_number_ar: "",
   stat2_label_en: "",
   stat2_label_ar: "",
 
-  stat3_number: "",
+  stat3_number_en: "",
+  stat3_number_ar: "",
   stat3_label_en: "",
   stat3_label_ar: "",
 
-  stat4_number: "",
+  stat4_number_en: "",
+  stat4_number_ar: "",
   stat4_label_en: "",
   stat4_label_ar: "",
 

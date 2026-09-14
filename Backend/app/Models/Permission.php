@@ -19,11 +19,6 @@ class Permission extends Model
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    public function permissionCategory()
-    {
-        return $this->belongsTo(PermissionCategory::class);
-    }
-
     public function getAdminPermissionsAttribute()
     {
         // $admin = 

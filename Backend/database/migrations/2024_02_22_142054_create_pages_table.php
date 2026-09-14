@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('cover')->nullable();
             $table->integer('ordering')->unsigned()->nullable();
             $table->timestamps();
         });
@@ -39,7 +38,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
         Schema::dropIfExists('page_translations');
+        Schema::dropIfExists('pages');
     }
 };

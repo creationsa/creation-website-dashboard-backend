@@ -1,21 +1,20 @@
 import Header from "@/components/ui/Header";
+import SmartMedia from "@/components/ui/SmartMedia";
 import TextWithMotion from "@/components/ui/TextWithMotion";
-import Image from "next/image";
 import { AboutTheProjectProps } from "../types";
 
 export default function AboutTheProject({
   locale,
-  project,
-  title,
+  data,
   certainImage,
 }: AboutTheProjectProps) {
   return (
     <section className="space-y-20">
       <div className="container space-y-8">
         <Header
-          title={title}
-          description={project.about_project_description}
-          subDescription={project.about_project_sub_description}
+          title={data.first_title}
+          description={data.second_title}
+          subDescription={data.third_title}
           hasContainer={false}
           lang={locale}
           inlineHeadings
@@ -23,24 +22,24 @@ export default function AboutTheProject({
         />
 
         <TextWithMotion
-          text={project.about_project_paragraph}
+          text={data.overview_description}
           lang={locale}
           direction="start"
           styles="w-full md:w-[70%] xl:w-[60%]"
         />
       </div>
 
-      <div className="relative aspect-4001/1392 w-full">
-        <Image
-          src={certainImage}
-          alt={title}
-          fill
-          className="object-cover"
-          quality={90}
-        />
-      </div>
+      {certainImage?.file && (
+        <div className="relative aspect-4001/1392 w-full">
+          <SmartMedia
+            media={certainImage}
+            alt={data.title}
+            className="absolute inset-0 h-full w-full object-cover"
+            quality={90}
+            sizes="(min-width: 1280px) 1280px, 100vw"
+          />
+        </div>
+      )}
     </section>
   );
 }
-
-//16/6

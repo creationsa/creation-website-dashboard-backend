@@ -36,7 +36,10 @@
     "title": "العنوان",
     "upload_file": "رفع ملف",
     "click_to_browse": "اضغط للتصفح",
+    "invalid_image_type": "مسموح فقط بصور PNG أو JPG أو JPEG أو SVG",
     "something_went_wrong": "حدث خطأ ما",
+    "error_desc": "حدث خطأ غير متوقع. غالبًا تحديث الصفحة يحل المشكلة.",
+    "reload_page": "تحديث الصفحة",
     "created_done": "تمت الإضافة بنجاح",
     "updated_done": "تم التحديث بنجاح",
     "deleted_done": "تم الحذف بنجاح",
@@ -46,6 +49,8 @@
     "title_ar": "العنوان (بالعربية)",
     "desc_en": "الوصف (بالإنجليزية)",
     "desc_ar": "الوصف (بالعربية)",
+    "sub_desc_en": "الوصف الفرعي (بالإنجليزية)",
+    "sub_desc_ar": "الوصف الفرعي (بالعربية)",
     "first_title_part_en": "الجزء الأول من العنوان (إنجليزي)",
     "second_title_part_en": "الجزء الثاني من العنوان (إنجليزي)",
     "third_title_part_en": "الجزء الثالث من العنوان (إنجليزي)",
@@ -62,10 +67,22 @@
     "image_alt_en": "النص البديل للصورة (إنجليزي)",
     "image_alt_ar": "النص البديل للصورة (عربي)",
     "link": "الرابط",
-    "images": "الصور"
+    "images": "الصور",
+    "choose_page_that_you_want_to_add": "اختر الصفحة التي تريد إضافتها",
+    "page_title_settings": "إعدادات عنوان الصفحة",
+    "nav_title_hint": "يظهر العنوان أعلاه كنص رابط القائمة في الموقع الإلكتروني، أما الرابط (slug) أسفله فهو المسار الفعلي لعنوان الصفحة.",
+
+    "placeholder_logos_title": "لوجوهات العملاء",
+    "placeholder_logos_hint": "هذه مجرد علامة تحدد مكان قسم شعارات العملاء ضمن ترتيب الصفحة — الشعارات نفسها تُعدَّل من تبويب العملاء (Clients).",
+    "search_placeholder": "البحث عن {{title}}...",
+    "newest_first": "الأحدث أولاً",
+    "oldest_first": "الأقدم أولاً",
+    "no_results_title": "لا توجد نتائج",
+    "no_results_desc": "حاول تعديل كلمة البحث."
   },
   "errors": {
     "fieldRequired": "هذا الحقل مطلوب",
+    "svgFileRequired": "مسموح فقط بملفات SVG",
     "onlySpaces": "يجب ألا يحتوي على مسافات فقط",
     "onlyText": "أحرف فقط",
     "minLength": "أدخل {{count}} أحرف على الأقل",
@@ -96,10 +113,24 @@
     "description": "الوصف",
     "image_en": "الصورة (الإنجليزية)",
     "image_ar": "الصورة (العربية)",
-    "keywords": "الكلمات المفتاحية"
+    "image_alt_en": "النص البديل للصورة (إنجليزي)",
+    "image_alt_ar": "النص البديل للصورة (عربي)",
+    "keywords": "الكلمات المفتاحية",
+    "pick_from_project_images": "اختيار من صور المشروع",
+    "upload_custom_image": "رفع صورة مخصصة",
+    "choose_project_image": "اختر واحدة من صور المشروع",
+    "image_fallback_hint": "لو سبتها فاضية هتتاخد صورة الـ SEO الرئيسية من الإعدادات بدالها.",
+    "keywords_fallback_hint": "لو سبتها فاضية هتتاخد الكلمات المفتاحية الرئيسية من الإعدادات بدالها.",
+    "site_name": "اسم الموقع",
+    "site_name_en": "اسم الموقع (إنجليزي)",
+    "site_name_ar": "اسم الموقع (عربي)"
   },
   "statistics": {
-    "statistics": "الإحصائيات"
+    "statistics": "الإحصائيات",
+    "overview": "نظرة عامة على المحتوى",
+    "recent_activity": "آخر التعديلات",
+    "no_recent_activity": "لا يوجد نشاط حديث بعد",
+    "updated": "آخر تحديث"
   },
   "blogs": {
     "title": "المدونات",
@@ -108,6 +139,9 @@
     "manage_blogs": "إدارة المدونات",
     "no_blog_title": "لا توجد مدونات بعد",
     "no_blog_desc": "المدونات المنشورة ستظهر هنا بمجرد إنشائها.",
+    "nav_section": "عنوان صفحة القائمة",
+    "nav_title_en": "عنوان القائمة (إنجليزي)",
+    "nav_title_ar": "عنوان القائمة (عربي)",
     "show_in_home": "عرض في الصفحة الرئيسية",
     "slug": "الرابط الدائم (Slug)",
     "slug_en": "الرابط الدائم (بالإنجليزية)",
@@ -135,28 +169,108 @@
     "point_desc_en": "وصف النطقية (بالإنجليزية)",
     "point_desc_ar": "وصف النقطة (بالعربية)",
     "visible_on_home": "ظاهر في الصفحة الرئيسية",
-    "hidden_from_home": "مخفي من الصفحة الرئيسية"
+    "hidden_from_home": "مخفي من الصفحة الرئيسية",
+
+    "blogs_main_page": "الصفحة الرئيسية للمدونات"
   },
   "settings": {
     "settings": "الاعدادات",
-    "instagram": "إنستجرام",
-    "facebook": "فيسبوك",
-    "behance": "بيهانس",
-    "linkedin": "لينكد إن",
+    "socials": "روابط التواصل",
     "logo_en": "شعار الموقع (English)",
-    "logo_ar": "شعار الموقع (العربية)"
+    "logo_ar": "شعار الموقع (العربية)",
+    "social_link_management": "إدارة روابط التواصل",
+    "add_new_social": "أضف رابط تواصل جديد",
+    "social_link_row": "رابط تواصل #{{index}}"
+  },
+  "blockControls": {
+    "ticker_item_management": "إدارة عناصر الشريط الإخباري",
+    "add_new_ticker_item": "أضف عنصر جديد للشريط",
+    "ticker_item_row": "عنصر الشريط #{{index}}",
+    "accordion_item_management": "إدارة عناصر الأكورديون",
+    "add_new_accordion_item": "أضف عنصر أكورديون جديد",
+    "accordion_item_row": "عنصر الأكورديون #{{index}}"
   },
   "header": {
-    "header": "رأس الصفحة"
+    "header": "رأس الصفحة",
+    "logo_hint": "الشعار الظاهر هنا يأتي من الإعدادات، ولا يمكن تغييره من هذا النموذج.",
+    "menu_section": "القائمة",
+    "menu_items_label": "عناصر القائمة",
+    "toggles_section": "إعدادات العرض",
+    "language_switch": "زر تبديل اللغة",
+    "theme_switch": "زر تبديل الوضع الليلي / النهاري",
+    "visible": "ظاهر",
+    "hidden": "مخفي"
+  },
+  "projectPicker": {
+    "enter_manually": "إدخال يدوي",
+    "pick_existing_project": "اختيار مشروع موجود",
+    "choose_project": "اختر المشروع",
+    "project_required": "من فضلك اختر مشروع",
+    "loading_projects": "جاري تحميل المشاريع…"
+  },
+  "solutionPicker": {
+    "enter_manually": "إدخال يدوي",
+    "pick_existing_solution": "اختيار حل موجود",
+    "choose_solution": "اختر الحل",
+    "solution_required": "من فضلك اختر حل",
+    "loading_solutions": "جاري تحميل الحلول…"
+  },
+  "blogPicker": {
+    "enter_manually": "إدخال يدوي",
+    "pick_existing_blog": "اختيار مدونة موجودة",
+    "choose_blog": "اختر المدونة",
+    "blog_required": "من فضلك اختر مدونة",
+    "loading_blogs": "جاري تحميل المدونات…"
   },
   "footer": {
     "footer": "تذييل الصفحة",
-    "statement": "نص البيان",
-    "statement_image": "صورة البيان"
+    "statement": "البيان",
+    "statement_image": "صورة البيان",
+
+    "creation_section": "قسم كرييشن",
+    "creation_logo_hint": "الشعار الظاهر هنا يأتي من الإعدادات، ولا يمكن تغييره من هذا النموذج.",
+    "tagline_en": "الجملة المميزة (إنجليزي)",
+    "tagline_ar": "الجملة المميزة (عربي)",
+
+    "menu_section": "القائمة",
+    "menu_title_en": "عنوان القائمة (إنجليزي)",
+    "menu_title_ar": "عنوان القائمة (عربي)",
+    "menu_items_label": "عناصر القائمة",
+
+    "social_section": "روابط التواصل",
+    "social_title_en": "عنوان روابط التواصل (إنجليزي)",
+    "social_title_ar": "عنوان روابط التواصل (عربي)",
+    "social_items_label": "روابط التواصل",
+
+    "copyright_section": "سطر حقوق النشر",
+    "copyright_text_en": "نص حقوق النشر (إنجليزي)",
+    "copyright_text_ar": "نص حقوق النشر (عربي)",
+    "copyright_text_hint_before": "اكتب",
+    "copyright_text_hint_after": "في أي مكان في النص وهيتحول تلقائيًا للسنة الحالية ({{currentYear}}) لما يظهر في الموقع — لو مكتبتهاش، النص هيفضل زي ما كتبته بالظبط.",
+    "copyright_items_label": "لينكات حقوق النشر",
+
+    "badges_section": "شارات الثقة",
+    "badge_image": "صورة الشارة ({{index}})",
+    "badge_label_en": "نص الشارة (إنجليزي)",
+    "badge_label_ar": "نص الشارة (عربي)",
+    "badge_link": "رابط الشارة",
+    "choose_socials": "اختر روابط التواصل التي تريد عرضها"
+  },
+  "clients": {
+    "clients": "العملاء",
+    "title_section": "عنوان القسم",
+    "title_en_label": "العنوان (إنجليزي)",
+    "title_ar_label": "العنوان (عربي)",
+    "logos_section": "اللوجوهات",
+    "logo_image_label": "صورة لوجو العميل",
+    "logo_management": "إدارة شعارات العملاء",
+    "add_new_logo": "أضف شعار جديد",
+    "logo_row": "شعار #{{index}}"
   },
   "projects": {
     "title": "المشاريع",
     "manage_projects": "إدارة المشاريع",
+    "video_badge": "فيديو",
     "project": "مشروع",
     "titleWithArticle": "المشروع",
     "no_project_title": "لا توجد مشاريع بعد",
@@ -166,6 +280,8 @@
     "first_cover_media": "وسائط الغلاف الأولى",
     "overview_description_en": "وصف القسم التعريفي (إنجليزي)",
     "overview_description_ar": "وصف القسم التعريفي (عربي)",
+    "nav_title_en": "عنوان القائمة (إنجليزي)",
+    "nav_title_ar": "عنوان القائمة (عربي)",
 
     "stats_section": "قسم الإحصائيات",
     "second_cover_media": "وسائط الغلاف الثانية",
@@ -191,23 +307,58 @@
     "seventh_media": "الوسائط السابعة",
     "eighth_media": "الوسائط الثامنة",
 
-    "news_section": "شريط الاخبار"
+    "use_as_all_projects_cover": "استخدم كصورة لصفحة كل المشاريع",
+    "use_as_feature_image": "استخدم كصورة مميزة (Feature Image)",
+    "selected_as_cover": "مُختارة كغلاف",
+    "not_selected_as_cover": "غير مختارة",
+    "cover_media_field_required": "اختر صورة لاستخدامها كغلاف لصفحة كل المشاريع",
+    "feature_media_field_required": "اختر صورة لاستخدامها كصورة مميزة",
+    "cover_toggle_noop_hint": "اختر صورة أخرى لتحل محل هذه الصورة كغلاف",
+    "feature_toggle_noop_hint": "اختر صورة أخرى لتحل محل هذه الصورة كصورة مميزة",
+
+    "news_section": "شريط الاخبار",
+
+    "projects_main_page": "الصفحة الرئيسية للمشاريع",
+
+    "main_project_page_preview": "معاينة تخطيط القسم الرئيسي للمشروع",
+    "header_overview_section": "العنوان والنظرة العامة"
   },
   "solutions": {
     "title": "الحلول",
     "manage_solutions": "إدارة الحلول",
+    "service_management": "إدارة الخدمات",
+    "add_new_service": "أضف خدمة جديدة",
+    "service_row": "خدمة #{{index}}",
+    "capability_management": "إدارة القدرات",
+    "add_new_capability": "أضف قدرة جديدة",
+    "capability_row": "قدرة #{{index}}",
+    "gallery_section": "معرض الصور",
+    "gallery_item_management": "إدارة معرض الصور",
+    "add_new_gallery_item": "أضف عنصر جديد للمعرض",
+    "gallery_item_row": "عنصر المعرض #{{index}}",
     "solution": "حل",
     "titleWithArticle": "الحلول",
     "no_solution_title": "لا توجد حلول بعد",
     "no_solution_desc": "الحلول المنشورة ستظهر هنا بمجرد إنشائها",
 
+    "nav_title_en": "عنوان القائمة (إنجليزي)",
+    "nav_title_ar": "عنوان القائمة (عربي)",
+
+    "header_section": "قسم الترويسة",
+    "services_section": "ماذا نقدم",
     "news_section": "شريط الاخبار",
+    "capabilities_section": "قسم القدرات",
 
     "proposition_section": "القيمة المقترحة",
     "proposition_title_en": "عنوان القيمة المقترحة (بالإنجليزية)",
     "proposition_title_ar": "عنوان القيمة المقترحة (بالعربية)",
     "proposition_desc_en": "وصف القيمة المقترحة (بالإنجليزية)",
     "proposition_desc_ar": "وصف القيمة المقترحة (بالعربية)",
+    "small_description_en": "وصف مختصر (بالإنجليزية)",
+    "small_description_ar": "وصف مختصر (بالعربية)",
+
+    "card_icon": "أيقونة الكارت",
+    "card_icon_label": "أيقونة (SVG فقط)",
 
     "execution_framework_section": "إطار التنفيذ",
     "execution_title_en": "عنوان إطار التنفيذ (بالإنجليزية)",
@@ -216,7 +367,9 @@
     "execution_label_en": "العنوان (بالإنجليزية)",
     "execution_label_ar": "العنوان (بالعربية)",
     "execution_value_en": "القيمة (بالإنجليزية)",
-    "execution_value_ar": "القيمة (بالعربية)"
+    "execution_value_ar": "القيمة (بالعربية)",
+
+    "solutions_main_page": "الصفحة الرئيسية للحلول"
   },
   "pages": {
     "titleWithArticle": "الصفحة",
@@ -224,18 +377,45 @@
     "new_page": "صفحة جديدة",
     "update_page": "الصفحة الحالية",
     "title": "منشئ الصفحات",
+    "featured_work_management": "إدارة الأعمال المميزة",
+    "add_new_featured_work": "أضف عمل مميز جديد",
+    "featured_work_row": "عمل مميز #{{index}}",
+    "text_block_management": "إدارة الأقسام النصية",
+    "add_new_text_block": "أضف قسم نصي جديد",
+    "text_block_row": "قسم نصي #{{index}}",
+    "point_management": "إدارة النقاط",
+    "add_new_point": "أضف نقطة جديدة",
+    "display_row_management": "إدارة الصفوف",
+    "add_new_display_row": "أضف صف جديد",
+    "display_row": "صف #{{index}}",
+    "list_item_management": "إدارة عناصر القائمة",
+    "add_new_list_item": "أضف عنصر قائمة جديد",
+    "list_item_row": "عنصر القائمة #{{index}}",
+    "blog_item_management": "إدارة عناصر المدونة",
+    "add_new_blog_item": "أضف عنصر مدونة جديد",
+    "blog_item_row": "عنصر مدونة #{{index}}",
     "new_dynamic_page": "إنشاء صفحة ديناميكية جديدة",
     "page_title_en": "عنوان الصفحة (بالإنجليزي)",
     "page_title_ar": "عنوان الصفحة (بالعربي)",
     "page_slug_en": "رابط الصفحة الـ Slug (بالإنجليزي)",
+    "is_home_label": "الصفحة الرئيسية",
+    "is_home_on": "هذه الصفحة الرئيسية",
+    "is_home_off": "ليست الصفحة الرئيسية",
+    "is_home_slug_hint": "تُفتح هذه الصفحة من الرابط الرئيسي (/) — الرابط (slug) أعلاه غير مستخدم.",
     "add_new_section": "إضافة قسم جديد",
     "choose_section": "اختر السكشن الذي تريد إضافته",
     "content": "المحتوى",
     "seo": "تحسين محركات البحث",
+    "seo_tab_disabled_hint": "يجب حفظ العنصر أولاً لتفعيل إعدادات تحسين محركات البحث الخاصة به.",
     "add_item": "إضافة عنصر جديد",
     "items_management": "إدارة العناصر",
     "delete_the_block": "حذف هذه الكتلة بالكامل",
+    "confirm_delete_section": "هل أنت متأكد من رغبتك في حذف هذا القسم؟",
     "item_row": "عنصر رقم #{{index}}",
+    "collapse_section": "طي القسم",
+    "expand_section": "فتح القسم",
+    "move_section_up": "تحريك لأعلى",
+    "move_section_down": "تحريك لأسفل",
     "no_page_title": "لا توجد صفحات بعد",
     "no_page_desc": "الصفحات التي سيتم إنشاوها ستظهر هنا فور إنشائها",
     "layout_preview": "معاينة حية لشكل العنصر",
@@ -246,9 +426,15 @@
       "acc_title_en": "عنوان عنصر الأكورديون (إنجليزي)",
       "acc_title_ar": "عنوان عنصر الأكورديون (عربي)",
       "acc_content_en": "محتوى عنصر الأكورديون (إنجليزي)",
-      "acc_content_ar": "محتوى عنصر الأكورديون (عربي)"
+      "acc_content_ar": "محتوى عنصر الأكورديون (عربي)",
+      "block_subtitle_en": "العنوان الفرعي (بالإنجليزية) — اختياري",
+      "block_subtitle_ar": "العنوان الفرعي (بالعربية) — اختياري",
+      "block_description_en": "الوصف (بالإنجليزية)",
+      "block_description_ar": "الوصف (بالعربية)",
+      "content_block_management": "كتل المحتوى",
+      "add_content_block": "إضافة كتلة محتوى جديدة",
+      "content_block_row": "كتلة المحتوى #{{index}}"
     },
-
     "banner_section": {
       "section_title": "قسم البانر الرئيسي",
 
@@ -262,17 +448,21 @@
 
       "banner_preview": "معاينة قسم البانر الرئيسي"
     },
-
     "display_info_section": {
       "section_title": "سكشن عرض البيانات المتكررة",
 
       "right_side_images": "الجانب الأيمن (الكروت والعناصر)",
       "left_side_texts": "الجانب الأيسر (النصوص)",
+      "pick_project_label": "اختيار مشروع موجود",
+      "pick_solution_label": "اختيار حل موجود",
+      "upload_media": "رفع صورة",
+      "duplicate_project": "هذا المشروع مستخدم بالفعل في البطاقة الأخرى لنفس العنصر — يُرجى اختيار مشروع مختلف",
 
       "left_title_en": "عنوان الجنب الشمال (إنجليزي)",
       "left_title_ar": "عنوان الجنب الشمال (عربي)",
       "left_desc_en": "وصف الجنب الشمال (إنجليزي)",
       "left_desc_ar": "وصف الجنب الشمال (عربي)",
+      "left_btn_slug": "رابط / سلاج الزرار",
       "left_btn_en": "نص الزرار (إنجليزي)",
       "left_btn_ar": "نص الزرار (عربي)",
 
@@ -281,17 +471,21 @@
       "first_right_card_title_ar": "عنوان الكارت الأول (عربي)",
       "first_right_card_desc_en": "وصف الكارت الأول (إنجليزي)",
       "first_right_card_desc_ar": "وصف الكارت الأول (عربي)",
+      "first_right_slug": "رابط / سلاج الكارت الأول",
 
       "second_right_media": "ثاني ميديا",
       "second_right_card_title_en": "عنوان الكارت الثاني (إنجليزي)",
       "second_right_card_title_ar": "عنوان الكارت الثاني (عربي)",
       "second_right_card_desc_en": "وصف الكارت الثاني (إنجليزي)",
       "second_right_card_desc_ar": "وصف الكارت الثاني (عربي)",
+      "second_right_slug": "رابط / سلاج الكارت الثاني",
 
       "display_info_preview": "معاينة سكشن البيانات المتكررة"
     },
     "featured_works": {
       "section_title": "قسم الأعمال المميزة",
+      "pick_project_label": "اختيار مشروع موجود",
+      "duplicate_project": "هذا المشروع مستخدم بالفعل في عنصر آخر بنفس القسم — يُرجى اختيار مشروع مختلف",
       "item_image": "صورة العنصر",
       "item_title_en": "عنوان العنصر (إنجليزي)",
       "item_title_ar": "عنوان العنصر (عربي)",
@@ -321,19 +515,73 @@
 
       "achievements_preview": "معاينة قسم الإنجازات والرؤية بفيديو"
     },
+    "reviews": {
+      "section_title": "قسم الثقة / التقييمات",
+      "description_settings": "وصف الهيدر",
+      "items_settings": "شارات الثقة (اتنين بالظبط)",
+      "logo_image": "صورة لوجو الشارة",
+      "item_title_en": "العنوان (إنجليزي)",
+      "item_title_ar": "العنوان (عربي)",
+      "item_description_en": "الوصف (إنجليزي)",
+      "item_description_ar": "الوصف (عربي)",
+      "link_text_en": "نص الرابط (إنجليزي)",
+      "link_text_ar": "نص الرابط (عربي)",
+      "link_url": "رابط الصفحة",
+      "reviews_preview": "معاينة قسم الثقة / التقييمات"
+    },
+    "blogs_teaser": {
+      "section_title": "قسم عرض المدونات",
+      "button_section": "زرار \"View All\"",
+      "button_title_en": "نص الزرار (إنجليزي)",
+      "button_title_ar": "نص الزرار (عربي)",
+      "button_slug_en": "لينك الزرار (Slug)",
+      "pick_blog_label": "اختيار مدونة موجودة",
+      "item_image": "صورة العنصر",
+      "item_title_en": "عنوان العنصر (إنجليزي)",
+      "item_title_ar": "عنوان العنصر (عربي)",
+      "item_slug_en": "Slug العنصر (إنجليزي)"
+    },
+    "contact_section": {
+      "section_title": "علامة مكان فورم التواصل",
+      "placeholder_title": "فورم التواصل",
+      "placeholder_hint": "هذه مجرد علامة تحدد مكان نموذج التواصل ضمن ترتيب الصفحة — النموذج نفسه لا يُعدَّل من لوحة التحكم.",
+      "contact_preview": "معاينة علامة فورم التواصل"
+    },
+    "text_list_section": {
+      "section_title": "قائمة عناصر نصية",
+      "sticky_sidebar_toggle_label": "القائمة الجانبية الثابتة",
+      "sticky_sidebar_enabled": "مفعّلة",
+      "sticky_sidebar_disabled": "غير مفعّلة",
+      "sections_label_en": "كلمة القائمة الجانبية الثابتة (إنجليزي)",
+      "sections_label_ar": "كلمة القائمة الجانبية الثابتة (عربي)",
+      "sticky_description_en": "مقدمة القائمة الجانبية الثابتة (إنجليزي)",
+      "sticky_description_ar": "مقدمة القائمة الجانبية الثابتة (عربي)",
+      "item_header_en": "عنوان العنصر (إنجليزي)",
+      "item_header_ar": "عنوان العنصر (عربي)",
+      "body_type_description": "وصف",
+      "body_type_list": "قائمة نقاط",
+      "add_description_block": "+ إضافة وصف",
+      "add_list_block": "+ إضافة قائمة",
+      "remove_block": "حذف",
+      "description_en": "الوصف (إنجليزي)",
+      "description_ar": "الوصف (عربي)",
+      "point_text_en": "نص النقطة (إنجليزي)",
+      "point_text_ar": "نص النقطة (عربي)",
+      "remove_point": "حذف النقطة"
+    },
     "culture_identity": {
       "section_title": "قسم الهوية والثقافة الإبداعي",
       "top_left_corner": "نص الركن العلوي الأيسر",
       "top_right_corner": "نص الركن العلوي الأيمن",
       "text_en": "النص (إنجليزي)",
       "text_ar": "النص (عربي)",
+      "second_text_en": "النص الثاني (إنجليزي)",
+      "second_text_ar": "النص الثاني (عربي)",
       "center_content_group": "النصوص المركزية (المعروضة فوق الصورة)",
       "center_title_en": "العنوان الرئيسي (إنجليزي)",
       "center_title_ar": "العنوان الرئيسي (عربي)",
       "center_description_en": "نص الوصف الفرعي (إنجليزي)",
       "center_description_ar": "نص الوصف الفرعي (عربي)",
-      "center_footer_text_en": "الكلمة السفلية للبراند/اللوجو (إنجليزي)",
-      "center_footer_text_ar": "الكلمة السفلية للبراند/اللوجو (عربي)",
       "main_image": "صورة الجرافيك / الخلفية الرئيسية",
       "image_alt_en": "النص البديل للصورة (إنجليزي)",
       "image_alt_ar": "النص البديل للصورة (عربي)",
@@ -377,7 +625,8 @@
       "overlay_label_title_en": "عنوان الشارة العائمة (إنجليزي)",
       "overlay_label_title_ar": "عنوان الشارة العائمة (عربي)",
       "stats_section_title": "صف المؤشرات والإحصائيات السفلي",
-      "stat_number": "رقم الإحصائية {{num}}",
+      "stat_number_en": "قيمة / رقم الإحصائية {{num}} (إنجليزي)",
+      "stat_number_ar": "قيمة / رقم الإحصائية {{num}} (عربي)",
       "stat_label_en": "عنوان الإحصائية {{num}} (إنجليزي)",
       "stat_label_ar": "عنوان الإحصائية {{num}} (عربي)",
       "advanced_overview_preview": "معاينة قسم العرض المتقدم"
@@ -386,11 +635,14 @@
       "section_title": "منشئ المحتوى التفاعلي (مجموعات الأكورديون)",
       "layout_type_label": "أسلوب تنسيق وهيكل عرض السكشن",
       "layout_with_button": "هيكل الترويسة المزدوج (العنوان + زر إجراء على اليمين)",
+      "layout_heading_only": "هيكل الترويسة المزدوج (العنوان فقط)",
       "layout_with_media": "هيكل البانر العمودي (العنوان + ميديا ممتدة بكامل العرض)",
       "action_text_en": "نص زر الإجراء (إنجليزي)",
       "action_text_ar": "نص زر الإجراء (عربي)",
       "action_slug": "مسار توجيه رابط زر الإجراء",
       "banner_media_label": "ملف ميديا البانر العلوي العريض للسكشن",
+      "side_label_en": "النص الجانبي (بالإنجليزية)",
+      "side_label_ar": "النص الجانبي (بالعربية)",
       "custom_accordion_preview": "معاينة منشئ المحتوى التفاعلي"
     },
     "cta_banner": {
@@ -406,9 +658,6 @@
     },
     "logos": {
       "section_title": "شريط لوجوهات الشركات (Carousel)",
-      "title_en_label": "عنوان السكشن (إنجليزي)",
-      "title_ar_label": "عنوان السكشن (عربي)",
-      "logo_image_label": "صورة لوجو الشركة",
       "logos_preview": "معاينة شريط لوجوهات الشركة"
     }
   }

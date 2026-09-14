@@ -30,6 +30,24 @@ export default function IdentityCornersFields({
           register={register(`sections.${index}.content.top_left_text_ar`)}
           disabled={disabled}
         />
+        <Input
+          name={`sections.${index}.content.top_left_second_text_en`}
+          label={t("pages.culture_identity.second_text_en")}
+          error={sectionErrors?.top_left_second_text_en?.message}
+          register={register(
+            `sections.${index}.content.top_left_second_text_en`,
+          )}
+          disabled={disabled}
+        />
+        <Input
+          name={`sections.${index}.content.top_left_second_text_ar`}
+          label={t("pages.culture_identity.second_text_ar")}
+          error={sectionErrors?.top_left_second_text_ar?.message}
+          register={register(
+            `sections.${index}.content.top_left_second_text_ar`,
+          )}
+          disabled={disabled}
+        />
       </div>
 
       <div className="flex flex-col gap-3 rounded-xl border p-4 lg:gap-5">
@@ -46,6 +64,24 @@ export default function IdentityCornersFields({
           label={t("pages.culture_identity.text_ar")}
           error={sectionErrors?.top_right_text_ar?.message}
           register={register(`sections.${index}.content.top_right_text_ar`)}
+          disabled={disabled}
+        />
+        <Input
+          name={`sections.${index}.content.top_right_second_text_en`}
+          label={t("pages.culture_identity.second_text_en")}
+          error={sectionErrors?.top_right_second_text_en?.message}
+          register={register(
+            `sections.${index}.content.top_right_second_text_en`,
+          )}
+          disabled={disabled}
+        />
+        <Input
+          name={`sections.${index}.content.top_right_second_text_ar`}
+          label={t("pages.culture_identity.second_text_ar")}
+          error={sectionErrors?.top_right_second_text_ar?.message}
+          register={register(
+            `sections.${index}.content.top_right_second_text_ar`,
+          )}
           disabled={disabled}
         />
       </div>

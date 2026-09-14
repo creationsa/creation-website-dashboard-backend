@@ -17,7 +17,7 @@ class AboutResource extends JsonResource
     {
         $main_image   = $this->media()->where('option', 'main_image')->first();
         $other_images = $this->media()->where('option', null)->get();
-        $locales = [];
+        $locales      = [];
 
         foreach (config('translatable.locales') as $locale) {
             $locales[$locale]['title'] = $this->translate($locale)?->title;

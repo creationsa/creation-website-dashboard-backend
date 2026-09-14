@@ -1,3 +1,4 @@
+import PageTitle from "@/shared/ui/PageTitle";
 import Button from "@/shared/ui/Button";
 import Input from "@/shared/ui/textField/Input";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,8 @@ export default function LoginForm() {
       onSubmit={form.handleSubmit(onSubmit)}
       className="flex w-full flex-col gap-6"
     >
+      <PageTitle title={t("auth.login")} />
+
       <Input
         name="email"
         label={t("auth.email")}

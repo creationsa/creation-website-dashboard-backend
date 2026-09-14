@@ -25,7 +25,7 @@ export default function useBlogForm(blogToEdit?: SingleBlog) {
   const form = useForm<BlogFormValues>({
     defaultValues: getBlogDefaultValues(blogToEdit),
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const handleAddEditBlog = async (data: BlogFormValues) => {
@@ -34,17 +34,26 @@ export default function useBlogForm(blogToEdit?: SingleBlog) {
       uploadIfFile(data.cover_image, uploadAttachment, "blogs"),
     ]);
 
-    const formData = buildBlogFormData(data, {
+    const processedData: BlogFormValues = {
+      ...data,
+      base_image: baseImageMedia,
+      cover_image: coverImageMedia,
+    };
+
+    const formData = buildBlogFormData(processedData, {
       isEdit: isEditingSession,
       baseImageMedia,
       coverImageMedia,
     });
 
     if (isEditingSession) {
-      updateBlog({
-        id: blogToEdit!.id,
-        formData,
-      });
+      updateBlog(
+        {
+          id: blogToEdit!.id,
+          formData,
+        },
+        { onSuccess: () => form.reset(processedData) },
+      );
     } else {
       addBlog(formData);
     }

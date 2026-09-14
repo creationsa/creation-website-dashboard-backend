@@ -1,5 +1,11 @@
 import { createDynamicFeaturedItemsSchema } from "@/shared/components/dynamicFeaturedItemsFields/dynamicFeaturedItemsFieldsSchema";
 import { createHeaderSchema } from "@/shared/components/headerFields/headerSchema";
+import {
+  MAX_BUTTON_TEXT_LENGTH,
+  MAX_SHORT_TEXT_LENGTH,
+  MIN_BUTTON_TEXT_LENGTH,
+  MIN_SHORT_TEXT_LENGTH,
+} from "@/shared/constants/constants";
 import { englishField, normalField } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
 import { z } from "zod";
@@ -20,9 +26,21 @@ const createFullWidthVariant = () =>
 const createContainedVariant = (t: TFunction) =>
   z.object({
     layout_type: z.literal(FEATURED_LAYOUT_TYPES.CONTAINED),
-    action_button_text_en: englishField(t, 2, 50),
-    action_button_text_ar: normalField(t, 2, 50),
-    action_button_slug: englishField(t, 2, 150),
+    action_button_text_en: englishField(
+      t,
+      MIN_BUTTON_TEXT_LENGTH,
+      MAX_BUTTON_TEXT_LENGTH,
+    ),
+    action_button_text_ar: normalField(
+      t,
+      MIN_BUTTON_TEXT_LENGTH,
+      MAX_BUTTON_TEXT_LENGTH,
+    ),
+    action_button_slug: englishField(
+      t,
+      MIN_SHORT_TEXT_LENGTH,
+      MAX_SHORT_TEXT_LENGTH,
+    ),
   });
 
 export const createFeaturedWorksSchema = (t: TFunction) => {

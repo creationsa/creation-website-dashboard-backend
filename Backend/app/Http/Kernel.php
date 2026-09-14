@@ -16,12 +16,11 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\Cors::class,
     ];
 
     /**
@@ -78,9 +77,9 @@ class Kernel extends HttpKernel
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
 
-        'one_session' => \App\Http\Middleware\OneSessionMiddleware::class,
-
+        'one_session'             => \App\Http\Middleware\OneSessionMiddleware::class,
         'CustomPermission'        => \App\Http\Middleware\CustomPermissionMiddleware::class,
-
+        'check_user'              => \App\Http\Middleware\CheckUserMiddleware::class,
+        'agent'                   => \App\Http\Middleware\AgentMiddleware::class,
     ];
 }

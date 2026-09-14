@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
+    // 80 is used by projectDetails' paired gallery images (ImageItem.tsx).
+    qualities: [75, 80, 90],
+    unoptimized: process.env.NODE_ENV !== "production",
     remotePatterns: [
       {
         protocol: "https",
@@ -38,6 +41,16 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "creation.wecreation.tech",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "8000",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "8000",
       },
     ],
   },

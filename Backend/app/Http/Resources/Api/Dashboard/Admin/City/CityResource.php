@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\Dashboard\Admin\City;
 
 use App\Http\Resources\Api\Dashboard\Admin\Country\CountryItemResource;
+use App\Http\Resources\Api\Dashboard\Admin\Governrate\GovernrateItemResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CityResource extends JsonResource
@@ -19,7 +20,10 @@ class CityResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'country'   => CountryItemResource::make($this->country)
+            'is_active' => (bool) $this->is_active,
+            'area'      => $this->getAreaCoordinates(),
+            'country'   => CountryItemResource::make($this->country),
+            'governrate' => GovernrateItemResource::make($this->governrate),
         ];
 
     }

@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type SunIconProps = SVGProps<SVGSVGElement>;
-
-export default function SunIcon(props: SunIconProps) {
+export default function SunIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 64 64">
       <g>

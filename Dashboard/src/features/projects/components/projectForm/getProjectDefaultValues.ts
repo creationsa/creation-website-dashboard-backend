@@ -1,16 +1,13 @@
 import { DYNAMIC_ITEM_INITIAL_STATE } from "@/shared/components/dynamicItemsFields/getDynamicItemsFieldsDefaultValues";
 import { HEADER_INITIAL_STATE } from "@/shared/components/headerFields/getHeaderDefaultValues";
-import { SEO_SECTION_INITIAL_STATE } from "@/shared/components/seoSection/getSeoSectionDefaultValues";
-import { SLUG_SECTION_INITIAL_STATE } from "@/shared/components/slugSection/getSlugSectionDefaultValues";
 import { MEDIA_INITIAL_STATE } from "@/shared/components/smartMediaField/smartMediaDefaultValues";
 import { TITLE_SECTION_INITIAL_STATE } from "@/shared/components/titleSection/getTitleSectionDefaultValues";
 import type { SingleProject } from "../../types";
 import type { ProjectFormValues } from "./projectSchema";
 
-export const PROJECT_INITIAL_STATE = {
+export const PROJECT_INITIAL_STATE: ProjectFormValues = {
   ...TITLE_SECTION_INITIAL_STATE,
-  ...SLUG_SECTION_INITIAL_STATE,
-  ...SEO_SECTION_INITIAL_STATE,
+  slug_en: "",
 
   first_cover_media: MEDIA_INITIAL_STATE,
   ...HEADER_INITIAL_STATE,
@@ -39,6 +36,9 @@ export const PROJECT_INITIAL_STATE = {
   seventh_media: MEDIA_INITIAL_STATE,
   eighth_media: MEDIA_INITIAL_STATE,
 
+  cover_media_field: "first_cover_media",
+  feature_media_field: "first_cover_media",
+
   ticker_items: [DYNAMIC_ITEM_INITIAL_STATE],
 };
 
@@ -51,8 +51,6 @@ export default function getProjectDefaultValues(
     title_en: projectToEdit.title_en || "",
     title_ar: projectToEdit.title_ar || "",
     slug_en: projectToEdit.slug_en || "",
-    seo_desc_en: projectToEdit.seo_desc_en || "",
-    seo_desc_ar: projectToEdit.seo_desc_ar || "",
 
     first_cover_media: projectToEdit.first_cover_media
       ? { ...MEDIA_INITIAL_STATE, ...projectToEdit.first_cover_media }
@@ -105,6 +103,11 @@ export default function getProjectDefaultValues(
     eighth_media: projectToEdit.eighth_media
       ? { ...MEDIA_INITIAL_STATE, ...projectToEdit.eighth_media }
       : MEDIA_INITIAL_STATE,
+
+    cover_media_field: projectToEdit.cover_media_field ?? "first_cover_media",
+    feature_media_field:
+      projectToEdit.feature_media_field ?? "first_cover_media",
+
     ticker_items: projectToEdit.ticker_items?.length
       ? projectToEdit.ticker_items
       : [DYNAMIC_ITEM_INITIAL_STATE],

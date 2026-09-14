@@ -3,11 +3,13 @@ import type { ArrayPath, FieldValues, UseFormReturn } from "react-hook-form";
 export interface FeaturedItemFieldsProps<TFieldValues extends FieldValues> {
   form: UseFormReturn<TFieldValues>;
   basePath: string;
-  itemIndex: number;
+  rowLabel: string;
   isDeleteDisabled: boolean;
   onRemove: () => void;
   disabled?: boolean;
   hasTitleAndSlug?: boolean;
+  allowProjectPicker?: boolean;
+  excludeProjectIds?: number[];
 }
 
 export interface DynamicFeaturedItemsFieldsProps<
@@ -19,4 +21,8 @@ export interface DynamicFeaturedItemsFieldsProps<
   itemInitialState: Record<string, unknown>;
   disabled?: boolean;
   hasTitleAndSlug?: boolean;
+  allowProjectPicker?: boolean;
+  managementLabel: string;
+  addLabel: string;
+  rowLabelKey: string;
 }

@@ -18,11 +18,11 @@ class Sidebare extends JsonResource
         // $user =  User::findOrFail(628);
         $user =  auth('api')->user();
         return [
-            "id"             => $this->id,
-            "title"          => $this->name,
-            "key"           => $this->key,
-            "icon"           => $this->icon,
-            "permissions"       => PermissionResource::collection($user->role?->permissions()->where("permission_category_id", $this->id)->where("show_in_side_bar", 1)->get())
+            "id"          => $this->id,
+            "title"       => $this->name,
+            "key"         => $this->key,
+            "icon"        => $this->icon,
+            "permissions" => PermissionResource::collection($user->role?->permissions()->where("permission_category_id", $this->id)->where("show_in_side_bar", 1)->get())
         ];
     }
 }

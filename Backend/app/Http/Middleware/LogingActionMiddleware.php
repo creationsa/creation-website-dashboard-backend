@@ -19,7 +19,7 @@ class LogingActionMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
-            $user = auth()->user();
+            $user = auth('api')->user();
             $title = request()->route()->getName();
             $method = request()->method();
             $url = request()->url();

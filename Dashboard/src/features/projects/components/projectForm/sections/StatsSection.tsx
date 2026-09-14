@@ -3,6 +3,7 @@ import SmartMediaField from "@/shared/components/smartMediaField";
 import Box from "@/shared/ui/Box";
 import Input from "@/shared/ui/textField/Input";
 import { useTranslation } from "react-i18next";
+import CoverToggle from "../CoverToggle";
 
 const STATS_KEYS = ["one", "two", "three"] as const;
 
@@ -24,6 +25,11 @@ export default function StatsSection({ form, disabled }: SectionProps) {
           form={form}
           name="second_cover_media"
           label={t("projects.second_cover_media")}
+          disabled={disabled}
+        />
+        <CoverToggle
+          form={form}
+          fieldName="second_cover_media"
           disabled={disabled}
         />
       </div>

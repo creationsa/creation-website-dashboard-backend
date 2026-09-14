@@ -1,8 +1,20 @@
 import type { TFunction } from "i18next";
 import { z } from "zod";
-import { ARABIC_REGEX, ENGLISH_REGEX } from "../constants/constants";
+import {
+  ARABIC_REGEX,
+  ENGLISH_REGEX,
+  MAX_TITLE_LENGTH,
+  MIN_TITLE_LENGTH,
+} from "../constants/constants";
 
-export const normalField = (t: TFunction, min = 3, max = 100) =>
+/*
+ * accept any type of data
+ */
+export const normalField = (
+  t: TFunction,
+  min = MIN_TITLE_LENGTH,
+  max = MAX_TITLE_LENGTH,
+) =>
   z
     .string()
     .trim()
@@ -10,7 +22,15 @@ export const normalField = (t: TFunction, min = 3, max = 100) =>
     .min(min, t("errors.minLength", { count: min }))
     .max(max, t("errors.maxLength", { count: max }));
 
-export const arabicField = (t: TFunction, min = 3, max = 100) =>
+/*
+ * accept arabic characters only
+ */
+
+export const arabicField = (
+  t: TFunction,
+  min = MIN_TITLE_LENGTH,
+  max = MAX_TITLE_LENGTH,
+) =>
   z
     .string()
     .trim()
@@ -21,7 +41,14 @@ export const arabicField = (t: TFunction, min = 3, max = 100) =>
       message: t("errors.OnlyArabicCharactersAreAllowed"),
     });
 
-export const englishField = (t: TFunction, min = 3, max = 100) =>
+/*
+ * accept english characters only
+ */
+export const englishField = (
+  t: TFunction,
+  min = MIN_TITLE_LENGTH,
+  max = MAX_TITLE_LENGTH,
+) =>
   z
     .string()
     .trim()
@@ -32,6 +59,9 @@ export const englishField = (t: TFunction, min = 3, max = 100) =>
       message: t("errors.OnlyEnglishCharactersAreAllowed"),
     });
 
+/*
+ * accept image file or a string (url) and validate that the string is not empty if it's a string
+ */
 export const imageField = (t: TFunction) =>
   z
     .union([z.instanceof(File), z.string()])
@@ -44,6 +74,21 @@ export const imageField = (t: TFunction) =>
       },
     );
 
+/*
+ * accept image file or a string (url) and validate that the string is not empty if it's a string and that the file is an svg file
+ */
+export const svgImageField = (t: TFunction) =>
+  imageField(t).refine(
+    (value) => {
+      const name = value instanceof File ? value.name : value;
+      return name.toLowerCase().endsWith(".svg");
+    },
+    { message: t("errors.svgFileRequired") },
+  );
+
+/*
+ * accept email and validate that it's a valid email format
+ */
 export const emailField = (t: TFunction) =>
   z
     .string()

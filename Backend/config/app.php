@@ -194,7 +194,9 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
         App\Providers\SMSServiceProvider::class,
         App\Providers\SettingServiceProvider::class,
         App\Providers\TrackingServiceProvider::class,
@@ -202,8 +204,6 @@ return [
 
         // packages 
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
-
-
     ],
 
     /*
@@ -220,7 +220,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
-
     ])->toArray(),
 
 ];

@@ -1,15 +1,15 @@
-import SeoSection from "@/shared/components/seoSection";
+import SeoSection from "./sections/SeoSection";
 import TitleSection from "@/shared/components/titleSection";
+import Box from "@/shared/ui/Box";
 import Button from "@/shared/ui/Button";
 import PageTitle from "@/shared/ui/PageTitle";
+import Input from "@/shared/ui/textField/Input";
 import { useTranslation } from "react-i18next";
 import type { BlogFormProps } from "../../types";
 import FirstSubtitleSection from "./sections/FirstSubtitleSection";
 import ImagesSection from "./sections/ImagesSection";
 import ItemsSection from "./sections/ItemsSection";
-import ShowInHome from "./sections/ShowInHome";
 import useBlogForm from "./useBlogForm";
-import SlugSection from "@/shared/components/slugSection";
 
 export default function BlogForm({ blogToEdit }: BlogFormProps) {
   const { t } = useTranslation();
@@ -17,7 +17,8 @@ export default function BlogForm({ blogToEdit }: BlogFormProps) {
     useBlogForm(blogToEdit);
 
   const {
-    formState: { isDirty, isValid },
+    register,
+    formState: { isDirty, isValid, errors },
   } = form;
 
   const isSubmitDisabled =
@@ -41,14 +42,22 @@ export default function BlogForm({ blogToEdit }: BlogFormProps) {
         }
       />
 
-      {/* SHOW IN HOME */}
-      <ShowInHome form={form} disabled={isLoading} />
-
       {/* BLOG TITLE */}
       <TitleSection form={form} disabled={isLoading} />
 
       {/* SLUG */}
-      <SlugSection form={form} disabled={isLoading} />
+      <Box
+        title={t("blogs.slug")}
+        className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-5"
+      >
+        <Input
+          name="slug_en"
+          label={t("blogs.slug_en")}
+          error={errors?.slug_en?.message}
+          register={register("slug_en")}
+          disabled={isLoading}
+        />
+      </Box>
 
       {/* SEO DESCRIPTIONS */}
       <SeoSection form={form} disabled={isLoading} />

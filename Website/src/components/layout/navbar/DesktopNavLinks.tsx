@@ -2,26 +2,29 @@
 
 import { usePathname } from "next/navigation";
 import NavLinkItem from "./NavLinkItem";
-import { NAV_LINKS } from "./navLinks";
 import { DesktopNavLinksProps } from "./types";
 
-export default function DesktopNavLinks({ locale, nav }: DesktopNavLinksProps) {
+export default function DesktopNavLinks({
+  locale,
+  menuItems,
+}: DesktopNavLinksProps) {
   const pathname = usePathname();
 
-  const pathnameWithoutLocale = pathname.replace(`/${locale}`, "") || "/";
+  const pathnameWithoutLocale = pathname?.replace(`/${locale}`, "") || "/";
 
   return (
     <ul className="hidden text-lg font-semibold uppercase lg:flex lg:items-center lg:gap-8 xl:gap-12">
-      {NAV_LINKS.map((link) => {
+      {menuItems?.map(({ key, href, label }) => {
+        const linkPath = href.replace(`/${locale}`, "") || "/";
         const isActive =
-          pathnameWithoutLocale === link.href ||
-          pathnameWithoutLocale.startsWith(link.href + "/");
+          pathnameWithoutLocale === linkPath ||
+          pathnameWithoutLocale.startsWith(linkPath + "/");
 
         return (
-          <li key={link.href}>
+          <li key={key}>
             <NavLinkItem
-              href={`/${locale}${link.href}`}
-              label={nav[link.label]}
+              href={`/${locale}/${href}`}
+              label={label}
               isActive={isActive}
             />
           </li>

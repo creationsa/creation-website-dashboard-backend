@@ -97,6 +97,15 @@ class PermissionSeeder extends Seeder
 
                         $routesNamesList[$index]['front_name'] = $trimmed . '/show';
                         $routesNamesList[$index]['title']      = 'show ' . $trimmed;
+                    }else{
+                        $routesNamesList[$index]['back_name'] = $routeName;
+
+                        $subject = $routeName;
+                        $search = '.index';
+                        $trimmed = str_replace($search, '', $subject);
+
+                        $routesNamesList[$index]['front_name'] = $trimmed . '/index';
+                        $routesNamesList[$index]['title']      = 'index ' . $trimmed;
                     }
                 }
             }
@@ -117,8 +126,8 @@ class PermissionSeeder extends Seeder
                 PermissionTranslation::firstOrCreate([
                     'locale'        => $locale,
                     'permission_id' => $permission_row,
-                ], [
-                    'title'         =>  $locale != 'en' ? (new TranslationService())->apiTranslate($title, $locale) : $title,
+                ],[
+                    'title'         =>  $locale != 'en'? (new TranslationService())->apiTranslate($title, $locale) : $title,
                     'locale'        => $locale,
                     'permission_id' => $permission_row,
                 ]);
@@ -126,9 +135,15 @@ class PermissionSeeder extends Seeder
         }
 
         $permission_ids = Permission::pluck('id')->toArray();
-        $role           = RoleTranslation::where(['name' => 'admin'])->first();
-        if (!$role) {
-            $role = Role::create(['en' => ['name' => 'admin'], 'ar' => ['name' => 'admin']]);
+        $roleTranslation = RoleTranslation::where('name', 'admin')->first();
+
+        if ($roleTranslation) {
+            $role = $roleTranslation->role; // go back to Role model
+        } else {
+            $role = Role::create([
+                'en' => ['name' => 'admin'],
+                'ar' => ['name' => 'admin']
+            ]);
         }
 
         $role->permissions()->sync($permission_ids);

@@ -1,5 +1,5 @@
 apps:
-  - name: ma5sos_default
+  - name: sekka_default
     script: artisan
     exec_mode: fork
     interpreter: php

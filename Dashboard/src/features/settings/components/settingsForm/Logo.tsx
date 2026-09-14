@@ -1,5 +1,5 @@
 import Box from "@/shared/ui/Box";
-import FileUpload from "@/shared/ui/FileUpload";
+import FileUpload from "@/shared/ui/fileUpload";
 import Input from "@/shared/ui/textField/Input";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -27,6 +27,8 @@ export default function Logo({ form, disabled }: SectionProps) {
               label={t("settings.logo_en")}
               value={field.value}
               onChange={field.onChange}
+              onBlur={field.onBlur}
+              accept="image/svg+xml"
               error={errors.logo_en?.message}
               disabled={disabled}
             />
@@ -58,6 +60,8 @@ export default function Logo({ form, disabled }: SectionProps) {
               label={t("settings.logo_ar")}
               value={field.value}
               onChange={field.onChange}
+              onBlur={field.onBlur}
+              accept="image/svg+xml"
               error={errors.logo_ar?.message}
               disabled={disabled}
             />

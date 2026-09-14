@@ -1,0 +1,61 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use {{ rootNamespace }}Models\{{ modelName }};
+use {{ rootNamespace }}Http\Resources\Api\Dashboard\{{ modelName }}\{ {{ modelName }}IndexResource, {{ modelName }}Resource };
+
+
+//php artisan make:custom-controller ModelNameController ModelName//
+
+class {{ class }} extends Controller
+{ 
+    public function index()
+    {
+       ${{ modelSmall }} = {{ modelName }}::latest()->paginate(10);
+        return {{ modelName }}IndexResource::collection(${{ modelSmall }})->additional([
+            'message' => '',
+            'status' => 'success'
+        ]);
+    }
+
+    public function indexNotPaginated(Request $request)
+    {
+        ${{ modelSmall }} = {{ modelName }}::latest()->get();
+        return {{ modelName }}IndexResource::collection(${{ modelSmall }})->additional([
+            'message' => '',
+            'status' => 'success'
+        ]);
+    }
+
+    public function store({{ modelName }}Request $request)
+    {
+        ${{ modelSmall }} = {{ modelName }}::create($request->validated());
+        return {{ modelName }}Resource::make(${{ modelSmall }})->additional(['status' => 'success', 'message' => trans('Created successfully')]);
+    }
+
+    public function show($id)
+    {
+        ${{ modelSmall }} = {{ modelName }}::findOrFail($id);
+        return {{ modelName }}Resource::make(${{ modelSmall }})->additional(['status' => 'success', 'message' => '']);
+    }
+
+    public function update({{ modelName }}Request $request, $id)
+    {
+        ${{ modelSmall }} = {{ modelName }}::findOrFail($id);
+        ${{ modelSmall }}->update($request->validated());
+        return {{ modelName }}Resource::make(${{ modelSmall }})->additional(['status' => 'success', 'message' => trans('Updated successfully')]);
+    }
+    
+    public function destroy($id)
+    {
+        ${{ modelSmall }} = {{ modelName }}::findOrFail($id);
+        if ( ${{ modelSmall }}->users->count() > 0) {
+            return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Deleted fail')], 422);
+        }
+        ${{ modelSmall }}->delete();
+        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Deleted successfully')]);
+    }
+}

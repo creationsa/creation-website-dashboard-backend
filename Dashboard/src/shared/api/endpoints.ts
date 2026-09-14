@@ -1,4 +1,7 @@
 export const endpoints = {
+  statistics: {
+    root: "/dashboard/admin/statistics",
+  },
   auth: {
     login: "/dashboard/admin/login",
     logout: "/dashboard/admin/logout",
@@ -8,6 +11,8 @@ export const endpoints = {
   blogs: {
     root: "/dashboard/admin/blogs",
     byId: (id: number | string) => `/dashboard/admin/blogs/${id}`,
+    mainData: "/dashboard/admin/blogsMainData",
+    picker: "/dashboard/admin/blogs/picker",
   },
   seo: {
     root: "/dashboard/admin/metadata",
@@ -23,17 +28,28 @@ export const endpoints = {
 
     allProjects: "/dashboard/admin/allProjects",
     byId: (id: number | string) => `/dashboard/admin/allProjects/${id}`,
+    picker: "/dashboard/admin/allProjects/picker",
   },
   solutions: {
     root: "/dashboard/admin/solutions",
 
     allSolutions: "/dashboard/admin/allSolutions",
     byId: (id: number | string) => `/dashboard/admin/allSolutions/${id}`,
+    picker: "/dashboard/admin/allSolutions/picker",
   },
   settings: {
     root: "/dashboard/admin/settings",
   },
   footer: {
     root: "/dashboard/admin/footer",
+  },
+  header: {
+    root: "/dashboard/admin/header",
+  },
+  clients: {
+    root: "/dashboard/admin/clients",
+  },
+  menuOptions: {
+    root: "/dashboard/admin/menu-options",
   },
 };

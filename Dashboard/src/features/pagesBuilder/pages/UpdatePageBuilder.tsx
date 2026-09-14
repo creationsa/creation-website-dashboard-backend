@@ -15,5 +15,11 @@ export default function UpdatePageBuilder() {
   if (!id || isNaN(numericId) || !page)
     return <Navigate to={routes.pagesBuilder} replace />;
 
-  return <PagesBuilderForm dataToEdit={page} />;
+  return (
+    <PagesBuilderForm
+      dataToEdit={page}
+      id={numericId}
+      metadataId={page.metadata_id}
+    />
+  );
 }

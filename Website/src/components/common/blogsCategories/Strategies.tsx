@@ -1,6 +1,6 @@
+import BlogContent from "@/components/common/blogContent";
 import { StrategiesProps } from "@/components/pages/blogsDetails/types";
 import Header from "@/components/ui/Header";
-import BlogContent from "./BlogContent";
 
 export default function Strategies({
   blogData,

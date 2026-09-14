@@ -16,7 +16,6 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('phone_code', 5)->nullable();
-            $table->string('show_phone_code')->nullable();
             $table->string('flag')->nullable();
             $table->integer('phone_number_limit')->nullable();
             $table->integer('national_id_limit')->nullable();
@@ -29,6 +28,7 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->foreignId('country_id')->constrained('countries')->cascadeOnDelete();
             $table->string('name');
+            $table->string('currency')->nullable();
             $table->string('slug')->nullable();
             $table->string('nationality')->nullable();
             $table->string('short_name')->nullable();

@@ -25,7 +25,7 @@ export default function useSettingsForm(settingsToEdit?: SettingItem) {
   const form = useForm<SettingsFormValues>({
     defaultValues: getSettingsDefaultValues(settingsToEdit),
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const handleUpdateSettings = async (data: SettingsFormValues) => {
@@ -34,12 +34,20 @@ export default function useSettingsForm(settingsToEdit?: SettingItem) {
       uploadIfFile(data.logo_ar, uploadAttachment, "settings"),
     ]);
 
-    const formData = buildSettingsFormData(data, {
+    const processedData: SettingsFormValues = {
+      ...data,
+      logo_en,
+      logo_ar,
+    };
+
+    const formData = buildSettingsFormData(processedData, {
       logo_en,
       logo_ar,
     });
 
-    updateSettings(formData);
+    updateSettings(formData, {
+      onSuccess: () => form.reset(processedData),
+    });
   };
 
   return {

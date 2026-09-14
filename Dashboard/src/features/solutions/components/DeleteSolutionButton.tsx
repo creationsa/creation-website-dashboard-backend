@@ -20,7 +20,9 @@ export default function DeleteSolutionButton({
   return (
     <Modal>
       <Modal.Open opens="deleteSolution">
-        <Button variation="delete">{t("general.delete")}</Button>
+        <Button variation="delete" size="small">
+          {t("general.delete")}
+        </Button>
       </Modal.Open>
 
       <Modal.Window name="deleteSolution">

@@ -17,20 +17,21 @@ class AdminSeeder extends Seeder
     {
         $user = User::create([
             'full_name'            => 'admin',
-            'email'                => 'admin@' . env('APP_NAME') . '.com',
-            'phone_code'           => '965',
+            'email'                => 'admin@info.com',
+            'phone_code'           => '966',
             'phone'                => '501234567',
             'password'             => '123456789',
             'is_admin_active_user' => true,
             'user_type'            => 'super_admin',
             'gender'               => 'male',
+            'is_completed_data'    => true
         ]);
 
-        // $country = Country::first();
-        // $city    = City::where('country_id', $country->id)->first();
+        $country = Country::first();
+        $city    = City::where('country_id', $country->id)->first();
         Profile::create([
             'user_id'       => $user->id,
-            // 'country_id'    => $country->id,
+            'country_id'    => $country->id,
             // 'city_id'       => $city->id,
             'last_login_at' => now()
         ]);

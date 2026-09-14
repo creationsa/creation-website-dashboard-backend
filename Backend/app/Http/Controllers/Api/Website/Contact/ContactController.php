@@ -15,8 +15,8 @@ class ContactController extends Controller
     public function contact(ContactRequest $request)
     {
         $contact = Contact::create($request->validated());
-        $admins = User::whereIn('user_type',['admin','supper_admin'])->get();
+        $admins = User::whereIn('user_type',['admin','super_admin'])->get();
         Notification::send($admins, new ContactNotification($contact));
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('website.messages.send_your_contact_successfully')]);
+        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Your message has been sent successfully')]);
     }
 }

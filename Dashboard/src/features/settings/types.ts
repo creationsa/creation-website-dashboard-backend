@@ -1,6 +1,13 @@
 import type { UseFormReturn } from "react-hook-form";
 import type { SettingsFormValues } from "./components/settingsForm/settingsSchema";
 
+export interface SettingSocialItem {
+  id?: number;
+  title_en: string;
+  title_ar: string;
+  link: string;
+}
+
 export interface SettingItem {
   logo_en: string;
   logo_en_alt_en: string;
@@ -10,21 +17,7 @@ export interface SettingItem {
   logo_ar_alt_en: string;
   logo_ar_alt_ar: string;
 
-  instagram_title_en: string;
-  instagram_title_ar: string;
-  instagram_link: string;
-
-  facebook_title_en: string;
-  facebook_title_ar: string;
-  facebook_link: string;
-
-  behance_title_en: string;
-  behance_title_ar: string;
-  behance_link: string;
-
-  linkedin_title_en: string;
-  linkedin_title_ar: string;
-  linkedin_link: string;
+  socials: SettingSocialItem[];
 }
 
 export interface SettingsFormProps {

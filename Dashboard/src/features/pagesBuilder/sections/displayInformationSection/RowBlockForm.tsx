@@ -1,8 +1,8 @@
-import type { FieldErrors } from "react-hook-form";
+import { useWatch, type Path } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import BlockHeader from "../../components/pagesBuilderForm/BlockHeader";
+import BlockHeader from "@/shared/components/blockControls/BlockHeader";
 import SubHeadTitle from "../../components/pagesBuilderForm/SubHeadTitle";
-import type { DisplayInfoFormValues } from "./displayInfoSchema";
+import type { PageFormValues } from "../../components/pagesBuilderForm/pageSchema";
 import LeftContentFields from "./LeftContentFields";
 import RightCardForm from "./RightCardForm";
 import type { RowBlockProps } from "./types";
@@ -16,21 +16,23 @@ export default function RowBlockForm({
   onRemove,
 }: RowBlockProps) {
   const { t } = useTranslation();
-  const {
-    formState: { errors },
-  } = form;
-  const contentErrors = errors?.sections?.[sectionIndex]?.content as
-    | FieldErrors<DisplayInfoFormValues>
-    | undefined;
+  const { control } = form;
 
-  const blockErrors = contentErrors?.blocks?.[blockIndex] as
-    | FieldErrors<DisplayInfoFormValues["blocks"][number]>
-    | undefined;
+  const basePath = `sections.${sectionIndex}.content.blocks.${blockIndex}`;
+
+  const firstRightProjectId = useWatch({
+    control,
+    name: `${basePath}.first_right_project_id` as Path<PageFormValues>,
+  }) as number | null | undefined;
+  const secondRightProjectId = useWatch({
+    control,
+    name: `${basePath}.second_right_project_id` as Path<PageFormValues>,
+  }) as number | null | undefined;
 
   return (
     <div className="relative flex flex-col gap-3 lg:gap-5">
       <BlockHeader
-        index={blockIndex}
+        rowLabel={t("pages.display_row", { index: blockIndex + 1 })}
         onRemove={onRemove}
         isDeleteDisabled={isDeleteDisabled}
       />
@@ -53,7 +55,7 @@ export default function RowBlockForm({
             blockIndex={blockIndex}
             disabled={disabled}
             prefix="first_right"
-            errors={blockErrors}
+            otherCardProjectId={secondRightProjectId}
           />
 
           <RightCardForm
@@ -62,7 +64,7 @@ export default function RowBlockForm({
             blockIndex={blockIndex}
             disabled={disabled}
             prefix="second_right"
-            errors={blockErrors}
+            otherCardProjectId={firstRightProjectId}
           />
         </div>
       </div>

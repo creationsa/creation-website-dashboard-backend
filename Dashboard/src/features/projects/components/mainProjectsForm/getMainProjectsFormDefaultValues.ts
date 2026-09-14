@@ -1,5 +1,5 @@
 import { HEADER_INITIAL_STATE } from "@/shared/components/headerFields/getHeaderDefaultValues";
-import { LOGOS_INITIAL_STATE } from "@/shared/components/logosFields/getLogosFieldsDefaultValues";
+import { PAGE_TITLE_SETTINGS_SECTION_INITIAL_STATE } from "@/shared/components/pageTitleSettingsSection/getPageTitleSettingsSectionDefaultValues";
 import type { ProjectsFormValues } from "./mainProjectsFormSchema";
 import type { ProjectsMainDataProps } from "../../types";
 
@@ -7,7 +7,7 @@ export const PROJECTS_INITIAL_STATE = {
   ...HEADER_INITIAL_STATE,
   overview_description_en: "",
   overview_description_ar: "",
-  logos_section: { ...LOGOS_INITIAL_STATE },
+  ...PAGE_TITLE_SETTINGS_SECTION_INITIAL_STATE,
 };
 
 export default function getProjectsDefaultValues(
@@ -30,6 +30,8 @@ export default function getProjectsDefaultValues(
     overview_description_ar:
       projectMainDataToEdit.overview_description_ar || "",
 
-    logos_section: projectMainDataToEdit.logos_section,
+    nav_title_en: projectMainDataToEdit.nav_title_en || "",
+    nav_title_ar: projectMainDataToEdit.nav_title_ar || "",
+    slug_en: projectMainDataToEdit.slug_en || "",
   };
 }

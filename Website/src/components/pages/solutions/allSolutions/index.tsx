@@ -1,18 +1,14 @@
 import Header from "@/components/ui/Header";
-import SolutionsTicker from "../../solutionDetails/solutionsTicker";
 import { AllSolutionsProps } from "../types";
+import News from "@/components/common/news";
 
-export default function AllSolutions({
-  solutions,
-  locale,
-  news,
-}: AllSolutionsProps) {
+export default function AllSolutions({ mainData, locale }: AllSolutionsProps) {
   return (
     <section className="container">
       {/* HEADER */}
       <Header
-        description={solutions.all_services_description}
-        subDescription={solutions.all_services_sub_description}
+        description={mainData.core_desc}
+        subDescription={mainData.core_sub_desc}
         lang={locale}
         hasContainer={false}
         inlineHeadings
@@ -20,7 +16,7 @@ export default function AllSolutions({
       />
 
       {/* NEWS */}
-      <SolutionsTicker news={news} />
+      <News data={mainData.ticker_items} hasBorder />
     </section>
   );
 }

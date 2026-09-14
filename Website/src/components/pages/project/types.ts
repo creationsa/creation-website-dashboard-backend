@@ -1,41 +1,30 @@
-import { ProjectTranslations } from "@/dictionaries/types";
 import { LanguageType } from "@/i18n.config";
-import { StaticImageData } from "next/image";
-import { ProjectTab } from "./tabs";
-
-type RealProjectTab = Exclude<ProjectTab, "all">;
+import { SmartMediaContent } from "@/types/media";
 
 export interface ProjectItem {
-  type: RealProjectTab | RealProjectTab[];
-  toolkit_header: keyof ProjectTranslations | (keyof ProjectTranslations)[];
-  toolkit_title: keyof ProjectTranslations;
-  href: string;
-  img: StaticImageData;
+  title: string;
+  slug: string;
+  image: SmartMediaContent | null;
 }
 
-export interface ProjectTabsItem {
-  key: ProjectTab;
-  label: string;
+export interface ProjectsMainData {
+  first_title: string;
+  second_title: string;
+  third_title: string;
+  overview_description: string;
 }
 
 export interface AllProjectsProps {
-  project: ProjectTranslations;
+  mainData: ProjectsMainData;
   locale: LanguageType;
-}
-
-export interface ProjectTabsProps {
-  activeTab: ProjectTab;
-  onChange: (tab: ProjectTab) => void;
-  labels: ProjectTranslations;
+  projects: ProjectItem[];
 }
 
 export interface ProjectsGridProps {
   projects: ProjectItem[];
-  project: ProjectTranslations;
 }
 
 export interface ProjectCardProps {
   item: ProjectItem;
-  project: ProjectTranslations;
   directionIndex: number;
 }

@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type GlobalIconProps = SVGProps<SVGSVGElement>;
-
-export default function GlobalIcon(props: GlobalIconProps) {
+export default function GlobalIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 32 32">
       <path

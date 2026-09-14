@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Country extends Model implements TranslatableContract
 {
-    use Translatable, SoftDeletes;
-    protected $guarded = ['id','created_at','updated_at','deleted_at'];
-    public $translatedAttributes = ['name','nationality'];
+    use Translatable;
+    
+    protected $guarded           = ['id', 'created_at', 'updated_at', 'deleted_at'];
+    public $translatedAttributes = ['name', 'nationality', 'short_name'];
 
     protected static function boot()
     {
@@ -37,6 +38,15 @@ class Country extends Model implements TranslatableContract
     public function cities()
     {
     	return $this->hasMany(City::class);
+    }
+
+    public function governrates()
+    {
+        return $this->hasMany(Governrate::class);
+    }
+
+    public function country(){
+        return $this->belongsTo(Country::class);
     }
 
 }

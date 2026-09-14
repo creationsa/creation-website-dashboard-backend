@@ -19,7 +19,7 @@ class AdminResource extends JsonResource
         return [
             'id'                   => (int) $this->id,
             'full_name'            => (string) $this->full_name,
-            'image'                => $this->image_object,
+            'image'                => $this->image,
             'email'                => (string) $this->email,
             'phone'                => (string) $this->phone,
             'phone_code'           => (string) $this->phone_code,

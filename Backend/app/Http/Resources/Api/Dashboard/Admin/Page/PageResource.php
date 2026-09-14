@@ -15,12 +15,12 @@ class PageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'              => $this->id,
-            'title'           => $this->title,
-            'desc'            => $this->desc,
-            'type'            => $this->type,
-            'ordering'        => $this->ordering,
+            'id'       => $this->id,
+            'image'    => $this->image,
+            'title'    => $this->title,
+            'desc'     => $this->desc,
+            'type'     => $this->type,
+            'ordering' => $this->ordering,
         ];
-
     }
 }

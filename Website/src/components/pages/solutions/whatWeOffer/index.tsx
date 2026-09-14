@@ -1,24 +1,22 @@
+import FullWidthSlider from "@/components/common/fullWidthItems/FullWidthSlider";
 import Header from "@/components/ui/Header";
 import { WhatWeOfferProps } from "../types";
-import ProjectSlider from "./ProjectSlider";
 
-export default function WhatWeOffer({
-  solutions,
-  project_details,
-  locale,
-}: WhatWeOfferProps) {
+export default function WhatWeOffer({ mainData, locale }: WhatWeOfferProps) {
+  if (mainData.items.length === 0) return null;
+
   return (
     <section>
       {/* HEADER */}
       <Header
-        title={solutions.what_we_offer}
-        description={solutions.what_we_offer_description}
-        subDescription={solutions.what_we_offer_sub_description}
+        title={mainData.items_header.first_title}
+        description={mainData.items_header.second_title}
+        subDescription={mainData.items_header.third_title}
         lang={locale}
         styles="w-full mb-20"
       />
 
-      <ProjectSlider locale={locale} project_details={project_details} />
+      <FullWidthSlider locale={locale} items={mainData.items} />
     </section>
   );
 }

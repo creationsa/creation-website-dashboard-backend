@@ -1,24 +1,21 @@
 import { DeepDetailsProps } from "../types";
 
-export default function DeepDetails({
-  solutionData,
-  solution_details,
-}: DeepDetailsProps) {
+export default function DeepDetails({ data }: DeepDetailsProps) {
   return (
     <section className="container">
       <div className="ms-auto w-full text-2xl xl:w-1/2">
         <h3 className="mb-8 text-xl capitalize sm:text-2xl">
-          {solution_details.execution_framework}
+          {data.execution_title}
         </h3>
 
         <ul className="list-outside list-disc space-y-4 ps-6">
-          {solutionData.features.map((feature) => (
-            <li key={feature.title}>
+          {data.execution_keys.map((key) => (
+            <li key={key.label}>
               <p>
                 <span className="text-black-100 dark:text-white-100">
-                  {feature.title}:{" "}
+                  {key.label}:{" "}
                 </span>
-                {feature.description}
+                {key.value}
               </p>
             </li>
           ))}

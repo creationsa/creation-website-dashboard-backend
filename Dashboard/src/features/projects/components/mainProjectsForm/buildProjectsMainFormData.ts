@@ -28,33 +28,9 @@ export function buildProjectsMainFormData(
     values.overview_description_ar || "",
   );
 
-  if (values.logos_section) {
-    formData.append(
-      "logos_section[title_en]",
-      values.logos_section.title_en || "",
-    );
-    formData.append(
-      "logos_section[title_ar]",
-      values.logos_section.title_ar || "",
-    );
-
-    values.logos_section.logos?.forEach((logo, index) => {
-      if (logo.logo_image) {
-        formData.append(
-          `logos_section[logos][${index}][logo_image]`,
-          logo.logo_image,
-        );
-      }
-      formData.append(
-        `logos_section[logos][${index}][alt_en]`,
-        logo.alt_en || "",
-      );
-      formData.append(
-        `logos_section[logos][${index}][alt_ar]`,
-        logo.alt_ar || "",
-      );
-    });
-  }
+  formData.append("nav_title_en", values.nav_title_en || "");
+  formData.append("nav_title_ar", values.nav_title_ar || "");
+  formData.append("slug_en", values.slug_en || "");
 
   if (isEdit) {
     formData.append("_method", "PUT");

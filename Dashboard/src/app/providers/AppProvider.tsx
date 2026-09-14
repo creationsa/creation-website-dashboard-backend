@@ -1,3 +1,4 @@
+import ErrorBoundary from "@/shared/components/errorBoundary";
 import { useLanguage } from "@/shared/hooks/useLanguage";
 import { useEffect } from "react";
 import Navigation from "../navigation/Navigation";
@@ -19,7 +20,9 @@ export default function AppProvider() {
       <ThemeProvider>
         <ToastProvider />
         <RoutesProvider>
-          <Navigation />
+          <ErrorBoundary>
+            <Navigation />
+          </ErrorBoundary>
         </RoutesProvider>
       </ThemeProvider>
     </QueryProvider>

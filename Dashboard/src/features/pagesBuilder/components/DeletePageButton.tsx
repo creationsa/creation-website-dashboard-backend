@@ -1,4 +1,3 @@
-import { DeleteIcon } from "@/shared/icons";
 import Button from "@/shared/ui/Button";
 import ConfirmMessage from "@/shared/ui/ConfirmMessage";
 import Modal from "@/shared/ui/Modal";
@@ -19,13 +18,8 @@ export default function DeletePageButton({ page }: DeletePageProps) {
   return (
     <Modal>
       <Modal.Open opens="deletePage">
-        <Button
-          variation="delete"
-          size="small"
-          aria-label={t("general.delete")}
-          title={t("general.delete")}
-        >
-          <DeleteIcon />
+        <Button variation="delete" size="small">
+          {t("general.delete")}
         </Button>
       </Modal.Open>
 

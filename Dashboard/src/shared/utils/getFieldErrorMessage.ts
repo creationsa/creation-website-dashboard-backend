@@ -1,5 +1,8 @@
 import type { FieldErrors, FieldValues } from "react-hook-form";
 
+/*
+ * Get the error message for a specific field path from the form errors.
+ */
 export function getFieldErrorMessage(
   errors: FieldErrors<FieldValues>,
   path: string,

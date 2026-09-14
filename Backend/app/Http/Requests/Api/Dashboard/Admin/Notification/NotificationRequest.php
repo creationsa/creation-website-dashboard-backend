@@ -23,12 +23,17 @@ class NotificationRequest extends ApiMasterRequest
      */
     public function rules()
     {
+        $rules = [];
+
+        foreach (config('translatable.locales') as $locale) {
+            $rules[$locale. '.title'] = 'required|string|between:3,200';
+            $rules[$locale. '.body']  = 'required|string|between:3,10000';
+        }
+
         return [
-            'type'       => 'required|in:all,all_clients,all_employees,specific_client,specific_employee',
-            'user_ids'   => 'nullable|array|required_if:type,specific_client,specific_employee',
+            'type'       => 'required|in:all,admins,clients,super_admin,drivers,agents,specific',
+            'user_ids'   => 'nullable|array|required_if:type,specific',
             'user_ids.*' => 'nullable|exists:users,id',
-            'title'      => 'required|string|between:3,200',
-            'body'       => 'required|string|between:3,10000',
-        ];
+        ] + $rules;
     }
 }

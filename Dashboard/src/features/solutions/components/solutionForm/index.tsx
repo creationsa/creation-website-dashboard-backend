@@ -1,21 +1,21 @@
-import DynamicFeaturedItemsFields from "@/shared/components/dynamicFeaturedItemsFields";
-import { MEDIA_ONLY_ITEM_INITIAL_STATE } from "@/shared/components/dynamicFeaturedItemsFields/getDynamicFeaturedItemsFieldsDefaultValues";
-import DynamicItemsFields from "@/shared/components/dynamicItemsFields";
-import HeaderFields from "@/shared/components/headerFields";
+import ContactHint from "@/shared/components/contactHint";
 import PageTabs from "@/shared/components/pageTabs";
 import SeoForm from "@/shared/components/seoForm";
-import SlugSection from "@/shared/components/slugSection";
 import TitleSection from "@/shared/components/titleSection";
-import { useGetSeoDataByModal } from "@/shared/hooks/useGetSeoDataByModal";
-import Box from "@/shared/ui/Box";
+import { useGetSeoDataById } from "@/shared/hooks/useGetSeoDataById";
 import Button from "@/shared/ui/Button";
 import PageTitle from "@/shared/ui/PageTitle";
 import Spinner from "@/shared/ui/spinner/Spinner";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { SolutionFormProps } from "../../types";
-import ExecutionFrameworkSection from "./sections/ExecutionFrameworkSection";
-import ValueProposition from "./sections/ValueProposition";
+import SolutionCardIconSection from "./sections/SolutionCardIconSection";
+import SolutionExecutionFrameworkSection from "./sections/SolutionExecutionFrameworkSection";
+import SolutionGallerySection from "./sections/SolutionGallerySection";
+import SolutionHeaderSection from "./sections/SolutionHeaderSection";
+import SolutionNewsSection from "./sections/SolutionNewsSection";
+import SolutionSlugSection from "./sections/SolutionSlugSection";
+import SolutionValuePropositionSection from "./sections/SolutionValuePropositionSection";
 import useSolutionForm from "./useSolutionForm";
 
 export default function SolutionForm({ solutionToEdit }: SolutionFormProps) {
@@ -23,7 +23,9 @@ export default function SolutionForm({ solutionToEdit }: SolutionFormProps) {
   const { form, isLoading, isEditingSession, handleAddEditSolution } =
     useSolutionForm(solutionToEdit);
 
-  const { seoData, isSeoLoading } = useGetSeoDataByModal("pages");
+  const { seoData, isSeoLoading } = useGetSeoDataById(
+    solutionToEdit?.metadata_id ?? undefined,
+  );
   const [activeTab, setActiveTab] = useState<"content" | "seo">("content");
 
   const isEditMode = !!solutionToEdit;
@@ -39,7 +41,6 @@ export default function SolutionForm({ solutionToEdit }: SolutionFormProps) {
 
   return (
     <>
-      {/* HEADER */}
       <PageTitle
         title={
           isEditingSession
@@ -65,33 +66,21 @@ export default function SolutionForm({ solutionToEdit }: SolutionFormProps) {
         >
           <TitleSection form={form} disabled={isLoading} />
 
-          <SlugSection form={form} disabled={isLoading} />
+          <SolutionSlugSection form={form} disabled={isLoading} />
 
-          <Box className="flex flex-col gap-3 lg:gap-5">
-            <HeaderFields form={form} disabled={isLoading} />
-          </Box>
+          <SolutionCardIconSection form={form} disabled={isLoading} />
 
-          <ValueProposition form={form} disabled={isLoading} />
+          <SolutionHeaderSection form={form} disabled={isLoading} />
 
-          <ExecutionFrameworkSection form={form} disabled={isLoading} />
+          <SolutionValuePropositionSection form={form} disabled={isLoading} />
 
-          <Box className="flex flex-col gap-3 lg:gap-5">
-            <DynamicFeaturedItemsFields
-              form={form}
-              name="items"
-              itemInitialState={MEDIA_ONLY_ITEM_INITIAL_STATE}
-              disabled={isLoading}
-              hasTitleAndSlug={false}
-            />
-          </Box>
+          <SolutionExecutionFrameworkSection form={form} disabled={isLoading} />
 
-          <Box title={t("solutions.news_section")}>
-            <DynamicItemsFields
-              form={form}
-              disabled={isLoading}
-              name="ticker_items"
-            />
-          </Box>
+          <SolutionGallerySection form={form} disabled={isLoading} />
+
+          <SolutionNewsSection form={form} disabled={isLoading} />
+
+          <ContactHint />
 
           <Button
             type="submit"
@@ -104,7 +93,13 @@ export default function SolutionForm({ solutionToEdit }: SolutionFormProps) {
         </form>
       )}
 
-      {activeTab === "seo" && <SeoForm seoData={seoData} forType="solution" />}
+      {activeTab === "seo" && (
+        <SeoForm
+          seoData={seoData}
+          metadataId={solutionToEdit?.id}
+          metadataableType="solution"
+        />
+      )}
     </>
   );
 }

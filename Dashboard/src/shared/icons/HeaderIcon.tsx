@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type HeaderIconProps = SVGProps<SVGSVGElement>;
-
-export default function HeaderIcon(props: HeaderIconProps) {
+export default function HeaderIcon(props: IconProps) {
   return (
     <Icon {...props} viewBox="0 0 1920 1920">
       <path

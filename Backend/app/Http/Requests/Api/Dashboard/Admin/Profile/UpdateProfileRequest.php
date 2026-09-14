@@ -30,9 +30,9 @@ class UpdateProfileRequest extends ApiMasterRequest
     {
         $country = Country::wherePhoneCode($this->phone_code)->firstOr(function () {
             throw new HttpResponseException(response()->json([
-                'status' => 'fail',
-                'message' =>  trans('dashboard/admin.auth.phone_country_is_required'),
-                'data' => null,
+                'status'  => 'fail',
+                'data'    => null,
+                'message' =>  trans('Invalid phone code'),
             ], 422));
         });
 
@@ -51,7 +51,7 @@ class UpdateProfileRequest extends ApiMasterRequest
             "current_password" => [
                 "required_with:password", function ($attribute, $value, $fail) {
                     if (!Hash::check($value, auth('api')->user()->password)) {
-                        $fail(trans("validation.invalid_current_password"));
+                        $fail(trans("The current password is invalid"));
                     }
                 }
             ],

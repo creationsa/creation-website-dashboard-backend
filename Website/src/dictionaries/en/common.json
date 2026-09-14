@@ -1,28 +1,10 @@
 {
   "home": "Home",
-  "welcome": "Welcome",
-  "about_us": "About",
-  "contact_us": "Contact",
-  "faq": "FAQ",
-  "our_company": "Our Company",
-  "more_info": "More Info",
-  "career": "Career",
-  "team": "Team",
-  "blogs": "Blogs",
-  "solutions": "Solutions",
-  "portfolio": "projects",
-  "company": "Company",
-  "previous": "Previous",
-  "next": "Next",
   "back_to_home": "Back to Home",
   "not_found_number": "404",
-  "instagram": "Instagram",
-  "facebook": "Facebook",
-  "behance": "Behance",
-  "linkedin": "LinkedIn",
-  "seo_title": "Innovative Solutions, Lasting Impressions",
-  "seo_description": "Our vision is to shape the next era of digital presence—engineering ambitious brands into cultural and market leaders through strategic innovation and enduring influence.",
+
+  "previous": "Previous",
+  "next": "Next",
   "page_not_found_title": "Page Not Found",
-  "page_not_found_desc": "The page you're looking for doesn't exist.",
-  "creation": "crēation®"
+  "page_not_found_desc": "The page you're looking for doesn't exist."
 }

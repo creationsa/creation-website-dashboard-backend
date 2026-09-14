@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\Api\Dashboard\Admin\User;
 
+use App\Models\User;
+use App\Models\Driver;
+use App\Exports\ExportUser;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Api\Dashboard\Admin\User\UserRequest;
+use App\Http\Resources\Api\Dashboard\Admin\User\UserResource;
+use App\Notifications\Api\Dashboard\DriverStatusNotification;
 use App\Http\Resources\Api\Dashboard\Admin\User\UserIndexResource;
 use App\Http\Resources\Api\Dashboard\Admin\User\UserNamesResource;
-use App\Http\Resources\Api\Dashboard\Admin\User\UserResource;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     public function users_names(Request $request)
     {
-        $users = User::when($request->user_type, function ($query) use ($request) {
-
-            $query->where('user_type', $request->user_type);
-
-        })->latest()->get(['id', 'full_name']);
+        $users = User::whereNotIn('user_type', ['admin', 'super_admin'])
+            ->when($request->user_type, function ($query) use ($request) {
+                $query->where('user_type', $request->user_type);
+            })
+            ->latest()
+            ->get(['id', 'full_name']);
 
         return UserNamesResource::collection($users)->additional(['status' => 'success', 'message' => '']);
     }
@@ -31,48 +36,40 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::whereNotIn('user_type', ['admin', 'super_admin'])
-            ->when($request->is_ban, function ($query) use ($request) {
-                $query->where('is_ban', $request->is_ban);
-            })
-            ->when($request->is_active, function ($query) use ($request) {
-                $query->where('is_admin_active_user', $request->is_active);
-            })
-            //
-        /*leftJoin('subscription_plans', 'users.subscription_plan_id', '=', 'subscription_plans.id')
-            ->select('users.*', 'subscription_plans.name as subscription_plan_name')*/
-            
-            ->when(request()->keyword, function ($query) {
-                $query->where(function ($query) {
-                    $query->where('full_name', 'like', '%' . request()->keyword . '%')
-                        ->orWhere('phone', 'like', '%' . request()->keyword . '%')
-                        ->orWhere('email', 'like', '%' . request()->keyword . '%');
-                });
-            })
-            ->when(request()->points, function ($query) {
-                $query->whereBetween('points', [request()->points['min'], request()->points['max']]);
-            })
-            // ->when(request()->subscription_plan, function ($query) {
-            //     $query->where('subscription_plan_id', request()->subscription_plan);
-            // })
-            ->latest()->paginate(request()->per_page ?? 10);
-
+        $users = User::whereNotIn('user_type', ['admin', 'super_admin'])->where('is_completed_data', 1)
+            ->when($request->user_type, fn($query) => $query->where('user_type', $request->user_type))
+            ->when($request->keyword, fn($query) => $query->where(function ($query) use ($request) {
+            $query->where('full_name', 'like', '%' . $request->keyword . '%')
+                ->orWhere('phone', 'like', '%' . $request->keyword . '%')
+                ->orWhere('email', 'like', '%' . $request->keyword . '%');
+            }))
+            ->when(isset($request->is_active), fn($query) => $query->where('is_admin_active_user', $request->is_active))
+            ->when(isset($request->is_ban), fn($query) => $query->where('is_ban', $request->is_ban))
+            ->when(isset($request->status), fn($query) => $query->whereHas('driver', function($q) use($request){
+                $q->where('status', $request->status);
+            }))
+            ->when($request->from_date, fn($query) => $query->whereDate('created_at', '>=', $request->from_date))
+            ->when($request->to_date, fn($query) => $query->whereDate('created_at', '<=', $request->to_date))
+            ->latest()
+            ->paginate($request->per_page ?? 10);
 
         return UserIndexResource::collection($users)->additional(['status' => 'success', 'message' => '']);
     }
 
     public function indexWithoutPagination(Request $request)
     {
-        $users = User::when($request->user_type, function ($query) use ($request) {
-
-            $query->where('user_type', $request->user_type);
-
-        })->when(request()->keyword, function ($query) {
-            $query->where(function ($query) {
-                $query->where('full_name', 'like', '%' . request()->keyword . '%')
-                    ->orWhere('email', 'like', '%' . request()->keyword . '%');
-            });
-        })->latest()->get();
+        $users = User::whereNotIn('user_type', ['admin', 'super_admin'])
+            ->when($request->user_type, function ($query) use ($request) {
+                $query->where('user_type', $request->user_type);
+            })
+            ->when(request()->keyword, function ($query) {
+                $query->where(function ($query) {
+                    $query->where('full_name', 'like', '%' . request()->keyword . '%')
+                        ->orWhere('email', 'like', '%' . request()->keyword . '%');
+                });
+            })
+            ->latest()
+            ->get();
 
         return UserIndexResource::collection($users)->additional(['status' => 'success', 'message' => '']);
     }
@@ -85,13 +82,10 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        if (isset($request->phone) && (substr($request->phone, 0, 1) != '5' || substr($request->phone, 0, 1) != '05')) {
-            return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('app/client.messages.worng_phone_format')], 422);
-        }
-        $user = User::create($request->all() + ['is_admin_active_user' => 1, 'phone_verified_at' => now(), 'hash_code'  => generate_unique_code(8, '\\App\\Models\\User', 'hash_code', 'letters'),'points' => 25]);
-        $user->profile()->create($request->only(['country_id']));
-
-        return UserResource::make($user)->additional(['status' => 'success', 'message' => '']);
+        // $promotional_code = $this->generatePromotionalCode();
+        $user = User::create($request->validated() + ['is_admin_active_user' => 1, 'phone_verified_at' => now(), 'is_completed_data' => 1]);
+        $user->profile()->create($request->profile_data);
+        return UserResource::make($user)->additional(['status' => 'success', 'message' => trans('Created successfully')]);
     }
 
     /**
@@ -116,9 +110,9 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = User::whereNotIn('user_type', ['admin', 'super_admin'])->findOrFail($id);
-        $user->update($request->all());
-        $user->profile()->update($request->only(['country_id']));
-        return UserResource::make($user)->additional(['status' => 'success', 'message' => '']);
+        $user->update($request->validated());
+        $user->profile()->update($request->profile_data);
+        return UserResource::make($user)->additional(['status' => 'success', 'message' => trans('Updated successfully')]);
     }
 
     /**
@@ -130,9 +124,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::whereNotIn('user_type', ['admin', 'super_admin'])->findOrFail($id);
-
         if ($user->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('dashboard/admin.actions.deleted_successfully')]);
+            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
         }
     }
 
@@ -149,20 +142,25 @@ class UserController extends Controller
         $user->update(['is_ban' => !$user->is_ban]);
 
         // $ban = $user->is_ban == true ? 'ban' : 'not_ban';
-
         // $user->notify(new  BanNotification($this->banContent($ban), ['database', 'fcm']));
 
         return UserResource::make($user)->additional(['status' => 'success', 'message' => '']);
     }
 
-    public function addPoints($id, Request $request)
+    public function export()
     {
-        $request->validate([
-            'points' => 'required|numeric|min:1|max:1000000',
-        ]);
-        $user = User::whereNotIn('user_type', ['admin', 'super_admin'])->findOrFail($id);
-        $user->update(['points' => $user->points + $request->points]);
-        return UserResource::make($user)->additional(['status' => 'success', 'message' => '']);
-    }
+		return Excel::download(new ExportUser(), 'users.xlsx');
+	}
 
+    public function changeStatus(Request $request, $id)
+    {
+        $user = User::where('user_type', 'driver')->findOrFail($id);
+        $status = $request->status;
+        if (!in_array($status, ['accepted', 'rejected'])) {
+            return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Invalid status')], 422);
+        }
+        $user->driver()->update(['status' => $status]);
+        $user->notify(new DriverStatusNotification($user, $status, ['database', 'fcm']));
+        return UserResource::make($user)->additional(['status' => 'success', 'message' => trans('Status updated successfully')]);
+    }
 }

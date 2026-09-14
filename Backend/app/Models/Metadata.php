@@ -12,7 +12,7 @@ class Metadata extends Model implements TranslatableContract
     use HasFactory, Translatable;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    public $translatedAttributes = ['title', 'canonical_tags', 'image', 'type', 'description', 'keywords'];
+    public $translatedAttributes = ['title', 'canonical_tags', 'image', 'image_alt', 'image_type', 'site_name', 'type', 'description'];
     protected $casts = ['keywords' => 'json'];
 
     public function getImageAttribute($key)

@@ -72,13 +72,13 @@ class Handler extends ExceptionHandler
             $code = $exception->getStatusCode();
             switch ($code) {
                 case '404':
-                    return response()->json(['status' => 'fail', 'message' => trans('general.errors.page_not_found'), 'data' => null], 404);
+                    return response()->json(['status' => 'fail', 'message' => trans('Page not found'), 'data' => null], 404);
                     break;
                 case '403':
-                    return response()->json(['status' => 'fail', 'message' => trans('general.errors.not_authorized'), 'data' => null], 403);
+                    return response()->json(['status' => 'fail', 'message' => trans('Not Authorized'), 'data' => null], 403);
                     break;
                 default:
-                    return response()->json(['status' => 'fail', 'message' => trans('general.errors.page_not_found'), 'data' => null], 403);
+                    return response()->json(['status' => 'fail', 'message' => trans('Page not found'), 'data' => null], $code);
                     break;
             }
         }
@@ -89,18 +89,18 @@ class Handler extends ExceptionHandler
                 ->header('Content-Type', 'text/html; charset=utf-8');
         }
 
-        if ($exception instanceof ModelNotFoundException && auth()->check() && in_array(auth()->user()->user_type, ['admin', 'superadmin']) && !$request->ajax() && !$request->wantsJson()) {
+        if ($exception instanceof ModelNotFoundException && auth()->check() && in_array(auth('api')->user()->user_type, ['admin', 'super_admin']) && !$request->ajax() && !$request->wantsJson()) {
             return response()->view('errors.404', [], 404);
         }
 
         if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
-            return response()->json(['status' => 'fail', 'message' => trans('general.errors.data_not_found'), 'data' => null], 404);
+            return response()->json(['status' => 'fail', 'message' => trans('No data found'), 'data' => null], 404);
         }
 
         if ($exception instanceof AuthenticationException && $request->wantsJson()) {
-            return response()->json(['status' => 'fail', 'message' => trans('general.errors.login_first'), 'data' => null], 401);
+            return response()->json(['status' => 'fail', 'message' => trans('Login first'), 'data' => null], 401);
         }
-
+        
         return parent::render($request, $exception);
     }
 }

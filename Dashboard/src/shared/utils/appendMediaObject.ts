@@ -1,5 +1,8 @@
 import type { MediaFieldValues } from "../components/smartMediaField/smartMediaFieldSchema";
 
+/*
+ * append a media object to the form data
+ */
 export const appendMediaObject = (
   formData: FormData,
   key: string,

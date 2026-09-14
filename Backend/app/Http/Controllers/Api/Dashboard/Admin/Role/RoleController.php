@@ -6,13 +6,13 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\Admin\Role\{RoleRequest};
-use App\Http\Resources\Api\Dashboard\Admin\Role\{RoleItemResource, RoleResource , TranslatedRoleResource};
-
+use App\Http\Resources\Api\Dashboard\Admin\Role\{RoleItemResource, RoleResource, TranslatedRoleResource};
 class RoleController extends Controller
 {
     public function role_names(Request $request)
     {
         $roles = Role::latest()->get();
+
         return RoleItemResource::collection($roles)->additional([
             'message' => '',
             'status' =>  'success'
@@ -27,7 +27,7 @@ class RoleController extends Controller
             'status' =>  'success'
         ]);
     }
-    
+
     public function index(Request $request)
     {
         $role = Role::latest()->paginate($request->per_page ?? 10);
@@ -36,34 +36,36 @@ class RoleController extends Controller
             'status' =>  'success'
         ]);
     }
+
     public function show($id)
     {
         $role = Role::findOrFail($id);
         return TranslatedRoleResource::make($role)->additional(['status' => 'success', 'message' => '']);
     }
 
-   
     public function store(RoleRequest $request)
     {
         // return ($request->validated()) ;
-        $role = Role::create(array_except($request->validated(), ["permission_ids"]));
+        $role = Role::create(\Arr::except($request->validated(), ["permission_ids"]));
         $role->permissions()->attach($request->permission_ids);
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('dashboard/admin.actions.created_successfully')]);
+        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Created successfully')]);
     }
+
     public function update(RoleRequest $request, $id)
     {
         $role = Role::findOrFail($id);
-        $role->update(array_except($request->validated(), ["permission_ids"]));
+        $role->update(\Arr::except($request->validated(), ["permission_ids"]));
         $role->permissions()->sync($request->permission_ids);
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('dashboard/admin.actions.updated_successfully')]);
+        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Updated successfully')]);
     }
+
     public function destroy($id)
     {
         $role = Role::findOrFail($id);
         if ($role->users->count() > 0) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('dashboard/admin.actions.cant_delete_this_role_because_user_used')], 422);
+            return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('This role cannot be deleted because the user has used it')], 422);
         }
         $role->delete();
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('dashboard/admin.actions.deleted_successfully')]);
+        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Deleted successfully')]);
     }
 }

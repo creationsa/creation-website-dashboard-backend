@@ -1,9 +1,7 @@
-import type { SVGProps } from "react";
 import Icon from "../ui/Icon";
+import type { IconProps } from "./types";
 
-type CloseIconProps = SVGProps<SVGSVGElement>;
-
-export default function CloseIcon(props: CloseIconProps) {
+export default function CloseIcon(props: IconProps) {
   return (
     <Icon {...props}>
       <path

@@ -1,52 +1,103 @@
 import { MetadataRoute } from "next";
+import { getPageSlugs } from "@/components/pages/dynamicPage/getPageSlugs";
+import { getProjectSlugs } from "@/components/pages/projectDetails/getProjectSlugs";
+import { getSolutionSlugs } from "@/components/pages/solutionDetails/getSolutionSlugs";
+import { getBlogSlugs } from "@/components/pages/blogsDetails/getBlogSlugs";
+import { Languages } from "@/constants/enums";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.creation.sa";
+const BASE_URL = "https://www.creation.sa";
+const LOCALES = ["ar", "en"] as const;
 
-  const pages = [
-    "",
-    "/about",
-    "/solutions",
-    "/solutions/branding",
-    "/solutions/digital-marketing",
-    "/solutions/web-design",
-    "/solutions/production",
-    "/projects",
-    "/projects/mouj",
-    "/projects/boulevard-world",
-    "/projects/maybach-boutique",
-    "/projects/errva",
-    "/projects/tasier",
-    "/projects/nozomi",
-    "/projects/cupic",
-    "/projects/phase",
-    "/projects/darf",
-    "/projects/btic-group",
-    "/projects/damons",
-    "/projects/shovel",
-    "/blogs",
-    "/blogs/eco-system-architecture",
-    "/blogs/branding-transformation-structure",
-    "/blogs/ai-powered-business-operations",
-    "/blogs/beyond-digital-transformation",
-    "/blogs/spatial-experience-design",
-    "/blogs/quantum-resistant-digital-trust",
-    "/blogs/hyper-localized-generative-ops",
-    "/career",
-    "/faq",
-    "/contact",
+type ChangeFrequency = NonNullable<
+  MetadataRoute.Sitemap[number]["changeFrequency"]
+>;
+
+function entries(
+  pathAr: string,
+  pathEn: string,
+  options: {
+    priority: number;
+    changeFrequency: ChangeFrequency;
+    lastModified?: string;
+  },
+): MetadataRoute.Sitemap {
+  const paths = { ar: pathAr, en: pathEn };
+  const lastModified = options.lastModified
+    ? new Date(options.lastModified)
+    : undefined;
+
+  return LOCALES.map((locale) => ({
+    url: `${BASE_URL}/${locale}${paths[locale]}`,
+    ...(lastModified && { lastModified }),
+    changeFrequency: options.changeFrequency,
+    priority: options.priority,
+    alternates: {
+      languages: {
+        ar: `${BASE_URL}/ar${paths.ar}`,
+        en: `${BASE_URL}/en${paths.en}`,
+      },
+    },
+  }));
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [pages, projects, solutions, blogs] = await Promise.all([
+    getPageSlugs(Languages.ENGLISH),
+    getProjectSlugs(Languages.ENGLISH),
+    getSolutionSlugs(Languages.ENGLISH),
+    getBlogSlugs(Languages.ENGLISH),
+  ]);
+
+  return [
+    ...entries("", "", { priority: 1, changeFrequency: "weekly" }),
+
+    ...entries("/solutions", "/solutions", {
+      priority: 0.9,
+      changeFrequency: "weekly",
+    }),
+    ...entries("/projects", "/projects", {
+      priority: 0.9,
+      changeFrequency: "weekly",
+    }),
+    ...entries("/blogs", "/blogs", {
+      priority: 0.9,
+      changeFrequency: "weekly",
+    }),
+
+    ...pages.flatMap((page) =>
+      entries(`/${page.slug}`, `/${page.slug}`, {
+        priority: 0.7,
+        changeFrequency: "monthly",
+        lastModified: page.updated_at,
+      }),
+    ),
+
+    ...projects.flatMap((project) =>
+      entries(`/projects/${project.slug_ar}`, `/projects/${project.slug_en}`, {
+        priority: 0.8,
+        changeFrequency: "monthly",
+        lastModified: project.updated_at,
+      }),
+    ),
+
+    ...solutions.flatMap((solution) =>
+      entries(
+        `/solutions/${solution.slug_ar}`,
+        `/solutions/${solution.slug_en}`,
+        {
+          priority: 0.8,
+          changeFrequency: "monthly",
+          lastModified: solution.updated_at,
+        },
+      ),
+    ),
+
+    ...blogs.flatMap((blog) =>
+      entries(`/blogs/${blog.slug_ar}`, `/blogs/${blog.slug_en}`, {
+        priority: 0.6,
+        changeFrequency: "monthly",
+        lastModified: blog.updated_at,
+      }),
+    ),
   ];
-
-  const locales = ["/ar", "/en"];
-
-  const routes = pages.flatMap((page) =>
-    locales.map((locale) => ({
-      url: `${baseUrl}${locale}${page}`,
-      lastModified: new Date(),
-      priority: page === "" ? 1 : 0.8,
-      changeFrequency: "monthly" as const,
-    })),
-  );
-
-  return routes;
 }

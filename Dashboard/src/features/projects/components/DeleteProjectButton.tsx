@@ -18,7 +18,9 @@ export default function DeleteProjectButton({ project }: DeleteProjectProps) {
   return (
     <Modal>
       <Modal.Open opens="deleteProject">
-        <Button variation="delete">{t("general.delete")}</Button>
+        <Button variation="delete" size="small">
+          {t("general.delete")}
+        </Button>
       </Modal.Open>
 
       <Modal.Window name="deleteProject">

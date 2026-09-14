@@ -1,53 +1,31 @@
-"use client";
-
 import Header from "@/components/ui/Header";
-// import { useMemo, useState } from "react";
-import { PROJECTS } from "./ourProjects";
-import ProjectsGrid from "./ProjectsGrid";
-// import ProjectTabs from "./ProjectTabs";
-// import { ProjectTab } from "./tabs";
-import { AllProjectsProps } from "./types";
 import TextWithMotion from "@/components/ui/TextWithMotion";
+import ProjectsGrid from "./ProjectsGrid";
+import { AllProjectsProps } from "./types";
 
-export default function AllProjects({ project, locale }: AllProjectsProps) {
-  // const [activeTab, setActiveTab] = useState<ProjectTab>("all");
-
-  // const filteredProjects = useMemo(() => {
-  //   if (activeTab === "all") return PROJECTS;
-
-  //   return PROJECTS.filter((p) =>
-  //     Array.isArray(p.type) ? p.type.includes(activeTab) : p.type === activeTab,
-  //   );
-  // }, [activeTab]);
-
+export default function AllProjects({
+  mainData,
+  locale,
+  projects,
+}: AllProjectsProps) {
   return (
     <section className="overflow-hidden">
       <div className="container">
         <div className="flex flex-col gap-[55px]">
           {/* HEADER */}
           <Header
-            title={project.title}
-            description={project.title_description}
-            subDescription={project.title_sub_description}
+            title={mainData.first_title}
+            description={mainData.second_title}
+            subDescription={mainData.third_title}
             lang={locale}
             hasContainer={false}
           />
 
-          <TextWithMotion text={project.deep_description} lang={locale} />
-          {/* TABS */}
-          {/* <ProjectTabs
-            activeTab={activeTab}
-            onChange={setActiveTab}
-            labels={project}
-          /> */}
+          <TextWithMotion text={mainData.overview_description} lang={locale} />
         </div>
 
         {/* PROJECTS GRID */}
-        <ProjectsGrid
-          // key={activeTab}
-          projects={PROJECTS}
-          project={project}
-        />
+        <ProjectsGrid projects={projects} />
       </div>
     </section>
   );

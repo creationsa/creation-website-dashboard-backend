@@ -15,11 +15,13 @@ class CountryItemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                    => $this->id,
-            'flag'                  => $this->flag,
-            'phone_code'            => $this->phone_code,
-            'show_phone_code'       => $this->show_phone_code,
-            'name'                  => $this->name,
+            'id'         => $this->id,
+            'name'       => $this->name,
+            'short_name' => $this->short_name,
+            'phone_code' => $this->phone_code,
+            'phone_number_limit' => $this->phone_number_limit,
+            'flag'       => $this->flag,
+            'is_active'  => (bool) $this->is_active,
         ];
     }
 }

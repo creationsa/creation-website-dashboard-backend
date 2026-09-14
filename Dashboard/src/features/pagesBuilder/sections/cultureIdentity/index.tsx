@@ -1,20 +1,17 @@
-import Box from "@/shared/ui/Box";
 import { type FieldErrors } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import DeleteSectionButton from "../../components/pagesBuilderForm/DeleteSectionButton";
 import SmartMediaField from "@/shared/components/smartMediaField";
 import type { CultureIdentityFormValues } from "./cultureIdentitySchema";
 import IdentityCenterFields from "./IdentityCenterFields";
 import IdentityCornersFields from "./IdentityCornersFields";
 import type { CultureIdentitySectionProps } from "./types";
-import SectionPreview from "../../components/SectionPreview";
+import SectionPreview from "../../../../shared/components/sectionPreview";
 import culture from "./assets/culture.png";
 
 export default function CultureIdentitySection({
   form,
   index,
   disabled,
-  onRemove,
 }: CultureIdentitySectionProps) {
   const {
     formState: { errors },
@@ -26,10 +23,7 @@ export default function CultureIdentitySection({
     | undefined;
 
   return (
-    <Box
-      title={`( ${index + 1} ) ${t("pages.culture_identity.section_title")}`}
-      className="flex flex-col gap-3 lg:gap-5"
-    >
+    <>
       <SectionPreview
         src={culture}
         alt={t("pages.culture_identity.culture_preview")}
@@ -56,8 +50,6 @@ export default function CultureIdentitySection({
           disabled={disabled}
         />
       </div>
-
-      <DeleteSectionButton onRemove={onRemove} />
-    </Box>
+    </>
   );
 }

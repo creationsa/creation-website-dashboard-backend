@@ -1,11 +1,9 @@
 import Button from "@/shared/ui/Button";
 import { useTranslation } from "react-i18next";
 import type { SettingsFormProps } from "../../types";
-import useSettingsForm from "./useSettingsForm";
-import SocialMediaFields from "./SocialMediaFields";
 import Logo from "./Logo";
-
-const SOCIALS = ["instagram", "facebook", "behance", "linkedin"] as const;
+import SettingsSocialsFields from "./SettingsSocialsFields";
+import useSettingsForm from "./useSettingsForm";
 
 export default function SettingsForm({ settings }: SettingsFormProps) {
   const { t } = useTranslation();
@@ -25,14 +23,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
     >
       <Logo form={form} disabled={isLoading} />
 
-      {SOCIALS.map((social) => (
-        <SocialMediaFields
-          key={social}
-          form={form}
-          prefix={social}
-          disabled={isLoading}
-        />
-      ))}
+      <SettingsSocialsFields form={form} disabled={isLoading} />
 
       <Button
         type="submit"

@@ -38,7 +38,7 @@ class LoginRequest extends ApiMasterRequest
     public function messages()
     {
         return [
-            'email.exists' => trans('dashboard.auth.credentials_not_found'),
+            'email.exists' => trans('Invalid credentials'),
         ];
     }
 }

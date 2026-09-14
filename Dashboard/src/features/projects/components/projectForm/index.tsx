@@ -1,17 +1,16 @@
 import DynamicItemsFields from "@/shared/components/dynamicItemsFields";
 import PageTabs from "@/shared/components/pageTabs";
 import SeoForm from "@/shared/components/seoForm";
-import SeoSection from "@/shared/components/seoSection";
-import SlugSection from "@/shared/components/slugSection";
 import TitleSection from "@/shared/components/titleSection";
-import { useGetSeoDataByModal } from "@/shared/hooks/useGetSeoDataByModal";
+import { useGetSeoDataById } from "@/shared/hooks/useGetSeoDataById";
 import Box from "@/shared/ui/Box";
 import Button from "@/shared/ui/Button";
 import PageTitle from "@/shared/ui/PageTitle";
 import Spinner from "@/shared/ui/spinner/Spinner";
-import { useState } from "react";
+import Input from "@/shared/ui/textField/Input";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { ProjectFormProps } from "../../types";
+import { PROJECT_MEDIA_FIELDS, type ProjectFormProps } from "../../types";
 import MediaSection from "./sections/MediaSection";
 import OverviewSection from "./sections/OverviewSection";
 import StatsSection from "./sections/StatsSection";
@@ -19,16 +18,39 @@ import useProjectForm from "./useProjectForm";
 
 export default function ProjectForm({ projectToEdit }: ProjectFormProps) {
   const { t } = useTranslation();
+
   const { form, isLoading, isEditingSession, handleAddEditProject } =
     useProjectForm(projectToEdit);
-
-  const { seoData, isSeoLoading } = useGetSeoDataByModal("pages");
+  const { seoData, isSeoLoading } = useGetSeoDataById(
+    projectToEdit?.metadata_id ?? undefined,
+  );
   const [activeTab, setActiveTab] = useState<"content" | "seo">("content");
+
+  // Lets the SEO tab offer "pick one of this project's own images"
+  // instead of only uploading a brand new file.
+  const mediaOptions = useMemo(
+    () =>
+      PROJECT_MEDIA_FIELDS.map((field) => {
+        const media = projectToEdit?.[field];
+        const isVideo = media?.type === "video";
+
+        return {
+          label: t(`projects.${field}`),
+          url: isVideo ? media?.poster : media?.file,
+          type: isVideo ? ("video" as const) : ("image" as const),
+        };
+      }).filter(
+        (option): option is { label: string; url: string; type: "image" | "video" } =>
+          typeof option.url === "string" && option.url.length > 0,
+      ),
+    [projectToEdit, t],
+  );
 
   const isEditMode = !!projectToEdit;
 
   const {
-    formState: { isDirty, isValid },
+    register,
+    formState: { isDirty, isValid, errors },
   } = form;
 
   const isSubmitDisabled =
@@ -64,9 +86,18 @@ export default function ProjectForm({ projectToEdit }: ProjectFormProps) {
         >
           <TitleSection form={form} disabled={isLoading} />
 
-          <SlugSection form={form} disabled={isLoading} />
-
-          <SeoSection form={form} disabled={isLoading} />
+          <Box
+            title={t("blogs.slug")}
+            className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-5"
+          >
+            <Input
+              name="slug_en"
+              label={t("blogs.slug_en")}
+              error={errors?.slug_en?.message}
+              register={register("slug_en")}
+              disabled={isLoading}
+            />
+          </Box>
 
           <OverviewSection form={form} disabled={isLoading} />
 
@@ -96,7 +127,14 @@ export default function ProjectForm({ projectToEdit }: ProjectFormProps) {
         </form>
       )}
 
-      {activeTab === "seo" && <SeoForm seoData={seoData} forType="project" />}
+      {activeTab === "seo" && (
+        <SeoForm
+          seoData={seoData}
+          metadataId={projectToEdit?.id}
+          metadataableType="project"
+          mediaOptions={mediaOptions}
+        />
+      )}
     </>
   );
 }

@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -21,11 +22,11 @@ class CreateProfilesTable extends Migration
 
             $table->float('lat', 8, 4)->nullable();
             $table->float('lng', 8, 4)->nullable();
-            $table->text('location_description')->nullable();
+            $table->text('location')->nullable();
 
             $table->timestamp('last_login_at')->nullable();
             $table->timestamp('allow_session_from')->nullable();
-
+            
             $table->timestamps();
         });
     }

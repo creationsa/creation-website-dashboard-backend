@@ -5,11 +5,25 @@ namespace App\Http\Controllers\Api\Dashboard\Admin\Metadata;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\Admin\Metadata\MetadataRequest;
 use App\Http\Resources\Api\Dashboard\Admin\Metadata\{MetadataResource, MetadataShowResource};
+use App\Models\BuilderPage;
 use App\Models\Metadata;
+use App\Models\Project;
+use App\Models\Solution;
 use Illuminate\Http\Request;
 
 class MetadataController extends Controller
 {
+    /**
+     * Short, client-facing keys mapped to the model each is allowed to link
+     * metadata to via `metadataable_id` — keeps raw class strings out of
+     * the request payload.
+     */
+    private const METADATAABLE_TYPES = [
+        'page' => BuilderPage::class,
+        'project' => Project::class,
+        'solution' => Solution::class,
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -23,14 +37,14 @@ class MetadataController extends Controller
                 ->orWhereTranslationLike('canonical_tags', '%' . request()->keyword . '%')
                 ->orWhereTranslationLike('type', '%' . request()->keyword . '%')
                 ->orWhereTranslationLike('description', '%' . request()->keyword . '%')
-                ->orWhereTranslationLike('keywords', '%' . request()->keyword . '%');
+                ->orWhere('keywords', 'like', '%' . request()->keyword . '%');
             });
         })
         ->when(request()->for, function ($query) {
             $query->where('for', request()->for);
         })->latest()->paginate(20);
 
-        return MetadataResource::collection($metadata)->additional(['status' => 'success', 'message' => '']);
+        return MetadataShowResource::collection($metadata)->additional(['status' => 'success', 'message' => '']);
     }
 
     /**
@@ -41,8 +55,14 @@ class MetadataController extends Controller
      */
     public function store(MetadataRequest $request)
     {
-        $metadata = Metadata::create($request->validated());
-        return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('dashboard.messages.success_add')]);
+        $data = $request->validated();
+
+        if (!empty($data['metadataable_id'])) {
+            $data['metadataable_type'] = self::METADATAABLE_TYPES[$data['metadataable_type'] ?? ''] ?? null;
+        }
+
+        $metadata = Metadata::create($data);
+        return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('Created successfully')]);
     }
 
     /**
@@ -67,8 +87,14 @@ class MetadataController extends Controller
     public function update(MetadataRequest $request, $id)
     {
         $metadata = Metadata::findOrFail($id);
-        $metadata->update($request->validated());
-        return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('dashboard.messages.success_update')]);
+        $data = $request->validated();
+
+        if (!empty($data['metadataable_id'])) {
+            $data['metadataable_type'] = self::METADATAABLE_TYPES[$data['metadataable_type'] ?? ''] ?? null;
+        }
+
+        $metadata->update($data);
+        return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('Updated successfully')]);
     }
 
     /**
@@ -81,6 +107,6 @@ class MetadataController extends Controller
     {
         $metadata = Metadata::findOrFail($id);
         $metadata->delete();
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('dashboard.messages.success_delete')]);
+        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
     }
 }

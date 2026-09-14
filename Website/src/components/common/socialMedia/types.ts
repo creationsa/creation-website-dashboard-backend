@@ -1,5 +1,5 @@
-import { CommonTranslations } from "@/dictionaries/types";
+import { FooterSocialItem } from "@/lib/api/getFooter";
 
 export interface SocialMediaProps {
-  translations: CommonTranslations;
+  links?: FooterSocialItem[];
 }

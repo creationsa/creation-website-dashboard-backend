@@ -3,15 +3,11 @@
   "header_description": "Thinking",
   "more_thinking": "More Thinking",
 
-  "view_all_blogs": "View All Blogs",
-
-  "view_all": "View All",
-
   "the_insight": "The Insight",
-  "the_strategy": "The Strategy",
   "applied": "Applied",
 
+  "view_all_blogs": "View All Blogs",
+
   "blog_not_found_title": "Blog Not Found",
-  "blog_not_found_desc": "The blog you're looking for doesn't exist.",
-  "seo_description": "Your knowledge hub for the latest digital marketing trends and software solutions. crēation®'s insights help you craft immersive and impactful digital experiences."
+  "blog_not_found_desc": "The blog you're looking for doesn't exist."
 }
