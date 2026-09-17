@@ -38,10 +38,19 @@ export default function ProjectForm({ projectToEdit }: ProjectFormProps) {
           label: t(`projects.${field}`),
           url: isVideo ? media?.poster : media?.file,
           type: isVideo ? ("video" as const) : ("image" as const),
+          altEn: media?.alt_en,
+          altAr: media?.alt_ar,
         };
       }).filter(
-        (option): option is { label: string; url: string; type: "image" | "video" } =>
-          typeof option.url === "string" && option.url.length > 0,
+        (
+          option,
+        ): option is {
+          label: string;
+          url: string;
+          type: "image" | "video";
+          altEn: string | undefined;
+          altAr: string | undefined;
+        } => typeof option.url === "string" && option.url.length > 0,
       ),
     [projectToEdit, t],
   );

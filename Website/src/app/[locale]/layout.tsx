@@ -7,7 +7,7 @@ import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
-import { parseKeywords } from "../../../utils/parseKeywords";
+import { parseKeywords } from "../../utils/parseKeywords";
 import "./globals.css";
 
 const myHeadingFont = localFont({

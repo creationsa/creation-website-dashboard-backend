@@ -80,36 +80,6 @@ class ContactController extends Controller
         return ContactResource::make($contact)->additional(['status' => 'success', 'message' => '']);
     }
 
-    // public function reply(ContactReplyRequest $request, $id)
-    // {
-    //     $contact = Contact::findOrFail($id);
-    //     try {
-    //         $contact->replies()->create($request->safe()->only('reply') + ['sender_id' => auth('api')->id(), 'receiver_id' => $contact->user_id]);
-
-    //         switch ($request->send_vai) {
-    //             case 'sms':
-    //                 // if (setting('use_sms_service') == 'enable') {
-    //                 // }
-    //                 // send_sms($contact->user->phone_code . validateIfPhoneStartWithZero($contact->user->phone), $request->reply);
-    //                 //  send_smsForReply( validateIfPhoneStartWithZero($contact->user->phone), $request->reply);
-
-    //                 break;
-    //             case 'email':
-    //                 Mail::to($contact->email)->send(new ContactMail($request->reply));
-    //                 // Mail::send([], [], function ($message) use ($contact, $request) {
-    //                 //     $message->to($contact->email)->subject(trans('Reply to your message'))->setBody($request->reply, 'text/html');
-    //                 // });
-    //                 break;
-    //         }
-
-    //         $contact->update(['read_at' => now()]);
-    //         return response()->json(['status' => 'success', 'data' => null, 'messages' => trans('Sent successfully')]);
-    //     } catch (\Exception $e) {
-    //         info($e);
-    //         return response()->json(['status' => 'fail', 'data' => null, 'messages' => trans('Something went wrong, please try again')], 422);
-    //     }
-    // }
-
     /**
      * Remove the specified resource from storage.
      *

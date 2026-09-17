@@ -73,7 +73,7 @@ export default function RightCardForm({
         <>
           <SmartMediaField
             form={form}
-            name={`${basePath}.${prefix}_media`}
+            name={`${basePath}.${prefix}_media` as Path<PageFormValues>}
             label={t("pages.display_info_section.upload_media")}
             disabled={disabled}
           />

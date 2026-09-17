@@ -2,7 +2,6 @@ export const endpoints = {
   blogs: {
     root: "website/blogs",
     detail: (slug: string) => `website/blogs/${slug}`,
-    home: "website/home-blogs",
     slugs: "website/blogs/slugs",
   },
   seo: {

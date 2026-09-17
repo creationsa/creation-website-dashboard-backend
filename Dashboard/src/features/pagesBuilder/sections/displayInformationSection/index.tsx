@@ -6,6 +6,7 @@ import type { SectionProps } from "../../types";
 import Header from "../header";
 import RowBlockForm from "./RowBlockForm";
 import displayInfo from "./assets/display-information.png";
+import type { DisplayInfoFormValues } from "./displayInfoSchema";
 import { CARD_INITIAL_STATE } from "./getInfoDefaultValues";
 
 export default function DisplayInformationSection({
@@ -36,7 +37,11 @@ export default function DisplayInformationSection({
 
       <AddNewBlock
         count={blocks.length}
-        onAdd={() => appendBlock(CARD_INITIAL_STATE)}
+        onAdd={() =>
+          appendBlock(
+            CARD_INITIAL_STATE as unknown as DisplayInfoFormValues["blocks"][number],
+          )
+        }
         managementLabel={t("pages.display_row_management")}
         addLabel={t("pages.add_new_display_row")}
       />

@@ -12,6 +12,7 @@ export interface NavLinksProps {
   logoUrl?: string | null;
   logoAlt?: string;
   menuItems?: HeaderMenuItem[];
+  copyrightItems?: HeaderMenuItem[];
 }
 
 export interface LanguageSwitcherProps {

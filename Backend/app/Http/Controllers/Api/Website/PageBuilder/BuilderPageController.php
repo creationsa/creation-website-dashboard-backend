@@ -10,6 +10,7 @@ use App\Models\Solution;
 use App\Services\Website\LogoResolver;
 use App\Support\PageSectionMedia;
 use App\Support\ProjectMediaResolver;
+use App\Support\SeoResolver;
 
 class BuilderPageController extends Controller
 {
@@ -76,24 +77,36 @@ class BuilderPageController extends Controller
             ->map(fn ($section) => $this->resolveSection($section, $locale))
             ->values();
 
-        $ownMetadataT = $page->metadata?->translate($locale);
-
         $data = [
             'title' => $page->translate($locale)?->title,
             'slug' => $page->slug,
             'is_home' => (bool) $page->is_home,
             'sections' => $sections,
-            'seo' => [
-                'title' => $ownMetadataT?->title ?: $page->translate($locale)?->title,
-                'description' => $ownMetadataT?->description ?: '',
-                'image' => $ownMetadataT?->image,
-                'image_alt' => $ownMetadataT?->image_alt,
-                'image_type' => $ownMetadataT?->image_type,
-                'keywords' => $page->metadata?->keywords,
-            ],
+            'seo' => $this->resolveSeo($page, $locale),
         ];
 
         return response()->json(['data' => $data, 'status' => 'success', 'message' => '']);
+    }
+
+    /**
+     * Any SEO field this page hasn't set for itself falls back to the
+     * site-wide SEO Settings (the `for=home` Metadata row) — except title,
+     * which falls back to the page's own natural title instead, since the
+     * home page's title wouldn't make sense repeated on every page.
+     *
+     * @param  \App\Models\BuilderPage  $page
+     * @param  string  $locale
+     * @return array
+     */
+    private function resolveSeo(BuilderPage $page, string $locale): array
+    {
+        return SeoResolver::resolve(
+            $page->metadata,
+            $locale,
+            'home',
+            $page->translate($locale)?->title,
+            fn ($generalT) => $generalT?->description,
+        );
     }
 
     private function resolveSection(array $section, string $locale): array

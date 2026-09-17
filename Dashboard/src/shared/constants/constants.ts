@@ -9,11 +9,11 @@ export const TOKEN_KEY = "token";
 
 export const DEFAULT_PAGE_SIZE = 10;
 
-export const MIN_SEO_DESCRIPTION_LENGTH = 100;
+export const MIN_SEO_DESCRIPTION_LENGTH = 60;
 export const MAX_SEO_DESCRIPTION_LENGTH = 250;
 
 export const MIN_DESCRIPTION_LENGTH = 20;
-export const MAX_DESCRIPTION_LENGTH = 500;
+export const MAX_DESCRIPTION_LENGTH = 700;
 
 export const MIN_TITLE_LENGTH = 3;
 export const MAX_TITLE_LENGTH = 100;

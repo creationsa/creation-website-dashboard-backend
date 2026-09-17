@@ -7,10 +7,6 @@ Route::namespace('Website')->middleware('setLocale')->group(function () {
         Route::post('contact-us', 'ContactController@contact');
     });
 
-    Route::namespace('About')->group(function () {
-        Route::get('about', 'AboutController@get');
-    });
-
     Route::namespace('Header')->group(function () {
         Route::get('header', 'HeaderController@get');
     });
@@ -24,7 +20,6 @@ Route::namespace('Website')->middleware('setLocale')->group(function () {
         Route::get('blogs/slugs', 'BlogController@slugs');
         Route::get('blogs/{slug}', 'BlogController@show');
         Route::get('seo-blog', 'BlogController@seoBlog');
-        Route::get('home-blogs', 'BlogController@getHomeBlogs');
     });
 
     Route::namespace('Metadata')->group(function () {

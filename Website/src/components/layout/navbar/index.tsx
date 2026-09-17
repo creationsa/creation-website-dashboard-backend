@@ -42,6 +42,7 @@ export default async function Navbar() {
             logoUrl={header?.logo}
             logoAlt={header?.logo_alt}
             menuItems={header?.menu_items ?? []}
+            copyrightItems={header?.copyright_items ?? []}
           />
         </div>
       </nav>

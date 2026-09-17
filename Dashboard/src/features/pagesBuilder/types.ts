@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
-import type { FieldArrayWithId, UseFormReturn } from "react-hook-form";
+import type {
+  FieldArrayWithId,
+  SubmitHandler,
+  UseFormReturn,
+} from "react-hook-form";
 import type { PageFormValues } from "./components/pagesBuilderForm/pageSchema";
 
 export interface SubSectionProps {
@@ -74,4 +78,15 @@ export interface SectionAccordionProps {
   onRemove: () => void;
   disabled?: boolean;
   children: ReactNode;
+}
+
+export interface UsePageFormReturn {
+  form: UseFormReturn<PageFormValues>;
+  fields: FieldArrayWithId<PageFormValues, "sections">[];
+  appendSection: (type: string) => void;
+  remove: (index: number) => void;
+  move: (from: number, to: number) => void;
+  onSubmit: SubmitHandler<PageFormValues>;
+  isLoading: boolean;
+  isEditingSession: boolean;
 }

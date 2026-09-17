@@ -1,0 +1,25 @@
+name: Deploy Next.js to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 93.188.167.138
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            git config --global --add safe.directory /www/wwwroot/creation.sa
+            cd /www/wwwroot/creation.sa
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart creation-app || pm2 start npm --name "creation-app" -- start

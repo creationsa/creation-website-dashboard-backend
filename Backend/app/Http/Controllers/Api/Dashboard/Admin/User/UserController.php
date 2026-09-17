@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Dashboard\Admin\User;
 
 use App\Models\User;
-use App\Models\Driver;
 use App\Exports\ExportUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -11,24 +10,10 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Api\Dashboard\Admin\User\UserRequest;
 use App\Http\Resources\Api\Dashboard\Admin\User\UserResource;
-use App\Notifications\Api\Dashboard\DriverStatusNotification;
 use App\Http\Resources\Api\Dashboard\Admin\User\UserIndexResource;
-use App\Http\Resources\Api\Dashboard\Admin\User\UserNamesResource;
 
 class UserController extends Controller
 {
-    public function users_names(Request $request)
-    {
-        $users = User::whereNotIn('user_type', ['admin', 'super_admin'])
-            ->when($request->user_type, function ($query) use ($request) {
-                $query->where('user_type', $request->user_type);
-            })
-            ->latest()
-            ->get(['id', 'full_name']);
-
-        return UserNamesResource::collection($users)->additional(['status' => 'success', 'message' => '']);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -45,9 +30,6 @@ class UserController extends Controller
             }))
             ->when(isset($request->is_active), fn($query) => $query->where('is_admin_active_user', $request->is_active))
             ->when(isset($request->is_ban), fn($query) => $query->where('is_ban', $request->is_ban))
-            ->when(isset($request->status), fn($query) => $query->whereHas('driver', function($q) use($request){
-                $q->where('status', $request->status);
-            }))
             ->when($request->from_date, fn($query) => $query->whereDate('created_at', '>=', $request->from_date))
             ->when($request->to_date, fn($query) => $query->whereDate('created_at', '<=', $request->to_date))
             ->latest()
@@ -125,7 +107,7 @@ class UserController extends Controller
     {
         $user = User::whereNotIn('user_type', ['admin', 'super_admin'])->findOrFail($id);
         if ($user->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+            return $this->successResponse(trans('Deleted successfully'));
         }
     }
 
@@ -151,16 +133,4 @@ class UserController extends Controller
     {
 		return Excel::download(new ExportUser(), 'users.xlsx');
 	}
-
-    public function changeStatus(Request $request, $id)
-    {
-        $user = User::where('user_type', 'driver')->findOrFail($id);
-        $status = $request->status;
-        if (!in_array($status, ['accepted', 'rejected'])) {
-            return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Invalid status')], 422);
-        }
-        $user->driver()->update(['status' => $status]);
-        $user->notify(new DriverStatusNotification($user, $status, ['database', 'fcm']));
-        return UserResource::make($user)->additional(['status' => 'success', 'message' => trans('Status updated successfully')]);
-    }
 }

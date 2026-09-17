@@ -1,197 +1,118 @@
 # Creation Dashboard
 
-The admin panel for **Creation** — a marketing and production agency. Every piece of
-content on the public website (pages, projects, solutions, blogs, the header/footer
-menus, SEO metadata, clients, settings) is created and edited here. It is a
-single-page application that talks to the shared [Backend](../Backend) API; it has no
-database or server of its own.
+Admin dashboard for managing the content of the [creation.sa](https://creation.sa) website — blogs, projects, solutions, a drag-and-drop page builder, clients, footer/header, SEO metadata, and site-wide settings. Built as a React SPA that talks to a Laravel-style REST API.
 
-- **Public site:** [`../Website`](../Website) (Next.js) — renders what this panel produces
-- **API:** [`../Backend`](../Backend) (Laravel) — the single source of truth for all data
+## Tech Stack
 
----
+| Layer | Choice |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Build tool | Vite 8 |
+| Styling | Tailwind CSS 4 |
+| Routing | React Router 7 |
+| Server state | TanStack Query 5 |
+| Forms | React Hook Form + Zod (via `@hookform/resolvers`) |
+| HTTP client | Axios |
+| i18n | i18next / react-i18next (English + Arabic, RTL-aware) |
+| Notifications | react-hot-toast |
+| Select inputs | react-select |
+| Linting/formatting | ESLint (typescript-eslint) + Prettier (with the Tailwind class-sorting plugin) |
 
-## Stack
-
-| Concern            | Choice                                             |
-| ------------------ | -------------------------------------------------- |
-| Build tool         | Vite 8                                             |
-| Framework          | React 19 (SPA, no SSR)                             |
-| Language           | TypeScript 6                                       |
-| Routing            | React Router 7 (`react-router-dom`)               |
-| Server state       | TanStack Query 5 (`@tanstack/react-query`)        |
-| Forms              | React Hook Form 7 + Zod 4 (`@hookform/resolvers`) |
-| Styling            | Tailwind CSS 4 (`@tailwindcss/vite`)              |
-| i18n               | i18next + react-i18next + browser language detector |
-| HTTP               | Axios                                              |
-| Toasts             | react-hot-toast                                    |
-| Select inputs      | react-select                                       |
-
----
-
-## Getting started
-
-### Prerequisites
-
-- Node.js 20+
-- A running instance of the [Backend](../Backend) API (defaults to `http://127.0.0.1:8000`)
-
-### Install & run
+## Getting Started
 
 ```bash
 npm install
-printf 'VITE_API_BASE_URL=http://127.0.0.1:8000/api\n' > .env   # no .env.example ships yet
-npm run dev               # Vite dev server, default http://localhost:5173
+npm run dev
 ```
 
-### Environment
+The dev server runs on Vite's default port. Local environment/configuration values are not part of this repo — ask a team member for what you need before your first run.
 
-One variable, read in [`src/shared/api/axios.ts`](src/shared/api/axios.ts):
+### Requirements
 
-```
-VITE_API_BASE_URL=http://127.0.0.1:8000/api
-```
+- Node.js (a version compatible with Vite 8 / the TypeScript 6 toolchain — Node 20+ recommended)
+- A running instance of the backend API
 
-> `VITE_`-prefixed values are inlined into the client bundle at build time — never put
-> a secret here.
+## Available Scripts
 
-### Scripts
+| Script | What it does |
+|---|---|
+| `npm run dev` | Start the Vite dev server with HMR |
+| `npm run build` | Type-check the whole project (`tsc -b`) then produce a production build (`vite build`) |
+| `npm run preview` | Serve the last production build locally, for a final sanity check |
+| `npm run lint` | Run ESLint across the project |
 
-| Command           | Purpose                                    |
-| ----------------- | ------------------------------------------ |
-| `npm run dev`     | Vite dev server with HMR                   |
-| `npm run build`   | `tsc -b` (type-check) then `vite build`    |
-| `npm run preview` | Serve the production build locally         |
-| `npm run lint`    | ESLint over the whole tree                 |
+`npm run build` is the same command the deploy pipeline runs — if it fails locally, it will fail on deploy too.
 
----
-
-## Project structure
+## Project Structure
 
 ```
 src/
-├── app/                      # app shell — providers, routing, layouts
-│   ├── providers/            # QueryProvider, ThemeProvider, ToastProvider, AppProvider
-│   ├── navigation/           # Navigation.tsx (route table, lazy pages), routes.ts, PageNotFound
-│   └── layouts/              # AppLayout, sidebar, MobileSidebar
-├── features/                 # one folder per domain area (see below)
-│   ├── auth/  blogs/  clients/  footer/  header/
-│   ├── pagesBuilder/  projects/  settings/  solutions/  statistics/
-├── shared/                   # everything reused across features
-│   ├── api/                  # axios instance, endpoints.ts, queryKeys.ts
-│   ├── components/           # cross-feature components (forms, fields, controls)
-│   ├── ui/                   # design-system primitives (Button, Box, Input, Modal…)
-│   ├── hooks/  utils/  types/  constants/  icons/  storage/  contexts/
-├── i18n.ts                   # i18next init
-├── index.css                 # Tailwind import + design tokens
-└── main.tsx                  # entry
+├── app/                  # App shell: routing, layouts, providers
+│   ├── layouts/          # AppLayout, sidebar, header chrome
+│   ├── navigation/       # Route path constants, top-level <Navigation>
+│   └── providers/        # Query client, theme, toast, routes composition
+├── features/             # One folder per business domain (see below)
+├── shared/                # Cross-feature building blocks
+│   ├── api/               # Axios instance, shared endpoints, query keys
+│   ├── components/        # Reusable composite components (SEO form, page tabs, ...)
+│   ├── constants/         # Validation limits, regexes, shared constants
+│   ├── hooks/              # Cross-feature hooks (attachment upload, SEO fetch, ...)
+│   ├── storage/            # Auth token storage
+│   ├── types/               # Shared TS types
+│   ├── ui/                  # Design-system primitives (Button, Input, Select, ...)
+│   └── utils/                # Zod field helpers, error formatting, misc utils
+├── i18n.ts                # i18next setup
+└── public/Locale/         # En.json / Ar.json translation dictionaries
 ```
 
-### Feature folders
+### Features
 
-Every feature under `src/features/` has the **same shape**:
+Each folder under `src/features/` follows the same shape: `api/` (HTTP calls), `hooks/` (React Query wrappers), `components/` (forms, sections), `pages/`, and `types.ts`.
 
+| Feature | Covers |
+|---|---|
+| `auth` | Login, profile, logout |
+| `statistics` | Dashboard home / stat cards |
+| `blogs` | Blog CRUD, blog SEO |
+| `projects` | Project CRUD, project SEO |
+| `solutions` | Solution CRUD, solution SEO |
+| `pagesBuilder` | The custom page builder (see below) |
+| `clients` | Client logos section |
+| `footer` / `header` | Global site footer & header content |
+| `settings` | Site-wide settings |
+
+### Page Builder
+
+`features/pagesBuilder` lets an admin compose a page out of an ordered list of typed **sections**, each with its own Zod schema, default values, and form UI, under `sections/`:
+
+`bannerSection`, `displayInformationSection`, `featuredWorksSection`, `achievementsSection`, `cultureIdentity`, `newsTickerSection`, `mediaContentSection`, `advancedOverviewSection`, `customAccordion`, `ctaBanner`, `header`, `logos`, `reviewsSection`, `blogsTeaser`, `contactSection`, `textListSection`.
+
+The overall page schema (`pageSchema.ts`) is a Zod discriminated union over every section's `{ type, content }` shape — this is intentionally the most type-complex part of the codebase; see the note on `usePageForm.ts` below.
+
+### SEO
+
+`shared/components/seoForm` is a reusable SEO form (title/description/image/keywords, optionally a site name for the homepage) mounted from the SEO tab of blogs, projects, solutions, and pages. When editing content that's linked to a project/solution/page, the title/description/image fields are optional and fall back to the parent record's own content when left blank.
+
+## Internationalization
+
+The UI ships in English and Arabic (`src/public/Locale/En.json` / `Ar.json`) via `react-i18next`, with automatic language detection (`i18next-browser-languagedetector`) and full RTL support for Arabic. Every user-facing form field is bilingual by convention — most content models store `*_en` / `*_ar` pairs (e.g. `title_en`, `title_ar`).
+
+## Notable Implementation Details
+
+- **Zod field helpers** (`shared/utils/errorsHelpers.ts`): `englishField` / `arabicField` / `normalField` enforce length + character-set rules; `optionalEnglishField` / `optionalNormalField` are the same but allow an empty value (used for SEO fields on linked records); `imageField` / `svgImageField` accept either an uploaded `File` or an existing URL string.
+- **`usePageForm.ts`**: the page builder's combined schema is large enough (15+ section variants) that TypeScript occasionally hits its own type-complexity ceiling when re-verifying the resolver type against itself, producing spurious "two different types... unrelated" errors. A couple of narrow, deliberate type assertions there work around this — they're type-level only, Zod still validates the real data at runtime.
+- **Attachments**: file uploads go through `shared/hooks/useUploadAttachment`, uploading first and swapping the field's value for the resulting URL before the rest of the form data is submitted.
+
+## Deployment
+
+`.github/workflows/deploy.yml` deploys automatically on every push to `main`: it SSHes into the production host and runs `git pull`, `npm install`, and `npm run build` directly there — the live server builds its own bundle in place, using whatever local configuration already exists on that server.
+
+Since the build (including the full TypeScript check) happens on the server itself, make sure `npm run build` passes locally before pushing to `main`.
+
+## Linting & Formatting
+
+```bash
+npm run lint
 ```
-features/<name>/
-├── api/          # thin fetcher functions (getX.ts, createX.ts, …) wrapping the axios instance
-├── hooks/        # useX.ts — react-query wrappers around the fetchers
-├── components/   # feature-local components; a form is usually split into a sections/ folder
-├── pages/        # route components (the "smart" tier)
-└── types.ts      # all TypeScript interfaces for the feature, including component prop types
-```
 
-A large form (`SolutionForm`, `MainProjectsForm`, `SeoForm`, …) is decomposed into
-**section components** — one `<Box>` / `<CollapsibleBox>` per concern, each taking the
-whole `form` object as a single prop and reading only the fields it renders. Section
-prop types live in the feature's `types.ts` (or a co-located `types.ts` for shared
-components).
-
-Cross-feature imports are avoided — shared concerns go through `src/shared/`.
-
----
-
-## Architecture & conventions
-
-### API layer (`src/shared/api/`)
-
-- **`axios.ts`** — one Axios instance. A request interceptor attaches the JWT
-  (`Authorization: Bearer …`) and `Accept-Language`; a response interceptor clears the
-  token and hard-redirects to `/login` on `401`.
-- **`endpoints.ts`** — every URL path as a typed object. No hand-typed strings in features.
-- **`queryKeys.ts`** — every react-query cache key, in one registry.
-- **Response envelope** — the Backend always returns `{ data, status, message }`.
-  Fetchers return `data.data` (and `data.meta` for paginated listings).
-
-### State management
-
-| Kind          | Mechanism                                          |
-| ------------- | ------------------------------------------------- |
-| Server state  | TanStack Query only (`staleTime` 5 min, `retry` 1, no refetch-on-focus) |
-| List UI state | URL — `useSearchParams` via `useListQueryParams` (page / keyword / sort) |
-| Theme         | one React Context (`shared/contexts/themeContext`) |
-| Everything else | local component `useState`                       |
-
-No Redux / Zustand — the app doesn't need a global store.
-
-### Forms
-
-React Hook Form + Zod, `mode: "onTouched"`, everywhere. Each form has a
-`*Schema.ts` next to it that builds its Zod schema (taking `TFunction` so error
-messages are translated) and a `getXDefaultValues.ts`. Field errors on dynamic
-array items are read with the shared `getFieldErrorMessage(errors, "path.to.field")`
-helper.
-
-### Routing & auth
-
-- `src/app/navigation/Navigation.tsx` — the route table. Every page is `lazy()`-loaded
-  behind a single `<Suspense fallback={<Spinner />}>`.
-- `RequireAuth` / `RequireGuest` wrappers gate routes on the presence of a token.
-- The JWT is stored in `localStorage` (`shared/storage/authStorage.ts`).
-
-### i18n
-
-- `react-i18next`, two flat dictionaries in `public/Locale/En.json` and `Ar.json`.
-- Dashboard UI copy is written in **Modern Standard Arabic** (فصحى), not colloquial.
-- Direction is reactive: `AppProvider` sets `document.documentElement.dir` / `lang`
-  from the active language; layout uses logical Tailwind properties (`ps-*`, `pe-*`,
-  `inset-s-*`, `inset-e-*`) so RTL/LTR need only one set of rules.
-
-### UI system
-
-- `src/index.css` defines the full colour scale as CSS variables (`--black-*`,
-  `--white-*`, `--gray-*`, `--tiffany-*`) plus a `dark` variant and two self-hosted
-  `@font-face` faces (Thmanyah Display / Text).
-- `src/shared/ui/` holds the primitives: `Button`, `Box`, `CollapsibleBox`, `Modal`,
-  `Input` / `TextArea`, `SelectField`, `Switch`, `Spinner`, `PageTitle`,
-  `NoDataMessage`, `fileUpload/`.
-- Icons: `src/shared/icons/*` — each wraps one `Icon.tsx`, exported from `index.ts`.
-
-### Error / loading / empty states
-
-- **Error** — `shared/components/errorBoundary/` wraps the router; a page crash shows a
-  styled fallback with a "Reload Page" action instead of white-screening.
-- **Loading** — `isLoading → <Spinner size="lg" />`.
-- **Empty** — `!items?.length → <NoDataMessage …>` with a call-to-action.
-
----
-
-## Build & deploy
-
-`npm run build` produces a static bundle in `dist/` (type-checked first via `tsc -b`).
-Serve it as static files behind any web server or CDN; all routes fall back to
-`index.html` (SPA). Set `VITE_API_BASE_URL` at build time for the target environment.
-
----
-
-## Known gaps
-
-Tracked from internal audits; none block usage:
-
-- `tsconfig` has no `strict` / `noImplicitAny` (the code is written as if it did).
-- `src/shared/ui/Button.tsx` removes the focus outline with no visible replacement —
-  keyboard-focus visibility is lost app-wide.
-- `.env` is tracked in git and missing from `.gitignore`.
-- `index.html` still carries `robots: index, follow` and Open Graph / Twitter meta
-  copied from an unrelated portfolio template.
-- Both locale JSONs are bundled into the entry chunk though one language is used per session.
-- No automated tests, no CI pipeline.
+Prettier is configured with `prettier-plugin-tailwindcss` for automatic class sorting. Run it through your editor's format-on-save or `npx prettier --write .`.

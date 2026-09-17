@@ -30,6 +30,14 @@ class HeaderResource extends JsonResource
                 ->map(fn ($item) => MenuItemResolver::resolve($item))
                 ->filter()
                 ->values(),
+
+            // Actually the footer's copyright items (see HeaderController)
+            // — carried here too so the mobile nav's slide-out menu can
+            // show them without also fetching the whole footer.
+            'copyright_items' => $this->copyrightItems
+                ->map(fn ($item) => MenuItemResolver::resolve($item))
+                ->filter()
+                ->values(),
         ];
     }
 }

@@ -22,7 +22,6 @@ class SimpleBlogResource extends JsonResource
             'seo_desc'             => $this->seo_desc,
             'slug'                 => $this->slug,
             'base_image'           => $this->base_image_object,
-            'show_in_home'         => (bool) $this->show_in_home,
             'created_at'            => Carbon::parse($this->created_at)->format('Y-m-d h:i A'),
         ];
 

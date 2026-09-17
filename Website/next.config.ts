@@ -11,6 +11,22 @@ const securityHeaders = [
   },
 ];
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const localRemotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] =
+  [
+    {
+      protocol: "http",
+      hostname: "127.0.0.1",
+      port: "8000",
+    },
+    {
+      protocol: "http",
+      hostname: "localhost",
+      port: "8000",
+    },
+  ];
+
 const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
@@ -26,9 +42,8 @@ const nextConfig: NextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
-    // 80 is used by projectDetails' paired gallery images (ImageItem.tsx).
     qualities: [75, 80, 90],
-    unoptimized: process.env.NODE_ENV !== "production",
+    unoptimized: !isProduction,
     remotePatterns: [
       {
         protocol: "https",
@@ -43,15 +58,10 @@ const nextConfig: NextConfig = {
         hostname: "creation.wecreation.tech",
       },
       {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8000",
+        protocol: "https",
+        hostname: "api.creation.sa",
       },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8000",
-      },
+      ...(isProduction ? [] : localRemotePatterns),
     ],
   },
 

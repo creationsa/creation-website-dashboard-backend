@@ -74,6 +74,8 @@ class BlogController extends Controller
                             ->where('id', '<', $blog->id);
                     });
             })
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
             ->limit(2)
             ->get();
 
@@ -81,6 +83,8 @@ class BlogController extends Controller
             $wrapBlogs = Blog::with(['translations'])
                 ->where('id', '!=', $blog->id)
                 ->whereNotIn('id', $nextBlogs->pluck('id'))
+                ->orderByDesc('created_at')
+                ->orderByDesc('id')
                 ->limit(2 - $nextBlogs->count())
                 ->get();
 
@@ -88,20 +92,6 @@ class BlogController extends Controller
         }
 
         return $nextBlogs->values();
-    }
-
-    public function getHomeBlogs()
-    {
-        $blogs = Blog::with(['translations'])
-            ->where('show_in_home', true)
-            ->latest()
-            ->limit(2)
-            ->get();
-
-        return SimpleBlogResource::collection($blogs)->additional([
-            'status'  => 'success',
-            'message' => '',
-        ]);
     }
 
     public function seoBlog(Request $request)

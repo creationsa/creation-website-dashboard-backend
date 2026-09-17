@@ -6,29 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\Admin\Auth\{LoginRequest};
 use App\Http\Resources\Api\Dashboard\Admin\Auth\UserResource;
 use App\Models\User;
-use App\Traits\ApiResponse;
 
 class AuthController extends Controller
 {
-    use ApiResponse ;
-
     public function login(LoginRequest $request)
     {
         $token = auth('api')->attempt($request->validated());
 
-        if (!$token) return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Invalid credentials')], 403);
+        if (!$token) return $this->errorResponse(trans('Invalid credentials'), 403);
 
         $auth = auth('api')->user();
         $user = User::find($auth->id);
 
         if (!$user->is_admin_active_user) {
             auth('api')->logout();
-            return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Inactive')], 403);
+            return $this->errorResponse(trans('Inactive'), 403);
         }
 
         if ($user->is_ban) {
             auth('api')->logout();
-            return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('You have been blocked')], 403);
+            return $this->errorResponse(trans('You have been blocked'), 403);
         }
 
         $user->profile()->update(['last_login_at' => now()]);

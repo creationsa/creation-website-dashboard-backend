@@ -9,7 +9,7 @@ export default function TextListItem({
 }: TextListItemProps) {
   return (
     <BlogContent
-      title={`${String(index + 1).padStart(2, "0")} ${item.header}`}
+      title={`${String(index + 1).padStart(2, "0")}. ${item.header}`}
       className={hasStickySidebar ? "mt-0! w-full!" : "mt-0!"}
     >
       <div className="flex flex-col gap-20">

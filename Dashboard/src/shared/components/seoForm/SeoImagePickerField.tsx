@@ -12,6 +12,7 @@ export default function SeoImagePickerField({
   label,
   value,
   onChange,
+  onSelectMedia,
   error,
   disabled,
   mediaOptions,
@@ -61,7 +62,10 @@ export default function SeoImagePickerField({
                   type="button"
                   title={option.label}
                   disabled={disabled}
-                  onClick={() => onChange(option.url)}
+                  onClick={() => {
+                    onChange(option.url);
+                    onSelectMedia?.(option);
+                  }}
                   className={`relative aspect-square overflow-hidden rounded-lg border-2 transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
                     isSelected
                       ? "border-tiffany-600 dark:border-tiffany-100"

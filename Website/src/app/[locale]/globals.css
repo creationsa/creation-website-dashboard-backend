@@ -276,8 +276,8 @@
 }
 
 .svg-solution-wrapper svg * {
-  fill: var(--gray-600) !important;
-  stroke: transparent !important;
+  fill: none !important;
+  stroke: var(--gray-600) !important;
   transition: all 0.3s ease;
 }
 
@@ -287,26 +287,16 @@
 }
 
 .group:hover .svg-solution-wrapper svg * {
-  fill: var(--tiffany-100) !important;
-}
-
-.group:hover .svg-solution-wrapper svg image {
-  filter: invert(91%) sepia(15%) saturate(781%) hue-rotate(85deg)
-    brightness(102%) contrast(97%);
+  stroke: var(--tiffany-100) !important;
 }
 
 [data-theme="dark"] .svg-solution-wrapper svg * {
-  fill: var(--gray-500) !important;
-  stroke: transparent !important;
-}
-
-[data-theme="dark"] .svg-solution-wrapper svg image {
-  filter: invert(70%) sepia(14%) saturate(0%) hue-rotate(214deg) brightness(87%)
-    contrast(99%);
+  fill: none !important;
+  stroke: var(--gray-500) !important;
 }
 
 [data-theme="dark"] .group:hover .svg-solution-wrapper svg * {
-  fill: var(--black-100) !important;
+  stroke: var(--black-100) !important;
 }
 
 [data-theme="dark"] .group:hover .svg-solution-wrapper svg image {

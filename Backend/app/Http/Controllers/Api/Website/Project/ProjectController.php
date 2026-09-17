@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api\Website\Project;
 
 use App\Http\Controllers\Controller;
-use App\Models\Metadata;
 use App\Models\Project;
 use App\Models\ProjectsMainData;
 use App\Support\ProjectMediaResolver;
+use App\Support\SeoResolver;
 
 class ProjectController extends Controller
 {
@@ -45,15 +45,17 @@ class ProjectController extends Controller
 
     /**
      * Deterministic ordering shared by the listing grid and the detail
-     * page's prev/next lookup — plain `latest()` alone ties on identical
+     * page's prev/next lookup — plain `oldest()` alone ties on identical
      * timestamps (a real risk right after a batch import), which would
-     * make the two disagree on order.
+     * make the two disagree on order. Oldest-first so the first project
+     * ever created is first in the list, and every new project appends
+     * to the end.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function orderedQuery()
     {
-        return Project::orderByDesc('created_at')->orderByDesc('id');
+        return Project::orderBy('created_at')->orderBy('id');
     }
 
     /**
@@ -178,23 +180,13 @@ class ProjectController extends Controller
      */
     private function resolveSeo(Project $project, string $locale, array $data): array
     {
-        $own = $project->metadata;
-        $ownT = $own?->translate($locale);
-
-        $general = Metadata::where('for', 'projects')
-            ->whereNull('metadataable_type')
-            ->whereNull('metadataable_id')
-            ->first();
-        $generalT = $general?->translate($locale);
-
-        return [
-            'title' => $ownT?->title ?: $data['title'],
-            'description' => $ownT?->description ?: $data['overview_description'],
-            'image' => $ownT?->image ?: $generalT?->image,
-            'image_alt' => $ownT?->image_alt ?: $generalT?->image_alt,
-            'image_type' => $ownT?->image_type ?: $generalT?->image_type,
-            'keywords' => $own?->keywords ?: $general?->keywords,
-        ];
+        return SeoResolver::resolve(
+            $project->metadata,
+            $locale,
+            'projects',
+            $data['title'],
+            fn () => $data['overview_description'],
+        );
     }
 
     /**

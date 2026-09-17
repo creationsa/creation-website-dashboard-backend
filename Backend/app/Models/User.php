@@ -67,19 +67,9 @@ class User extends Authenticatable implements JWTSubject
         return count($parts) > 1 ? end($parts) : '';
     }
 
-    public function social()
-    {
-        return $this->hasOne(SocialLogin::class);
-    }
-
     public function media()
     {
         return $this->morphOne(AppMedia::class, 'app_mediaable');
-    }
-
-    public function walletTransactions()
-    {
-        return $this->hasMany(WalletTransaction::class, 'user_id');
     }
 
     public function country()
@@ -87,25 +77,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Country::class, 'phone_code', 'phone_code');
     }
 
-    public function driver()
-    {
-        return $this->hasOne(Driver::class, 'user_id');
-    }
-
-    public function agent()
-    {
-        return $this->hasOne(Agent::class, 'user_id');
-    }
-
-    public function driverOrder()
-    {
-        return $this->hasMany(DriverOrder::class, 'driver_id');
-    }
-
-    public function ordersForDriver()
-    {
-        return $this->hasMany(Order::class, 'driver_id');
-    }
     public function devices()
     {
         return $this->hasMany(Device::class);
@@ -120,11 +91,6 @@ class User extends Authenticatable implements JWTSubject
     // {
     //     return $this->hasOne(Wallet::class);
     // }
-
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
 
     public function referrer()
     {
@@ -154,16 +120,6 @@ class User extends Authenticatable implements JWTSubject
     public function hasRole($role)
     {
         return $this->role ? @$this->role->name == $role : false;
-    }
-
-    public function driverReviews()
-    {
-        return $this->hasMany(Review::class, 'driver_id');
-    }
-
-    public function getDriverAvgRateAttribute()
-    {
-        return $this->driverReviews()->avg('rate');
     }
 
     public function hasPermission($permission)

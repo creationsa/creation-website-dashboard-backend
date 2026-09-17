@@ -29,6 +29,56 @@ function normalizeAccordionItems(items: LegacyAccordionItem[]) {
   });
 }
 
+interface LegacyPoint {
+  text_en?: string;
+  text_ar?: string;
+  description_en?: string;
+  description_ar?: string;
+  [key: string]: unknown;
+}
+
+function normalizePoints(points: LegacyPoint[]) {
+  return points.map((point) => {
+    if ("description_en" in point || "description_ar" in point) return point;
+
+    const { text_en, text_ar, ...rest } = point;
+
+    return {
+      ...rest,
+      label_en: "",
+      label_ar: "",
+      description_en: text_en ?? "",
+      description_ar: text_ar ?? "",
+    };
+  });
+}
+
+interface LegacyTextBlock {
+  block_type?: string;
+  points?: LegacyPoint[];
+  [key: string]: unknown;
+}
+
+interface LegacyTextItem {
+  blocks?: LegacyTextBlock[];
+  [key: string]: unknown;
+}
+
+function normalizeTextListItems(items: LegacyTextItem[]) {
+  return items.map((item) => {
+    if (!item.blocks) return item;
+
+    return {
+      ...item,
+      blocks: item.blocks.map((block) => {
+        if (block.block_type !== "list" || !block.points) return block;
+
+        return { ...block, points: normalizePoints(block.points) };
+      }),
+    };
+  });
+}
+
 function normalizeAdvancedOverviewStats(content: Record<string, unknown>) {
   const result = { ...content };
 
@@ -51,6 +101,7 @@ function normalizeSections(sections: unknown[]) {
       type?: string;
       content?: Record<string, unknown> & {
         accordion_items?: LegacyAccordionItem[];
+        items?: LegacyTextItem[];
       };
     };
 
@@ -67,6 +118,13 @@ function normalizeSections(sections: unknown[]) {
 
     if (typed.type === "advanced_overview_section") {
       content = normalizeAdvancedOverviewStats(content);
+    }
+
+    if (typed.type === "text_list_section" && typed.content.items) {
+      content = {
+        ...content,
+        items: normalizeTextListItems(typed.content.items),
+      };
     }
 
     return { ...typed, content };

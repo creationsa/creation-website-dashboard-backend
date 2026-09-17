@@ -142,7 +142,6 @@
     "nav_section": "عنوان صفحة القائمة",
     "nav_title_en": "عنوان القائمة (إنجليزي)",
     "nav_title_ar": "عنوان القائمة (عربي)",
-    "show_in_home": "عرض في الصفحة الرئيسية",
     "slug": "الرابط الدائم (Slug)",
     "slug_en": "الرابط الدائم (بالإنجليزية)",
     "seo": "تحسين محركات البحث (SEO)",
@@ -248,6 +247,7 @@
     "copyright_text_hint_before": "اكتب",
     "copyright_text_hint_after": "في أي مكان في النص وهيتحول تلقائيًا للسنة الحالية ({{currentYear}}) لما يظهر في الموقع — لو مكتبتهاش، النص هيفضل زي ما كتبته بالظبط.",
     "copyright_items_label": "لينكات حقوق النشر",
+    "copyright_items_hint": "اللينكات دي بتظهر كمان في شاشات الموبايل، تحت في الـ menu الجانبي.",
 
     "badges_section": "شارات الثقة",
     "badge_image": "صورة الشارة ({{index}})",
@@ -565,8 +565,10 @@
       "remove_block": "حذف",
       "description_en": "الوصف (إنجليزي)",
       "description_ar": "الوصف (عربي)",
-      "point_text_en": "نص النقطة (إنجليزي)",
-      "point_text_ar": "نص النقطة (عربي)",
+      "point_label_en": "عنوان النقطة (إنجليزي، اختياري)",
+      "point_label_ar": "عنوان النقطة (عربي، اختياري)",
+      "point_description_en": "وصف النقطة (إنجليزي)",
+      "point_description_ar": "وصف النقطة (عربي)",
       "remove_point": "حذف النقطة"
     },
     "culture_identity": {

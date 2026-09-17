@@ -1,6 +1,7 @@
 import AddNewBlock from "@/shared/components/blockControls/AddNewBlock";
 import Button from "@/shared/ui/Button";
 import Input from "@/shared/ui/textField/Input";
+import TextArea from "@/shared/ui/textField/TextArea";
 import { getFieldErrorMessage } from "@/shared/utils/getFieldErrorMessage";
 import {
   useFieldArray,
@@ -50,31 +51,60 @@ export default function PointsFields<TFieldValues extends FieldValues>({
             key={field.id}
             className="flex flex-col items-start gap-3 rounded-xl border p-3 sm:flex-row sm:items-end"
           >
-            <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-              <Input
-                name={`${name}.${pointIndex}.text_en`}
-                label={`${t("pages.text_list_section.point_text_en")} (${pointIndex + 1})`}
-                error={getFieldErrorMessage(
-                  errors,
-                  `${name}.${pointIndex}.text_en`,
-                )}
-                register={register(
-                  `${name}.${pointIndex}.text_en` as Path<TFieldValues>,
-                )}
-                disabled={disabled}
-              />
-              <Input
-                name={`${name}.${pointIndex}.text_ar`}
-                label={`${t("pages.text_list_section.point_text_ar")} (${pointIndex + 1})`}
-                error={getFieldErrorMessage(
-                  errors,
-                  `${name}.${pointIndex}.text_ar`,
-                )}
-                register={register(
-                  `${name}.${pointIndex}.text_ar` as Path<TFieldValues>,
-                )}
-                disabled={disabled}
-              />
+            <div className="grid w-full grid-cols-1 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <Input
+                  name={`${name}.${pointIndex}.label_en`}
+                  label={`${t("pages.text_list_section.point_label_en")} (${pointIndex + 1})`}
+                  error={getFieldErrorMessage(
+                    errors,
+                    `${name}.${pointIndex}.label_en`,
+                  )}
+                  register={register(
+                    `${name}.${pointIndex}.label_en` as Path<TFieldValues>,
+                  )}
+                  disabled={disabled}
+                />
+                <Input
+                  name={`${name}.${pointIndex}.label_ar`}
+                  label={`${t("pages.text_list_section.point_label_ar")} (${pointIndex + 1})`}
+                  error={getFieldErrorMessage(
+                    errors,
+                    `${name}.${pointIndex}.label_ar`,
+                  )}
+                  register={register(
+                    `${name}.${pointIndex}.label_ar` as Path<TFieldValues>,
+                  )}
+                  disabled={disabled}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <TextArea
+                  name={`${name}.${pointIndex}.description_en`}
+                  label={`${t("pages.text_list_section.point_description_en")} (${pointIndex + 1})`}
+                  error={getFieldErrorMessage(
+                    errors,
+                    `${name}.${pointIndex}.description_en`,
+                  )}
+                  register={register(
+                    `${name}.${pointIndex}.description_en` as Path<TFieldValues>,
+                  )}
+                  disabled={disabled}
+                />
+                <TextArea
+                  name={`${name}.${pointIndex}.description_ar`}
+                  label={`${t("pages.text_list_section.point_description_ar")} (${pointIndex + 1})`}
+                  error={getFieldErrorMessage(
+                    errors,
+                    `${name}.${pointIndex}.description_ar`,
+                  )}
+                  register={register(
+                    `${name}.${pointIndex}.description_ar` as Path<TFieldValues>,
+                  )}
+                  disabled={disabled}
+                />
+              </div>
             </div>
 
             <Button

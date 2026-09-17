@@ -2,8 +2,10 @@ import { HEADER_INITIAL_STATE } from "@/shared/components/headerFields/getHeader
 import { TEXT_BLOCK_TYPES } from "./textListSchema";
 
 export const POINT_INITIAL_STATE = {
-  text_en: "",
-  text_ar: "",
+  label_en: "",
+  label_ar: "",
+  description_en: "",
+  description_ar: "",
 };
 
 export const DESCRIPTION_BLOCK_INITIAL_STATE = {

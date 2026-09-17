@@ -1,6 +1,7 @@
 import { RightArrowIcon } from "@/icons";
 import Image from "next/image";
 import Link from "next/link";
+import { formatDate } from "@/utils/formatDate";
 import { BlogCardProps } from "./types";
 
 export default function BlogCard({
@@ -33,7 +34,7 @@ export default function BlogCard({
           {title}
         </h3>
         <p className="text-sm uppercase">
-          {blogsTranslation.applied} {created_at}
+          {blogsTranslation.applied} {formatDate(created_at, locale)}
         </p>
       </div>
 

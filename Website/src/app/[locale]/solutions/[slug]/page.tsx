@@ -13,7 +13,7 @@ import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import getTrans from "@/lib/translation";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { parseKeywords } from "../../../../../utils/parseKeywords";
+import { parseKeywords } from "../../../../utils/parseKeywords";
 
 export async function generateMetadata({
   params,
@@ -87,7 +87,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const slugs = await getSolutionSlugs(Languages.ENGLISH);
+  const slugs = await getSolutionSlugs(Languages.ENGLISH).catch(() => []);
 
   return slugs.flatMap((solution) => [
     { locale: Languages.ARABIC, slug: solution.slug_en },

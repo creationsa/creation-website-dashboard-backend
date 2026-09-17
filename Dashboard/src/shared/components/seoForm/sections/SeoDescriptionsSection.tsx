@@ -2,14 +2,16 @@ import type { SeoSectionProps } from "@/shared/components/seoForm/types";
 import Box from "@/shared/ui/Box";
 import TextArea from "@/shared/ui/textField/TextArea";
 import { memo } from "react";
+import { useFormState } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 function SeoDescriptionsSection({ form, disabled }: SeoSectionProps) {
   const { t } = useTranslation();
-  const {
-    register,
-    formState: { errors },
-  } = form;
+  const { register, control } = form;
+  const { errors } = useFormState({
+    control,
+    name: ["seo_desc_en", "seo_desc_ar"],
+  });
 
   return (
     <Box

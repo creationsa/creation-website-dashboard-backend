@@ -104,9 +104,9 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
         if ($blog->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted Successfully')]);
+            return $this->successResponse(trans('Deleted Successfully'));
         }
-        return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Failed to delete')], 422);
+        return $this->errorResponse(trans('Failed to delete'));
     }
 
     private function blogData(BlogRequest $request): array

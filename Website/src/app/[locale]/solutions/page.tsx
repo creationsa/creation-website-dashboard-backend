@@ -10,7 +10,7 @@ import { getSeoForPage } from "@/lib/api/getSeoForPage";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 import getTrans from "@/lib/translation";
 import { Metadata } from "next";
-import { parseKeywords } from "../../../../utils/parseKeywords";
+import { parseKeywords } from "../../../utils/parseKeywords";
 
 export async function generateMetadata({
   params,

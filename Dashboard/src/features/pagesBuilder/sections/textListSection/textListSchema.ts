@@ -7,7 +7,12 @@ import {
   MIN_DESCRIPTION_LENGTH,
   MIN_TITLE_LENGTH,
 } from "@/shared/constants/constants";
-import { englishField, normalField } from "@/shared/utils/errorsHelpers";
+import {
+  englishField,
+  normalField,
+  optionalEnglishField,
+  optionalNormalField,
+} from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
 import { z } from "zod";
 
@@ -21,8 +26,10 @@ export type TextBlockType =
 
 const createPointSchema = (t: TFunction) =>
   z.object({
-    text_en: englishField(t, 2, 200),
-    text_ar: normalField(t, 2, 200),
+    label_en: optionalEnglishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    label_ar: optionalNormalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    description_en: englishField(t, 2, 300),
+    description_ar: normalField(t, 2, 300),
   });
 
 const createDescriptionBlockSchema = (t: TFunction) =>
@@ -73,70 +80,68 @@ export const createTextListSchema = (t: TFunction) => {
     items: z.array(createTextItemSchema(t)).min(1),
   });
 
-  return headerSchema
-    .merge(baseSchema)
-    .superRefine((data, ctx) => {
-      if (!data.has_sticky_sidebar) return;
+  return headerSchema.merge(baseSchema).superRefine((data, ctx) => {
+    if (!data.has_sticky_sidebar) return;
 
-      const labelEn = englishField(
-        t,
-        MIN_BUTTON_TEXT_LENGTH,
-        MAX_BUTTON_TEXT_LENGTH,
-      ).safeParse(data.sections_label_en);
-      const labelAr = normalField(
-        t,
-        MIN_BUTTON_TEXT_LENGTH,
-        MAX_BUTTON_TEXT_LENGTH,
-      ).safeParse(data.sections_label_ar);
+    const labelEn = englishField(
+      t,
+      MIN_BUTTON_TEXT_LENGTH,
+      MAX_BUTTON_TEXT_LENGTH,
+    ).safeParse(data.sections_label_en);
+    const labelAr = normalField(
+      t,
+      MIN_BUTTON_TEXT_LENGTH,
+      MAX_BUTTON_TEXT_LENGTH,
+    ).safeParse(data.sections_label_ar);
 
-      if (!labelEn.success) {
+    if (!labelEn.success) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["sections_label_en"],
+        message: labelEn.error.issues[0].message,
+      });
+    }
+
+    if (!labelAr.success) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["sections_label_ar"],
+        message: labelAr.error.issues[0].message,
+      });
+    }
+
+    if (data.sticky_description_en) {
+      const descriptionEn = englishField(
+        t,
+        MIN_DESCRIPTION_LENGTH,
+        MAX_DESCRIPTION_LENGTH,
+      ).safeParse(data.sticky_description_en);
+
+      if (!descriptionEn.success) {
         ctx.addIssue({
           code: "custom",
-          path: ["sections_label_en"],
-          message: labelEn.error.issues[0].message,
+          path: ["sticky_description_en"],
+          message: descriptionEn.error.issues[0].message,
         });
       }
+    }
 
-      if (!labelAr.success) {
+    if (data.sticky_description_ar) {
+      const descriptionAr = normalField(
+        t,
+        MIN_DESCRIPTION_LENGTH,
+        MAX_DESCRIPTION_LENGTH,
+      ).safeParse(data.sticky_description_ar);
+
+      if (!descriptionAr.success) {
         ctx.addIssue({
           code: "custom",
-          path: ["sections_label_ar"],
-          message: labelAr.error.issues[0].message,
+          path: ["sticky_description_ar"],
+          message: descriptionAr.error.issues[0].message,
         });
       }
-
-      if (data.sticky_description_en) {
-        const descriptionEn = englishField(
-          t,
-          MIN_DESCRIPTION_LENGTH,
-          MAX_DESCRIPTION_LENGTH,
-        ).safeParse(data.sticky_description_en);
-
-        if (!descriptionEn.success) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["sticky_description_en"],
-            message: descriptionEn.error.issues[0].message,
-          });
-        }
-      }
-
-      if (data.sticky_description_ar) {
-        const descriptionAr = normalField(
-          t,
-          MIN_DESCRIPTION_LENGTH,
-          MAX_DESCRIPTION_LENGTH,
-        ).safeParse(data.sticky_description_ar);
-
-        if (!descriptionAr.success) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["sticky_description_ar"],
-            message: descriptionAr.error.issues[0].message,
-          });
-        }
-      }
-    });
+    }
+  });
 };
 
 export type TextListFormValues = z.infer<

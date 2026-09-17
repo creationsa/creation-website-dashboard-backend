@@ -52,12 +52,18 @@ export default function FooterCopyrightSection({
         </p>
       </div>
 
-      <MenuItemsField
-        form={form}
-        name="copyright_items"
-        label={t("footer.copyright_items_label")}
-        disabled={disabled}
-      />
+      <div className="flex flex-col gap-1">
+        <MenuItemsField
+          form={form}
+          name="copyright_items"
+          label={t("footer.copyright_items_label")}
+          disabled={disabled}
+        />
+
+        <p className="ps-1 text-xs text-gray-500">
+          {t("footer.copyright_items_hint")}
+        </p>
+      </div>
     </Box>
   );
 }

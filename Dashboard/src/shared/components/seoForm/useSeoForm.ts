@@ -68,11 +68,11 @@ export default function useSeoForm(
       formData.append("metadataable_type", metadataableType || "");
     }
 
-    formData.append("en[title]", data.title_en);
-    formData.append("ar[title]", data.title_ar);
+    formData.append("en[title]", data.title_en || "");
+    formData.append("ar[title]", data.title_ar || "");
 
-    formData.append("en[description]", data.seo_desc_en);
-    formData.append("ar[description]", data.seo_desc_ar);
+    formData.append("en[description]", data.seo_desc_en || "");
+    formData.append("ar[description]", data.seo_desc_ar || "");
 
     if (englishImage) {
       formData.append("en[image]", String(englishImage));

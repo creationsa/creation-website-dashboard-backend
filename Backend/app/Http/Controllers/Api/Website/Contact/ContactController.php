@@ -17,6 +17,6 @@ class ContactController extends Controller
         $contact = Contact::create($request->validated());
         $admins = User::whereIn('user_type',['admin','super_admin'])->get();
         Notification::send($admins, new ContactNotification($contact));
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Your message has been sent successfully')]);
+        return $this->successResponse(trans('Your message has been sent successfully'));
     }
 }

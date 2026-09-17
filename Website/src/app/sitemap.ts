@@ -42,10 +42,10 @@ function entries(
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, projects, solutions, blogs] = await Promise.all([
-    getPageSlugs(Languages.ENGLISH),
-    getProjectSlugs(Languages.ENGLISH),
-    getSolutionSlugs(Languages.ENGLISH),
-    getBlogSlugs(Languages.ENGLISH),
+    getPageSlugs(Languages.ENGLISH).catch(() => []),
+    getProjectSlugs(Languages.ENGLISH).catch(() => []),
+    getSolutionSlugs(Languages.ENGLISH).catch(() => []),
+    getBlogSlugs(Languages.ENGLISH).catch(() => []),
   ]);
 
   return [

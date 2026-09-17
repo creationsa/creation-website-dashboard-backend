@@ -2,14 +2,16 @@ import type { SeoSectionProps } from "@/shared/components/seoForm/types";
 import Box from "@/shared/ui/Box";
 import Input from "@/shared/ui/textField/Input";
 import { memo } from "react";
+import { useFormState } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 function SeoSiteNameSection({ form, disabled }: SeoSectionProps) {
   const { t } = useTranslation();
-  const {
-    register,
-    formState: { errors },
-  } = form;
+  const { register, control } = form;
+  const { errors } = useFormState({
+    control,
+    name: ["site_name_en", "site_name_ar"],
+  });
 
   return (
     <Box

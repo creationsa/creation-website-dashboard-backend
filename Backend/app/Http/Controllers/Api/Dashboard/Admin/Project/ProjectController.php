@@ -114,7 +114,7 @@ class ProjectController extends Controller
         $project->metadata?->delete();
         $project->delete();
 
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+        return $this->successResponse(trans('Deleted successfully'));
     }
 
     /**

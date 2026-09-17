@@ -25,6 +25,8 @@ export interface SeoMediaOption {
   label: string;
   url: string;
   type: "image" | "video";
+  altEn?: string;
+  altAr?: string;
 }
 
 export interface SeoFormProps {
@@ -66,6 +68,7 @@ export interface SeoImagePickerFieldProps {
   label: string;
   value?: File | string | null;
   onChange: (value: File | string | null) => void;
+  onSelectMedia?: (option: SeoMediaOption) => void;
   error?: string;
   disabled?: boolean;
   mediaOptions: SeoMediaOption[];

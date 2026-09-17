@@ -205,6 +205,6 @@ class BuilderPageController extends Controller
         $page->metadata?->delete();
         $page->delete();
 
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+        return $this->successResponse(trans('Deleted successfully'));
     }
 }

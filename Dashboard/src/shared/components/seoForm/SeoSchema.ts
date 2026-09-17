@@ -10,6 +10,8 @@ import {
   englishField,
   imageField,
   normalField,
+  optionalEnglishField,
+  optionalNormalField,
 } from "@/shared/utils/errorsHelpers";
 import type { TFunction } from "i18next";
 import { z } from "zod";
@@ -23,19 +25,27 @@ export const createSeoSchema = (
   isHomeForm = false,
 ) =>
   z.object({
-    title_en: englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
-    title_ar: normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    title_en: isLinkedRecord
+      ? optionalEnglishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH)
+      : englishField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
+    title_ar: isLinkedRecord
+      ? optionalNormalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH)
+      : normalField(t, MIN_TITLE_LENGTH, MAX_TITLE_LENGTH),
 
-    seo_desc_en: englishField(
-      t,
-      MIN_SEO_DESCRIPTION_LENGTH,
-      MAX_SEO_DESCRIPTION_LENGTH,
-    ),
-    seo_desc_ar: normalField(
-      t,
-      MIN_SEO_DESCRIPTION_LENGTH,
-      MAX_SEO_DESCRIPTION_LENGTH,
-    ),
+    seo_desc_en: isLinkedRecord
+      ? optionalEnglishField(
+          t,
+          MIN_SEO_DESCRIPTION_LENGTH,
+          MAX_SEO_DESCRIPTION_LENGTH,
+        )
+      : englishField(t, MIN_SEO_DESCRIPTION_LENGTH, MAX_SEO_DESCRIPTION_LENGTH),
+    seo_desc_ar: isLinkedRecord
+      ? optionalNormalField(
+          t,
+          MIN_SEO_DESCRIPTION_LENGTH,
+          MAX_SEO_DESCRIPTION_LENGTH,
+        )
+      : normalField(t, MIN_SEO_DESCRIPTION_LENGTH, MAX_SEO_DESCRIPTION_LENGTH),
 
     keywords: z.array(z.string()),
     image_en: isLinkedRecord ? optionalImageField() : imageField(t),

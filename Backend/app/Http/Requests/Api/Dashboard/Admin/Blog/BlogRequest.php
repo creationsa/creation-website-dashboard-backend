@@ -57,7 +57,6 @@ class BlogRequest extends ApiMasterRequest
             'cover_image.media'     => $coverImageMediaRule,
             'cover_image_alt'       => 'nullable|array',
             'items'                 => 'required|array',
-            'show_in_home'          => 'nullable|boolean',
         ] + $rules;
     }
 }

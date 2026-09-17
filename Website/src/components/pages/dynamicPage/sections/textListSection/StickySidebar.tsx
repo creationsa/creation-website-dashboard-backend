@@ -8,7 +8,7 @@ export default function StickySidebar({
 }: StickySidebarProps) {
   return (
     <aside className="flex flex-col gap-15 lg:sticky lg:top-5 lg:w-[60%]">
-      {stickyDescription && <p>{stickyDescription}</p>}
+      {stickyDescription && <span>{stickyDescription}</span>}
 
       <div className="flex flex-col gap-3">
         <MainTitle title={sectionsLabel} />
@@ -17,12 +17,12 @@ export default function StickySidebar({
           {items.map((item, itemIndex) => (
             <li
               key={itemIndex}
-              className="text-tiffany-600 dark:text-tiffany-100 flex items-center gap-1.5 uppercase"
+              className="text-tiffany-600 dark:text-tiffany-100 flex items-baseline gap-1.5 uppercase"
             >
-              <span className="text-sm">
+              <span className="text-xs">
                 ({String(itemIndex + 1).padStart(2, "0")})
               </span>
-              <p>{item.header}</p>
+              <span className="text-sm">{item.header}</span>
             </li>
           ))}
         </ol>

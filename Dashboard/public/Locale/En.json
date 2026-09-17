@@ -144,7 +144,6 @@
     "nav_section": "Listing Page Navigation",
     "nav_title_en": "Navigation Title (English)",
     "nav_title_ar": "Navigation Title (Arabic)",
-    "show_in_home": "Show in Home page",
     "slug": "Slug",
     "slug_en": "Slug (English)",
     "seo": "SEO",
@@ -250,6 +249,7 @@
     "copyright_text_hint_before": "Type",
     "copyright_text_hint_after": "anywhere in the text and it will automatically be replaced with the current year ({{currentYear}}) when shown on the site — if you leave it out, the text stays exactly as written.",
     "copyright_items_label": "Copyright links",
+    "copyright_items_hint": "These links also show on mobile screens, at the bottom of the slide-out menu.",
 
     "badges_section": "Trust Badges",
     "badge_image": "Badge Image ({{index}})",
@@ -566,8 +566,10 @@
       "remove_block": "Remove",
       "description_en": "Description (English)",
       "description_ar": "Description (Arabic)",
-      "point_text_en": "Point Text (English)",
-      "point_text_ar": "Point Text (Arabic)",
+      "point_label_en": "Point Label (English, optional)",
+      "point_label_ar": "Point Label (Arabic, optional)",
+      "point_description_en": "Point Description (English)",
+      "point_description_ar": "Point Description (Arabic)",
       "remove_point": "Remove Point"
     },
     "culture_identity": {

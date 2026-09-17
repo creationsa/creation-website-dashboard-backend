@@ -1,0 +1,24 @@
+name: Deploy React/Vite Admin Dashboard
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 93.188.167.138
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            git config --global --add safe.directory /www/wwwroot/admin.creation.sa
+            cd /www/wwwroot/admin.creation.sa
+            git pull origin main
+            npm install
+            npm run build

@@ -5,25 +5,11 @@ namespace App\Http\Controllers\Api\Dashboard\Admin\Metadata;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\Admin\Metadata\MetadataRequest;
 use App\Http\Resources\Api\Dashboard\Admin\Metadata\{MetadataResource, MetadataShowResource};
-use App\Models\BuilderPage;
 use App\Models\Metadata;
-use App\Models\Project;
-use App\Models\Solution;
 use Illuminate\Http\Request;
 
 class MetadataController extends Controller
 {
-    /**
-     * Short, client-facing keys mapped to the model each is allowed to link
-     * metadata to via `metadataable_id` — keeps raw class strings out of
-     * the request payload.
-     */
-    private const METADATAABLE_TYPES = [
-        'page' => BuilderPage::class,
-        'project' => Project::class,
-        'solution' => Solution::class,
-    ];
-
     /**
      * Display a listing of the resource.
      *
@@ -55,13 +41,7 @@ class MetadataController extends Controller
      */
     public function store(MetadataRequest $request)
     {
-        $data = $request->validated();
-
-        if (!empty($data['metadataable_id'])) {
-            $data['metadataable_type'] = self::METADATAABLE_TYPES[$data['metadataable_type'] ?? ''] ?? null;
-        }
-
-        $metadata = Metadata::create($data);
+        $metadata = Metadata::create($request->validated());
         return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('Created successfully')]);
     }
 
@@ -87,13 +67,7 @@ class MetadataController extends Controller
     public function update(MetadataRequest $request, $id)
     {
         $metadata = Metadata::findOrFail($id);
-        $data = $request->validated();
-
-        if (!empty($data['metadataable_id'])) {
-            $data['metadataable_type'] = self::METADATAABLE_TYPES[$data['metadataable_type'] ?? ''] ?? null;
-        }
-
-        $metadata->update($data);
+        $metadata->update($request->validated());
         return MetadataShowResource::make($metadata)->additional(['status' => 'success', 'message' => trans('Updated successfully')]);
     }
 
@@ -107,6 +81,6 @@ class MetadataController extends Controller
     {
         $metadata = Metadata::findOrFail($id);
         $metadata->delete();
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+        return $this->successResponse(trans('Deleted successfully'));
     }
 }

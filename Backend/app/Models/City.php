@@ -28,11 +28,6 @@ class City extends Model implements TranslatableContract
         return $this->belongsTo(Country::class);
     }
 
-    public function governrate()
-    {
-        return $this->belongsTo(Governrate::class);
-    }
-
     public function users()
     {
         return $this->hasManyThrough(User::class, Profile::class, 'city_id', 'id', 'id', 'user_id');
@@ -43,12 +38,6 @@ class City extends Model implements TranslatableContract
         return $this->hasManyThrough(User::class, Profile::class, 'city_id', 'id', 'id', 'user_id')
             ->where('users.user_type', 'client');
     }
-
-    public function drivers()
-    {
-        return $this->hasMany(Driver::class);
-    }
-
 
     /**
      * Get polygon area as an array of [lat, lng].

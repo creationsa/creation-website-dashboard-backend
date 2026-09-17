@@ -1,14 +1,19 @@
 import { LanguageType } from "@/i18n.config";
-import { HeaderContent, TextItemContent } from "../../types";
+import { HeaderContent } from "../../types";
 
 export interface TextBlockDescriptionContent {
   block_type: "description";
   description: string;
 }
 
+export interface TextListPointContent {
+  label?: string;
+  description: string;
+}
+
 export interface TextBlockListContent {
   block_type: "list";
-  points: TextItemContent[];
+  points: TextListPointContent[];
 }
 
 export type TextBlockContent =

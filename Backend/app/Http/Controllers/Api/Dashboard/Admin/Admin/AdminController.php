@@ -99,7 +99,7 @@ class AdminController extends Controller
         $admin = User::where('user_type', 'admin')->findOrFail($id);
 
         if ($admin->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+            return $this->successResponse(trans('Deleted successfully'));
         }
     }
 

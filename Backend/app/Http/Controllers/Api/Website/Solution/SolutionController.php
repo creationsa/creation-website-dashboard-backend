@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\Website\Solution;
 
 use App\Http\Controllers\Controller;
-use App\Models\Metadata;
 use App\Models\Project;
 use App\Models\Solution;
 use App\Models\SolutionsMainData;
 use App\Services\Website\AssetProxy;
 use App\Support\ProjectMediaResolver;
+use App\Support\SeoResolver;
 
 class SolutionController extends Controller
 {
@@ -16,13 +16,15 @@ class SolutionController extends Controller
      * Deterministic ordering shared by the listing grid and the detail
      * page's prev/next lookup — see Project\ProjectController for why a
      * secondary tiebreaker matters (identical timestamps right after a
-     * batch import make plain `latest()` disagree with itself).
+     * batch import make plain `oldest()` disagree with itself). Oldest-
+     * first so the first solution ever created is first in the list, and
+     * every new solution appends to the end.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     private function orderedQuery()
     {
-        return Solution::orderByDesc('created_at')->orderByDesc('id');
+        return Solution::orderBy('created_at')->orderBy('id');
     }
 
     /**
@@ -343,22 +345,12 @@ class SolutionController extends Controller
      */
     private function resolveSeo(Solution $solution, string $locale, array $data): array
     {
-        $own = $solution->metadata;
-        $ownT = $own?->translate($locale);
-
-        $general = Metadata::where('for', 'solutions')
-            ->whereNull('metadataable_type')
-            ->whereNull('metadataable_id')
-            ->first();
-        $generalT = $general?->translate($locale);
-
-        return [
-            'title' => $ownT?->title ?: $data['title'],
-            'description' => $ownT?->description ?: $data['small_description'],
-            'image' => $ownT?->image ?: $generalT?->image,
-            'image_alt' => $ownT?->image_alt ?: $generalT?->image_alt,
-            'image_type' => $ownT?->image_type ?: $generalT?->image_type,
-            'keywords' => $own?->keywords ?: $general?->keywords,
-        ];
+        return SeoResolver::resolve(
+            $solution->metadata,
+            $locale,
+            'solutions',
+            $data['title'],
+            fn () => $data['small_description'],
+        );
     }
 }

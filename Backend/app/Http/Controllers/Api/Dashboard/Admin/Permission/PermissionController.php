@@ -28,7 +28,7 @@ class PermissionController extends Controller
             }
         }
 
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Updated successfully')]);
+        return $this->successResponse(trans('Updated successfully'));
     }
 
     /**

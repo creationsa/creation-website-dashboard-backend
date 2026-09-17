@@ -1,5 +1,6 @@
 "use client";
 
+import CopyrightItemsList from "@/components/common/copyrightItemsList";
 import Logo from "@/components/ui/Logo";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { CloseIcon, HamburgerIcon } from "@/icons";
@@ -13,6 +14,7 @@ export default function MobileMenu({
   logoUrl,
   logoAlt,
   menuItems,
+  copyrightItems,
 }: NavLinksProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -74,8 +76,18 @@ export default function MobileMenu({
                 );
               })}
             </ul>
-            <div className="border-border-800 dark:border-border-900 mt-auto flex flex-col items-center gap-6 border-t py-6">
+            <div className="mt-auto flex flex-col gap-6 px-4 pb-6">
               <Logo locale={locale} logoUrl={logoUrl} logoAlt={logoAlt} />
+
+              {copyrightItems && copyrightItems.length > 0 && (
+                <div className="border-border-800 dark:border-border-900 w-full border-t pt-6">
+                  <CopyrightItemsList
+                    items={copyrightItems}
+                    locale={locale}
+                    onItemClick={closeMenu}
+                  />
+                </div>
+              )}
             </div>
           </nav>
         </div>

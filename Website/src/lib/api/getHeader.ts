@@ -14,6 +14,7 @@ export interface HeaderData {
   show_language_switch: boolean;
   show_theme_switch: boolean;
   menu_items: HeaderMenuItem[];
+  copyright_items: HeaderMenuItem[];
 }
 
 export async function getHeader(locale: LanguageType): Promise<HeaderData> {

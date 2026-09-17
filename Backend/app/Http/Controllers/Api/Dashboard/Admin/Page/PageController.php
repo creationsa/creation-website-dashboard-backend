@@ -83,8 +83,8 @@ class PageController extends Controller
     {
         $slider = Page::where('id', $id)->firstOrFail();
         if ($slider->delete()) {
-            return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+            return $this->successResponse(trans('Deleted successfully'));
         }
-        return response()->json(['status' => 'fail', 'data' => null, 'message' => trans('Something went wrong, please try again')], 422);
+        return $this->errorResponse(trans('Something went wrong, please try again'));
     }
 }

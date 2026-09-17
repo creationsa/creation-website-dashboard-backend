@@ -129,7 +129,7 @@ class SolutionController extends Controller
         $solution->metadata?->delete();
         $solution->delete();
 
-        return response()->json(['status' => 'success', 'data' => null, 'message' => trans('Deleted successfully')]);
+        return $this->successResponse(trans('Deleted successfully'));
     }
 
     /**

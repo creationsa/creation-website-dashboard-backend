@@ -1,0 +1,26 @@
+name: Deploy Laravel API (Backend)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 93.188.167.138
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            git config --global --add safe.directory /www/wwwroot/api.creation.sa
+            cd /www/wwwroot/api.creation.sa
+            git pull origin master
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            php artisan storage:link
+            php artisan optimize:clear

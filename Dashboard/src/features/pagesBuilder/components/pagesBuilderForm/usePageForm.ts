@@ -1,16 +1,25 @@
 import { useUploadAttachment } from "@/shared/hooks/useUploadAttachment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import {
+  useFieldArray,
+  useForm,
+  type Resolver,
+  type SubmitHandler,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useCreateNewPage } from "../../hooks/useCreateNewPage";
 import { useUpdateExistingPage } from "../../hooks/useUpdateExistingPage";
+import type { UsePageFormReturn } from "../../types";
 import { buildPageFormData } from "../../utils/buildPageFormData";
 import { resolveSectionImages } from "../../utils/resolveSectionImages";
 import { createPageSchema, type PageFormValues } from "./pageSchema";
 import { SECTION_DEFAULTS } from "./sectionDefaultValues";
 
-export function usePageForm(dataToEdit?: PageFormValues, id?: number) {
+export function usePageForm(
+  dataToEdit?: PageFormValues,
+  id?: number,
+): UsePageFormReturn {
   const isEditingSession = Boolean(dataToEdit);
 
   const { t } = useTranslation();
@@ -22,8 +31,10 @@ export function usePageForm(dataToEdit?: PageFormValues, id?: number) {
 
   const schema = useMemo(() => createPageSchema(t), [t]);
 
+  const resolver = zodResolver(schema) as Resolver<PageFormValues>;
+
   const form = useForm<PageFormValues>({
-    resolver: zodResolver(schema),
+    resolver,
     defaultValues: dataToEdit ?? {
       page_title_en: "",
       page_title_ar: "",
@@ -50,10 +61,7 @@ export function usePageForm(dataToEdit?: PageFormValues, id?: number) {
     if (defaults) append(defaults as PageFormValues["sections"][number]);
   };
 
-  const onSubmit = async (data: PageFormValues) => {
-    // See useSolutionForm.ts for why this manual flag replaces the shared
-    // upload mutation's own `isPending` here — every section's images
-    // fire concurrent calls through the same mutation instance.
+  const onSubmit: SubmitHandler<PageFormValues> = async (data) => {
     setIsUploading(true);
     try {
       const resolvedSections = await Promise.all(
@@ -66,10 +74,7 @@ export function usePageForm(dataToEdit?: PageFormValues, id?: number) {
 
       if (isEditingSession && id) {
         const formData = buildPageFormData(payload, { isEdit: true });
-        updatePage(
-          { id, formData },
-          { onSuccess: () => form.reset(payload) },
-        );
+        updatePage({ id, formData }, { onSuccess: () => form.reset(payload) });
       } else {
         const formData = buildPageFormData(payload);
         addNewPage(formData);

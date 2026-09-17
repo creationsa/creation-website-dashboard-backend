@@ -1,189 +1,133 @@
-# Creation Website
+# CREATION — Corporate Website
 
-The public site for **Creation** — a marketing and production agency. It is a
-bilingual (Arabic / English), server-rendered Next.js app. Every page's content comes
-from the shared [Backend](../Backend) API; editors manage that content through the
-[Dashboard](../Dashboard).
+The marketing website for **Creation** — a bilingual (Arabic/English), fully localized, content‑driven site covering the home page, solutions, projects (portfolio), blogs, and CMS‑managed dynamic pages. Built with the Next.js App Router and backed by a headless Laravel API.
 
-- **Admin panel:** [`../Dashboard`](../Dashboard) (Vite + React SPA)
-- **API:** [`../Backend`](../Backend) (Laravel) — read-only `website/*` endpoints, no auth
+- Production: https://www.creation.sa
 
----
+## Tech Stack
 
-## Stack
+| Layer              | Choice                                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Framework          | [Next.js 16](https://nextjs.org) (App Router, React Server Components)                                                               |
+| Language           | TypeScript                                                                                                                           |
+| UI                 | React 19, [Tailwind CSS v4](https://tailwindcss.com)                                                                                 |
+| Animation          | [Framer Motion](https://www.framer.com/motion/)                                                                                      |
+| Forms              | [React Hook Form](https://react-hook-form.com) + [Zod](https://zod.dev) validation                                                   |
+| Email              | [EmailJS](https://www.emailjs.com) (client‑side contact form submission)                                                             |
+| Carousels          | [Swiper](https://swiperjs.com)                                                                                                       |
+| Theming            | [next-themes](https://github.com/pacocoursey/next-themes) (dark/light via `data-theme`)                                              |
+| i18n               | Custom middleware + [`@formatjs/intl-localematcher`](https://formatjs.io) + [`negotiator`](https://www.npmjs.com/package/negotiator) |
+| Linting/Formatting | ESLint 9 (flat config) + Prettier (with `prettier-plugin-tailwindcss`)                                                               |
 
-| Concern           | Choice                                       |
-| ----------------- | -------------------------------------------- |
-| Framework         | Next.js 16 (App Router, RSC)                 |
-| Language          | TypeScript 5                                 |
-| UI                | React 19                                     |
-| Styling           | Tailwind CSS 4 (PostCSS)                     |
-| Animation         | Framer Motion                                |
-| Carousels         | Swiper                                       |
-| Theming           | `next-themes` (`data-theme` attribute)       |
-| Forms             | React Hook Form + Zod (contact form)         |
-| Contact delivery  | EmailJS (`emailjs-com`)                      |
-| i18n              | custom — middleware locale routing + JSON dictionaries |
-| SVG               | `react-inlinesvg`                            |
+## Features
 
----
+- **Bilingual routing** — every route is prefixed with a locale (`/en/...`, `/ar/...`), with automatic RTL/LTR switching and browser-language detection on first visit.
+- **CMS‑driven dynamic pages** — `/[locale]/[slug]` renders a page assembled from an ordered list of "sections" returned by the API (banner, achievements, culture/identity, accordion, media content, reviews, text list, featured works, CTA banner, etc.) via `SectionRenderer`.
+- **Portfolio, Solutions & Blog** — list + detail views for `projects`, `solutions`, and `blogs`, each statically generated at build time from API-provided slugs, with per-page SEO metadata (Open Graph, Twitter cards, canonical + hreflang alternates).
+- **Smart media rendering** — a single `SmartMedia` component transparently renders either an optimized `next/image` or an autoplaying `<video>` depending on what the CMS returned for a given field.
+- **Dynamic SVG icons** — CMS‑uploaded icons are rendered client‑side via `react-inlinesvg` and recolored through CSS (see [Notes for maintainers](#notes-for-maintainers)).
+- **SEO** — auto-generated `sitemap.xml` and `robots.txt`, per-page metadata sourced from the API, Google Analytics (gtag).
+- **Resilient builds** — slug-fetching for static generation and the sitemap never crashes the whole build if a single API endpoint is temporarily unavailable (falls back to an empty list for that section).
 
-## Getting started
+## Getting Started
 
 ### Prerequisites
 
 - Node.js 20+
-- A running [Backend](../Backend) API
+- A running instance of the Creation API, plus the local environment config for it (ask a teammate — not part of this repo)
 
 ### Install & run
 
 ```bash
 npm install
-touch .env.local     # then add the variables listed below
-npm run dev          # http://localhost:3000
+npm run dev
 ```
 
-### Environment (`.env.local`)
+Open [http://localhost:3000](http://localhost:3000) — you'll be redirected to `/en` or `/ar` based on your browser's language.
 
-| Variable                          | Purpose                                        |
-| --------------------------------- | --------------------------------------------- |
-| `NEXT_PUBLIC_API_URL`             | Backend base URL, e.g. `http://127.0.0.1:8000/api/` |
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID`  | EmailJS service id (contact form)             |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template id                           |
-| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`  | EmailJS public key                            |
-
-### Scripts
-
-| Command           | Purpose                                     |
-| ----------------- | ------------------------------------------- |
-| `npm run dev`     | Next dev server (`localhost:3000`)          |
-| `npm run build`   | Production build                            |
-| `npm run start`   | Serve the production build on **port 5050** |
-| `npm run lint`    | ESLint (`eslint-config-next`)               |
-
----
-
-## Project structure
+## Project Structure
 
 ```
 src/
 ├── app/
-│   └── [locale]/                 # every route is under a locale segment
-│       ├── layout.tsx            # <html>, fonts, ThemeProvider, Navbar/Footer, GA, root generateMetadata
-│       ├── page.tsx              # home
-│       ├── loading.tsx  error.tsx  not-found.tsx
-│       ├── blogs/  projects/  solutions/     # listing + [slug] detail routes
-│       └── [slug]/page.tsx       # dynamic builder pages (About, Career, Contact, …)
+│   ├── [locale]/              # Every real page lives under the locale segment
+│   │   ├── page.tsx           # Home
+│   │   ├── [slug]/            # CMS dynamic pages (page-builder driven)
+│   │   ├── projects/[slug]/
+│   │   ├── solutions/[slug]/
+│   │   ├── blogs/[slug]/
+│   │   ├── layout.tsx         # Root layout: fonts, theme, navbar/footer, GA
+│   │   └── globals.css
+│   ├── sitemap.ts
+│   └── robots.ts
+├── middleware.ts               # Locale detection + redirect to /[locale]/...
 ├── components/
-│   ├── common/                   # shared building blocks (navigation, clients, contactForm, news…)
-│   ├── layout/                   # navbar, footer
-│   ├── pages/                    # page-specific component trees, incl. dynamicPage/SectionRenderer
-│   └── ui/                       # primitives (AppButton, BaseSlider, SmartMedia, Video, Icon…)
-├── dictionaries/
-│   ├── en/*.json  ar/*.json      # translation namespaces (common, nav, blogs, project, contact…)
-│   └── types.ts                  # typed shape of each namespace
-├── lib/
-│   ├── api/                      # client.ts (apiClient), endpoints.ts, getHeader/getFooter/getSeoForPage
-│   ├── translation.ts            # getTrans(locale, namespace) — dynamic-imports a dictionary
-│   └── getCurrentLocale.ts       # reads the locale from the request URL (via x-url header)
-├── constants/  hooks/  icons/  types/
-├── i18n.config.ts                # locales, default locale
-└── middleware.ts                 # locale detection + redirect
+│   ├── layout/                 # Navbar, footer, language switcher
+│   ├── common/                 # Shared building blocks (contact form, banners, news ticker, ...)
+│   ├── pages/                  # Feature/page-specific components, one folder per route
+│   │   └── dynamicPage/sections/  # One folder per CMS section type + SectionRenderer
+│   └── ui/                     # Low-level reusable primitives (SmartMedia, DynamicSvg, MainTitle, ...)
+├── lib/api/                     # apiClient fetch wrapper + endpoints.ts (single source of truth for API paths)
+├── dictionaries/{ar,en}/*.json  # Static UI copy, loaded per-namespace via getTrans()
+├── constants/enums.ts           # Languages, Directions
+├── i18n.config.ts               # Locale list + default locale
+├── hooks/
+├── icons/
+├── types/
+└── utils/
 ```
 
----
+## Internationalization (i18n)
 
-## Routing & i18n
+- Supported locales: `en` (default), `ar`.
+- `middleware.ts` inspects `Accept-Language` (via `negotiator` + `@formatjs/intl-localematcher`) and redirects any locale-less path to `/{locale}/...` on first visit.
+- The root `<html>` tag sets `dir="rtl"`/`dir="ltr"` based on the current locale.
+- Static UI strings live in `src/dictionaries/{ar,en}/*.json`, one file per feature ("namespace"), loaded server-side with `getTrans(locale, namespace)`.
+- Content (blog posts, project copy, page-builder sections, SEO metadata, etc.) is localized by the API itself — the frontend just passes `locale` through as an `Accept-Language` header and/or requests the matching slug.
+- `LanguageSwitcher` swaps the locale segment of the current path and uses `router.replace` (not `push`) so toggling the language doesn't create an extra browser‑history entry.
 
-- **`middleware.ts`** runs on every non-asset request. If the path has no locale
-  prefix it detects one from `Accept-Language` (via `negotiator` +
-  `@formatjs/intl-localematcher`) and redirects to `/{locale}{path}`. It also stashes
-  the full URL in an `x-url` request header.
-- All routes live under **`app/[locale]/`**. `generateStaticParams` in the layout
-  pre-renders both `ar` and `en`.
-- **`getCurrentLocale()`** reads the locale back out of `x-url` inside Server
-  Components that don't receive `params`.
-- **Translations** are per-namespace JSON files. `getTrans(locale, "common")`
-  dynamic-imports `dictionaries/{locale}/common.json`; it is `server-only`.
-- Direction: `layout.tsx` sets `<html lang dir>` from the locale; components use
-  logical Tailwind properties for RTL.
+## Data Fetching
 
----
+All API calls go through `src/lib/api/client.ts` (`apiClient`), a thin `fetch` wrapper that:
 
-## Data fetching
+- prefixes requests with the configured API base URL,
+- forwards the current locale as an `Accept-Language` header,
+- unwraps the API's `{ data: ... }` envelope,
+- uses Next's `fetch` cache with `revalidate` (default 60s, i.e. ISR) unless a call overrides it.
 
-All data is fetched in **Server Components** with `fetch` + ISR — there is no client
-data layer.
+Endpoint paths are centralized in `src/lib/api/endpoints.ts` — add new routes there rather than hardcoding strings in feature code.
 
-- **`lib/api/client.ts` — `apiClient<T>(endpoint, locale, options?, revalidate = 60)`**
-  wraps `fetch`, sends `Accept-Language`, sets `next: { revalidate }`, throws on
-  non-OK, and returns `json.data` (the Backend envelope is `{ data, status, message }`).
-- Each feature has its own `getX.ts` fetcher (e.g. `getProjects`, `getPageBySlug`,
-  `getClients`) that calls `apiClient` with an appropriate `revalidate` (listings
-  60s, header/footer 3600s).
-- Detail pages use **`generateStaticParams`** driven by a `…/slugs` endpoint, so
-  every project / solution / blog / builder page is statically generated for both
-  locales.
-- **`generateMetadata`** per route builds `title` / `description` / canonical +
-  `hreflang` alternates / Open Graph / Twitter from `getSeoForPage(...)` and the
-  page's own SEO record.
+Each feature folder under `src/components/pages/<feature>/` has its own `getX.ts` fetcher(s) (e.g. `getProjects`, `getProjectBySlug`, `getProjectSlugs`) built on top of `apiClient`.
 
----
+**Static generation:** `generateStaticParams` for `projects/[slug]`, `solutions/[slug]`, `blogs/[slug]`, `[locale]/[slug]`, and `sitemap.ts` all wrap their slug fetches in `.catch(() => [])`. If the API is briefly down or a single endpoint 404s, that section is simply omitted from the build instead of failing the entire deployment.
 
-## The dynamic page builder
+## Images & Media
 
-Routes under `app/[locale]/[slug]/` render pages that editors assemble in the
-Dashboard's *Pages Builder*. The Backend returns an ordered `sections[]` array;
-**`components/pages/dynamicPage/SectionRenderer.tsx`** switches on `section.type` and
-renders one of ~17 section components (`banner_section`, `featured_works_section`,
-`media_content_section`, `culture_identity_section`, `contact_section`, …). The set of
-types here must stay in sync with the Dashboard's `pagesBuilder` feature and the
-Backend's section schemas.
+- `SmartMedia` (`src/components/ui/SmartMedia.tsx`) is the single entry point for rendering CMS media: it renders a `next/image` for images and a plain autoplaying `<video>` for video content, based on the `type` field the API returns.
+- `next.config.ts` restricts remote images to an explicit allow‑list (`images.remotePatterns`): the production domains (`creation.sa`, `api.creation.sa`, …) always, plus `127.0.0.1:8000`/`localhost:8000` **only outside production**. Any new image host (backend domain change, CDN, etc.) must be added here or `next/image` will refuse to load it.
+- `images.unoptimized` is `true` in development (fast local iteration, no optimizer round‑trip) and `false` in production (real resizing/AVIF/WebP conversion). **Production image optimization requires the `sharp` package to be installed** — it's present in `node_modules` today but not yet pinned in `package.json`; run `npm install sharp` and commit the lockfile before relying on a self-hosted (Hostinger) production build.
 
----
+## SEO
 
-## Rendering model
+- `src/app/sitemap.ts` builds `/sitemap.xml` from page/project/solution/blog slugs (both locales, with `hreflang` alternates).
+- `src/app/robots.ts` serves `/robots.txt`, disallowing `/api/` and `/_next/`.
+- Every route's `generateMetadata` pulls title/description/OG/Twitter data from the API (`getSeoForPage` / the entity's own `seo` field), falling back to `{}` if the fetch fails so metadata errors never break page rendering.
 
-- Server Components by default. ~34 files opt into `"use client"` — anything using
-  Framer Motion, Swiper, `next-themes`, form state, or browser APIs.
-- Theming: `next-themes` with `attribute="data-theme"`, `defaultTheme="dark"`,
-  `enableSystem={false}`.
-- Fonts: self-hosted Thmanyah Display / Text via `next/font/local`.
-- Images: `next/image` with AVIF/WebP, `remotePatterns` allow-listing the Backend
-  hosts (`creation.sa`, `127.0.0.1:8000`, …); unoptimized outside production.
+## Scripts
 
----
+| Command         | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `npm run dev`   | Start the dev server (local API, unoptimized images) |
+| `npm run build` | Production build (production API, optimized images)  |
+| `npm run start` | Serve the production build on port `5050`            |
+| `npm run lint`  | Run ESLint                                           |
 
-## Security & headers
+## Deployment
 
-`next.config.ts` sets, for all routes: `X-Frame-Options: SAMEORIGIN`,
-`X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`,
-a locked-down `Permissions-Policy`, `poweredByHeader: false`, and `compress: true`.
+The app is deployed to two targets from the same codebase, split by branch:
 
----
+- **`main`** → production.
+- **`staging`** → staging/preview.
 
-## Analytics
-
-Google Analytics (`gtag`, id `G-0ESPCDTWXN`) is loaded in `layout.tsx` via `next/script`
-with `afterInteractive`.
-
----
-
-## Build & deploy
-
-```bash
-npm run build && npm run start   # serves on :5050
-```
-
-Deploy as a Node server (the app uses ISR + `generateStaticParams`, not a pure static
-export). Ensure the Backend host is in `next.config.ts` `images.remotePatterns` and
-that `NEXT_PUBLIC_API_URL` points at the right environment.
-
----
-
-## Known gaps
-
-- `apiClient` has no timeout / abort and surfaces only `API error: <status>` on
-  failure — the Backend's real error message isn't read.
-- Framer Motion is imported in ~16 files without `LazyMotion` / `m` — the full
-  library ships to those routes.
+- **Vercel**: works out of the box (native image optimization, no extra setup).
+- **Hostinger** (self-hosted, `next start`): make sure `sharp` is a real dependency (see [Images & Media](#images--media)) before shipping, or production image optimization will fail at runtime.

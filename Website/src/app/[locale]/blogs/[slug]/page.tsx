@@ -68,7 +68,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const slugs = await getBlogSlugs(Languages.ENGLISH);
+  const slugs = await getBlogSlugs(Languages.ENGLISH).catch(() => []);
 
   return slugs.flatMap((blog) => [
     {

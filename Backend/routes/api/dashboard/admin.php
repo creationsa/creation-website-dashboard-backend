@@ -93,32 +93,11 @@ Route::namespace('Dashboard\Admin')->middleware('setLocale')->group(function () 
             Route::match(['put', 'post'], 'clients', 'ClientController@update')->name('clients.store');
         });
 
-        Route::namespace('Country')->group(function () {
-
-            Route::apiResource('countries', 'CountryController');
-            Route::get('countries_without_pagination', 'CountryController@indexWithoutPagination');
-            // Route::get('get-countries-names', 'CountryController@get_countries_names');
-
-            Route::get('countries/{country}/cities', 'CountryController@getCities');
-            Route::get('countries/{country}/cities_without_pagination', 'CountryController@getCitiesByCountryWithoutPagination');
-            Route::patch('countries/{country_id}/toggle-active-country', 'CountryController@toggleActive')->name('countries.toggle_active');
-            Route::get('export-countries', 'CountryController@export')->name('countries.export');
-        });
-
-
         Route::namespace('Static')->group(function () {
             Route::apiResource('faqs', 'FaqController');
         });
 
-        Route::namespace('City')->group(function () {
-            Route::apiResource('cities', 'CityController');
-            Route::get('cities_without_pagination', 'CityController@getCitiesWithoutPagination');
-            // Route::get('get-cities-names', 'CityController@get_cities_names');
-            Route::patch('cities/{city_id}/toggle-active-city', 'CityController@toggleActive')->name('cities.toggle_active');
-            Route::get('export-cities', 'CityController@export')->name('cities.export');
-        });
 
-        
 
         Route::namespace('Admin')->group(function () {
             Route::apiResource('admins', 'AdminController');
@@ -136,9 +115,6 @@ Route::namespace('Dashboard\Admin')->middleware('setLocale')->group(function () 
             Route::get('users-without-paginated', 'UserController@indexWithoutPagination');
             Route::patch('users/{user_id}/toggle-active-user', 'UserController@toggleActive')->name('users.toggle_active');
             Route::patch('users/{user_id}/toggle-ban-user', 'UserController@toggleBan')->name('users.toggle_ban');
-            // Route::post('users/{id}/change-status', 'UserController@changeStatus')->name('users.change_status');
-
-            // Route::get('users-names', 'UserController@users_names');
 
             Route::get('export-users', 'UserController@export')->name('users.export')->withoutMiddleware('auth:api');
         });

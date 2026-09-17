@@ -36,7 +36,6 @@ class BlogResource extends JsonResource
             'cover_image'          => $this->cover_image,
             'cover_image_object'   => $this->cover_image_object,
             'items'                => BlogItemResource::collection($this->items),
-            'show_in_home'         => (bool) $this->show_in_home,
             'created_at'           => Carbon::parse($this->created_at)->format('Y-m-d h:i A'),
         ]+$locales;
 

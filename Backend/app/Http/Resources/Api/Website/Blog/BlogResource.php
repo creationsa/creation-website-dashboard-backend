@@ -22,7 +22,6 @@ class BlogResource extends JsonResource
             'base_image_object'    => $this->base_image_object,
             'cover_image'          => $this->cover_image,
             'cover_image_object'   => $this->cover_image_object,
-            'show_in_home'         => (bool) $this->show_in_home,
             'items'                => BlogItemResource::collection($this->items),
             'related_blogs'        => SimpleBlogResource::collection($this->relatedBlogs),
             'created_at'           => Carbon::parse($this->created_at)->format('Y-m-d h:i A'),

@@ -6,12 +6,26 @@ export default function TextBlock({ block, index }: TextBlockProps) {
       <ul className="list-outside list-disc space-y-4 ps-6">
         {block.points.map((point, pointIndex) => (
           <li key={pointIndex}>
-            <p>{point.text}</p>
+            <p>
+              {point.label && (
+                <span className="text-black-100 dark:text-white-100">
+                  {point.label}:{" "}
+                </span>
+              )}
+              {point.description}
+            </p>
           </li>
         ))}
       </ul>
     );
   }
 
-  return <p key={index}>{block.description}</p>;
+  return (
+    <p
+      key={index}
+      className="text-lg text-gray-600 md:me-auto dark:text-gray-500"
+    >
+      {block.description}
+    </p>
+  );
 }

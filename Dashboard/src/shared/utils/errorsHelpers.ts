@@ -60,6 +60,46 @@ export const englishField = (
     });
 
 /*
+ * accept any type of data, but allow it to be left empty entirely (the
+ * website falls back to another source when it's blank) — anything typed
+ * in still has to pass the same length/character checks as the required
+ * version
+ */
+export const optionalNormalField = (
+  t: TFunction,
+  min = MIN_TITLE_LENGTH,
+  max = MAX_TITLE_LENGTH,
+) =>
+  z
+    .string()
+    .trim()
+    .max(max, t("errors.maxLength", { count: max }))
+    .refine((val) => val.length === 0 || val.length >= min, {
+      message: t("errors.minLength", { count: min }),
+    })
+    .optional();
+
+/*
+ * accept english characters only, but allow it to be left empty entirely
+ */
+export const optionalEnglishField = (
+  t: TFunction,
+  min = MIN_TITLE_LENGTH,
+  max = MAX_TITLE_LENGTH,
+) =>
+  z
+    .string()
+    .trim()
+    .max(max, t("errors.maxLength", { count: max }))
+    .refine((val) => val.length === 0 || val.length >= min, {
+      message: t("errors.minLength", { count: min }),
+    })
+    .refine((val) => val.length === 0 || ENGLISH_REGEX.test(val), {
+      message: t("errors.OnlyEnglishCharactersAreAllowed"),
+    })
+    .optional();
+
+/*
  * accept image file or a string (url) and validate that the string is not empty if it's a string
  */
 export const imageField = (t: TFunction) =>

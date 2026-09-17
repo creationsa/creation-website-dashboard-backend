@@ -48,7 +48,7 @@ class RoleController extends Controller
         // return ($request->validated()) ;
         $role = Role::create(\Arr::except($request->validated(), ["permission_ids"]));
         $role->permissions()->attach($request->permission_ids);
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Created successfully')]);
+        return $this->successResponse(trans('Created successfully'));
     }
 
     public function update(RoleRequest $request, $id)
@@ -56,7 +56,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->update(\Arr::except($request->validated(), ["permission_ids"]));
         $role->permissions()->sync($request->permission_ids);
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Updated successfully')]);
+        return $this->successResponse(trans('Updated successfully'));
     }
 
     public function destroy($id)
@@ -66,6 +66,6 @@ class RoleController extends Controller
             return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('This role cannot be deleted because the user has used it')], 422);
         }
         $role->delete();
-        return response()->json(['status' => 'success', 'data' => null, 'message' =>  trans('Deleted successfully')]);
+        return $this->successResponse(trans('Deleted successfully'));
     }
 }
